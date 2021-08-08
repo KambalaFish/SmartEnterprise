@@ -1,0 +1,12 @@
+{
+    "extends": "@tsconfig/create-react-app/tsconfig.json",
+    "compilerOptions": {
+//        "module": "CommonJS",
+        "target": "ES2020",
+        "sourceMap": true,
+        "jsx": "react",
+        "noEmit": false
+    },
+    "exclude": ["node_modules"],
+    "include": ["resources", "index.d.ts"]
+}
