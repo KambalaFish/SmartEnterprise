@@ -15,6 +15,7 @@ const unauthenticatedUser: AuthenticatedUser = {
 }
 
 const USERSTORAGE = 'user';
+const SESSIONWASEXPIRED = 'sessionwasexpired';
 
 const authContext = createContext<useProvideAuthType>(
     {
@@ -42,11 +43,25 @@ function getUserFromLocalStorage(): AuthenticatedUser{
     }
     return JSON.parse(storageVal) as AuthenticatedUser;
 }
+
 function setUserToLocalStorage(user: AuthenticatedUser){
     localStorage.setItem(USERSTORAGE, JSON.stringify(user));
 }
-function removeUserFromLocalStorage(){
+
+export function removeUserFromLocalStorage(): void{
     localStorage.removeItem(USERSTORAGE);
+}
+
+export function setSessionWasExpired(): void{
+    localStorage.setItem(SESSIONWASEXPIRED, 'true');
+}
+
+export function wasSessionExpired(): boolean{
+    return localStorage.getItem(SESSIONWASEXPIRED) === 'true';
+}
+
+export function removeSessionExpiration(): void{
+    localStorage.removeItem(SESSIONWASEXPIRED);
 }
 
 function useProvideAuth(): useProvideAuthType {
@@ -61,13 +76,6 @@ function useProvideAuth(): useProvideAuthType {
             .then<boolean|ErrorBody>( ({code, response}) => {
                 console.log('signin.then response: ', response, 'code: ', code)
                 if (code==200){
-                    // response =
-                    //     {
-                    //         id: 1,
-                    //         name: 'Dima',
-                    //         email: 'admin@admin.com',
-                    //         role: UserType.SystemAdmin
-                    //     };
                     setUser(response as AuthenticatedUser);
                     setUserToLocalStorage(response as AuthenticatedUser);
                     cb();

@@ -11,7 +11,8 @@ import {
 import {PageResponse} from "./Interfaces/InterfacesApi";
 import {ICompanyFilter} from "./Interfaces/InterfacesApi";
 import {confirmationHandler, errorHandler, logginErrorHandler} from "./Handlers";
-import {apiInstance, instace} from "./Instances";
+import {apiInstance, instance} from "./Instances";
+import {removeUserFromLocalStorage} from "../components/Auth/Authentication";
 
 interface ClientApi {
     login(credentials: Credentials) : Promise<ApiResponse<AuthenticatedUser|ErrorBody>>;
@@ -43,7 +44,7 @@ class ClientApiImpl implements ClientApi {
     }
 
     login(credentials: Credentials): Promise<ApiResponse<AuthenticatedUser | ErrorBody>> {
-        return instace
+        return instance
             .get<never>(apiPaths.XSRFCookie)
             .then(response => {
                 return apiInstance.post<AuthenticatedUser>(apiPaths.login, {...credentials})
@@ -54,7 +55,7 @@ class ClientApiImpl implements ClientApi {
     }
 
     logout(): Promise<ApiResponse<never|ErrorBody>> {
-        return instace
+        return instance
             .get(apiPaths.XSRFCookie)
             .then(response => {
                 return apiInstance.post(apiPaths.logout);
@@ -182,3 +183,5 @@ class ClientApiImpl implements ClientApi {
 export default function api(): ClientApi {
     return ClientApiImpl.getInstance();
 }
+
+//as a workaround I try to transform api into useApi hook

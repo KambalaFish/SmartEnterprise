@@ -7,7 +7,7 @@ import {useStyles} from "./includes/styles";
 import {Copyright} from "./includes/Copyright";
 import {useHistory} from "react-router-dom";
 import {spaPaths} from "../../../utils/utils";
-import {useAuth} from "../Authentication";
+import {removeSessionExpiration, useAuth, wasSessionExpired} from "../Authentication";
 import Alert from '@material-ui/lab/Alert';
 import {useForm, SubmitHandler} from "react-hook-form";
 import {Credentials} from "../../../utils/Interfaces/InterfacesApi";
@@ -18,7 +18,7 @@ import {Controller} from "react-hook-form";
 export default function SignIn(): JSX.Element {
     const classes = useStyles();
     const auth = useAuth();
-    const [alert, setAlert] = useState<string | null>(null);
+    const [backendErrorAlert, setBackendErrorAlert] = useState<string | null>(null);
     const history = useHistory();
     const {handleSubmit, control, formState: {errors}} = useForm<Credentials>({
         resolver: yupResolver(loginFormValidationSchema),
@@ -27,6 +27,9 @@ export default function SignIn(): JSX.Element {
             password: ''
         }
     });
+    const [sessionWasExpired, setSessionWasExpired] = useState<boolean>(wasSessionExpired());
+    if (sessionWasExpired)
+        removeSessionExpiration();
 
     const onSubmit: SubmitHandler<Credentials> = (data: Credentials) => {
         auth
@@ -35,17 +38,22 @@ export default function SignIn(): JSX.Element {
             })
             .catch((reason) => {
                 console.log('signin reason: ', reason);
-                setAlert(reason.error);
+                setBackendErrorAlert(reason.error);
                 setTimeout(() => {
-                    setAlert(null);
+                    setBackendErrorAlert(null);
                 }, 10000)
             })
     }
 
     return (
         <Grid container direction={"column"}>
-            {alert &&
-            <Alert variant={'filled'} severity={'error'} onClose={() => setAlert(null)}>{alert}</Alert>
+            {sessionWasExpired &&
+            <Alert variant={'filled'} severity={'warning'} onClose={() => setSessionWasExpired(false)}>
+                Your session was expired, please sign-in again!
+            </Alert>
+            }
+            {backendErrorAlert &&
+            <Alert variant={'filled'} severity={'error'} onClose={() => setBackendErrorAlert(null)}>{backendErrorAlert}</Alert>
             }
             <Grid container direction={'row'} component="main" className={classes.root}>
                 <Grid item sm={6} md={9} className={classes.image}/>

@@ -24979,7 +24979,11 @@ function App() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "useAuth": () => (/* binding */ useAuth),
-/* harmony export */   "ProvideAuth": () => (/* binding */ ProvideAuth)
+/* harmony export */   "ProvideAuth": () => (/* binding */ ProvideAuth),
+/* harmony export */   "removeUserFromLocalStorage": () => (/* binding */ removeUserFromLocalStorage),
+/* harmony export */   "setSessionWasExpired": () => (/* binding */ setSessionWasExpired),
+/* harmony export */   "wasSessionExpired": () => (/* binding */ wasSessionExpired),
+/* harmony export */   "removeSessionExpiration": () => (/* binding */ removeSessionExpiration)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
@@ -25011,6 +25015,7 @@ var unauthenticatedUser = {
   roles: []
 };
 var USERSTORAGE = 'user';
+var SESSIONWASEXPIRED = 'sessionwasexpired';
 var authContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)({
   user: unauthenticatedUser,
   signin: function signin(creds, cb) {
@@ -25052,6 +25057,15 @@ function setUserToLocalStorage(user) {
 function removeUserFromLocalStorage() {
   localStorage.removeItem(USERSTORAGE);
 }
+function setSessionWasExpired() {
+  localStorage.setItem(SESSIONWASEXPIRED, 'true');
+}
+function wasSessionExpired() {
+  return localStorage.getItem(SESSIONWASEXPIRED) === 'true';
+}
+function removeSessionExpiration() {
+  localStorage.removeItem(SESSIONWASEXPIRED);
+}
 
 function useProvideAuth() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(getUserFromLocalStorage()),
@@ -25068,13 +25082,6 @@ function useProvideAuth() {
       console.log('signin.then response: ', response, 'code: ', code);
 
       if (code == 200) {
-        // response =
-        //     {
-        //         id: 1,
-        //         name: 'Dima',
-        //         email: 'admin@admin.com',
-        //         role: UserType.SystemAdmin
-        //     };
         setUser(response);
         setUserToLocalStorage(response);
         cb();
@@ -25190,8 +25197,8 @@ function SignIn() {
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
       _useState2 = _slicedToArray(_useState, 2),
-      alert = _useState2[0],
-      setAlert = _useState2[1];
+      backendErrorAlert = _useState2[0],
+      setBackendErrorAlert = _useState2[1];
 
   var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useHistory)();
 
@@ -25206,14 +25213,21 @@ function SignIn() {
       control = _useForm.control,
       errors = _useForm.formState.errors;
 
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_Authentication__WEBPACK_IMPORTED_MODULE_4__.wasSessionExpired)()),
+      _useState4 = _slicedToArray(_useState3, 2),
+      sessionWasExpired = _useState4[0],
+      setSessionWasExpired = _useState4[1];
+
+  if (sessionWasExpired) (0,_Authentication__WEBPACK_IMPORTED_MODULE_4__.removeSessionExpiration)();
+
   var onSubmit = function onSubmit(data) {
     auth.signin(data, function () {
       history.replace(_utils_utils__WEBPACK_IMPORTED_MODULE_3__.spaPaths.home);
     })["catch"](function (reason) {
       console.log('signin reason: ', reason);
-      setAlert(reason.error);
+      setBackendErrorAlert(reason.error);
       setTimeout(function () {
-        setAlert(null);
+        setBackendErrorAlert(null);
       }, 10000);
     });
   };
@@ -25221,13 +25235,19 @@ function SignIn() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
     container: true,
     direction: "column"
-  }, alert && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_10__.default, {
+  }, sessionWasExpired && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_10__.default, {
+    variant: 'filled',
+    severity: 'warning',
+    onClose: function onClose() {
+      return setSessionWasExpired(false);
+    }
+  }, "Your session was expired, please sign-in again!"), backendErrorAlert && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_10__.default, {
     variant: 'filled',
     severity: 'error',
     onClose: function onClose() {
-      return setAlert(null);
+      return setBackendErrorAlert(null);
     }
-  }, alert), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+  }, backendErrorAlert), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
     container: true,
     direction: 'row',
     component: "main",
@@ -28708,14 +28728,14 @@ var ClientApiImpl = /*#__PURE__*/function () {
   _createClass(ClientApiImpl, [{
     key: "login",
     value: function login(credentials) {
-      return _Instances__WEBPACK_IMPORTED_MODULE_2__.instace.get(_utils__WEBPACK_IMPORTED_MODULE_0__.apiPaths.XSRFCookie).then(function (response) {
+      return _Instances__WEBPACK_IMPORTED_MODULE_2__.instance.get(_utils__WEBPACK_IMPORTED_MODULE_0__.apiPaths.XSRFCookie).then(function (response) {
         return _Instances__WEBPACK_IMPORTED_MODULE_2__.apiInstance.post(_utils__WEBPACK_IMPORTED_MODULE_0__.apiPaths.login, _objectSpread({}, credentials));
       }).then(_Handlers__WEBPACK_IMPORTED_MODULE_1__.confirmationHandler)["catch"](_Handlers__WEBPACK_IMPORTED_MODULE_1__.logginErrorHandler); // .catch(errorHandler);
     }
   }, {
     key: "logout",
     value: function logout() {
-      return _Instances__WEBPACK_IMPORTED_MODULE_2__.instace.get(_utils__WEBPACK_IMPORTED_MODULE_0__.apiPaths.XSRFCookie).then(function (response) {
+      return _Instances__WEBPACK_IMPORTED_MODULE_2__.instance.get(_utils__WEBPACK_IMPORTED_MODULE_0__.apiPaths.XSRFCookie).then(function (response) {
         return _Instances__WEBPACK_IMPORTED_MODULE_2__.apiInstance.post(_utils__WEBPACK_IMPORTED_MODULE_0__.apiPaths.logout);
       }).then(_Handlers__WEBPACK_IMPORTED_MODULE_1__.confirmationHandler)["catch"](_Handlers__WEBPACK_IMPORTED_MODULE_1__.errorHandler);
     }
@@ -28827,7 +28847,7 @@ var ClientApiImpl = /*#__PURE__*/function () {
 
 function api() {
   return ClientApiImpl.getInstance();
-}
+} //as a workaround I try to transform api into useApi hook
 
 /***/ }),
 
@@ -29199,18 +29219,58 @@ function logginErrorHandler(error) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "apiInstance": () => (/* binding */ apiInstance),
-/* harmony export */   "instace": () => (/* binding */ instace)
+/* harmony export */   "instance": () => (/* binding */ instance)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "./resources/js/Application/utils/utils.ts");
+/* harmony import */ var _components_Auth_Authentication__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Auth/Authentication */ "./resources/js/Application/components/Auth/Authentication.tsx");
+
 
 
 var apiInstance = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
   baseURL: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getApiBaseUrl)()
 });
-var instace = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
+var instance = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
   baseURL: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getBaseUrl)()
+});
+instance.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  var originalConfig = error.config;
+  console.log('config: ', originalConfig);
+  console.log('url: ', originalConfig.url);
+
+  if (originalConfig.url != '/api/login' && error.response) {
+    if (error.response.status === 401 && !originalConfig._retry) {
+      originalConfig._retry = true;
+      (0,_components_Auth_Authentication__WEBPACK_IMPORTED_MODULE_2__.removeUserFromLocalStorage)();
+      (0,_components_Auth_Authentication__WEBPACK_IMPORTED_MODULE_2__.setSessionWasExpired)();
+      window.location.reload();
+      return instance(originalConfig);
+    }
+  }
+
+  return Promise.reject(error);
+});
+apiInstance.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  var originalConfig = error.config;
+  console.log('config: ', originalConfig);
+  console.log('url: ', originalConfig.url);
+
+  if (originalConfig.url != '/api/login' && error.response) {
+    if (error.response.status === 401 && !originalConfig._retry) {
+      originalConfig._retry = true;
+      (0,_components_Auth_Authentication__WEBPACK_IMPORTED_MODULE_2__.removeUserFromLocalStorage)();
+      (0,_components_Auth_Authentication__WEBPACK_IMPORTED_MODULE_2__.setSessionWasExpired)();
+      window.location.reload();
+      return apiInstance(originalConfig);
+    }
+  }
+
+  return Promise.reject(error);
 });
 
 /***/ }),
