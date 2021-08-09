@@ -1,5 +1,4 @@
-import axios, {AxiosError, AxiosResponse} from "axios";
-import {getBaseUrl, apiPaths, getApiBaseUrl} from "./utils";
+import {apiPaths} from "./utils";
 import {
     ApiResponse, AuthenticatedUser,
     ContactResponse,
@@ -12,7 +11,6 @@ import {PageResponse} from "./Interfaces/InterfacesApi";
 import {ICompanyFilter} from "./Interfaces/InterfacesApi";
 import {confirmationHandler, errorHandler, logginErrorHandler} from "./Handlers";
 import {apiInstance, instance} from "./Instances";
-import {removeUserFromLocalStorage} from "../components/Auth/Authentication";
 
 interface ClientApi {
     login(credentials: Credentials) : Promise<ApiResponse<AuthenticatedUser|ErrorBody>>;
