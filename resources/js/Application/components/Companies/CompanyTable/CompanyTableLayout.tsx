@@ -17,7 +17,7 @@ export function CompanyTableLayout(): JSX.Element{
     return (
         <Grid item container direction={'row'} justifyContent={'center'}>
             <Grid item style={{margin: `30px 0px`}} xs={10}>
-                <Typography variant={'h4'}  color='secondary'>Registered companies:</Typography>
+                <Typography variant={'h4'} color='primary'>Registered companies:</Typography>
             </Grid>
             <Grid item xs={10}>
                 <CompanyFilter
