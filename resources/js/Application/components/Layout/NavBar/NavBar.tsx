@@ -77,7 +77,7 @@ export default function NavBar (): JSX.Element {
                     <div className={classes.title}/>
                     <div>
                         <Chip
-                            label="Administration"
+                            label="Company menu"
                             onClick={handleAdministration}
                             icon={<ExpandMoreRoundedIcon/>}
                         />
