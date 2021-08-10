@@ -1,16 +1,16 @@
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
-import {Chip, IconButton, MenuItem, Toolbar, Typography} from "@material-ui/core";
+import {Chip, IconButton, MenuItem, Toolbar} from "@material-ui/core";
 import {green} from "@material-ui/core/colors";
 import {CustomMenu} from "./includes/CustomMenu";
 import {spaPaths} from "../../../utils/utils";
 import {useStyles} from "./includes/styles";
 import {useHistory} from "react-router-dom";
-import MenuIcon from "@material-ui/icons/Menu";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import HomeIcon from '@material-ui/icons/Home';
 import {useAuth} from "../../Auth/Authentication";
+import {getCurrentPageIdentifier} from "./includes/currentPageName";
 
 export default function NavBar (): JSX.Element {
 
@@ -56,17 +56,6 @@ export default function NavBar (): JSX.Element {
         handleAdministrationClose();
     }
 
-
-    // const handleLogout = () => {
-    //     handleProfileMenuClose();
-    //     logout()
-    //         .then((response)=>{
-    //             if (response === true){
-    //                 history.replace(spaPaths.signIn);
-    //             }
-    //         })
-    //         .catch((reason) => alert(reason.error));
-    // };
     const auth = useAuth();
 
     const handleLogout = () => {
@@ -78,29 +67,21 @@ export default function NavBar (): JSX.Element {
         )
     };
 
-    const profileIcon = 'profileIcon';
-    const adminId = 'adminIcon';
+    const currentPageIdentifier = getCurrentPageIdentifier(history.location.pathname);
 
     return (
         <div className={classes.root}>
             <AppBar position="static" style={{margin: 0}}>
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        Photos
-                    </Typography>
+                    {currentPageIdentifier}
+                    <div className={classes.title}/>
                     <div>
                         <Chip
-                            aria-controls={adminId}
-                            aria-haspopup="true"
                             label="Administration"
                             onClick={handleAdministration}
                             icon={<ExpandMoreRoundedIcon/>}
                         />
                         <CustomMenu
-                            id={adminId}
                             anchorEl={administrationAnchor}
                             open={adminOpen}
                             onClose={handleAdministrationClose}
@@ -120,6 +101,7 @@ export default function NavBar (): JSX.Element {
                         <IconButton
                             onClick={handleProfileMenu}
                             color="inherit"
+                            style={{marginRight: 5}}
                         >
                             <AccountCircle />
                         </IconButton>
