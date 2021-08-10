@@ -41,19 +41,17 @@ export function CompanyUpdate({match, location, history}: RouteComponentProps<Re
     const classes = useStyles();
 
     return company?
-        <Grid container direction={'column'} alignItems={'center'} justify={'center'}>
+        <Grid container direction={'column'} alignItems={'center'} justifyContent={'center'}>
             <Grid item xs={6} className={classes.t1}>
                 <Typography variant={'h4'} align={'center'}>Update {company.name} company</Typography>
             </Grid>
             <CompanyUpdateForm id={id} company={company}/>
         </Grid>
         :
-        <Grid container direction={'column'} alignItems={'center'} justify={'center'}>
+        <Grid container direction={'column'} alignItems={'center'} justifyContent={'center'}>
             <Grid item xs={6}>
                 <CircularProgress/>
                 {/*<Typography variant={'h4'}>Loading, please wait...</Typography>*/}
             </Grid>
         </Grid>
 }
-//0. как насчёт promise.all()
-//1. зачем нужен id в TextField, смотри UpdateForm
