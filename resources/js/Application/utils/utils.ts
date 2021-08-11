@@ -9,11 +9,12 @@ export function getApiBaseUrl(): string {
 export const spaPaths = {
     home: "/home",
     signIn: '/sign-in',
-    allCompanies: '/allCompanies',
-    companyCreation: '/createCompany',
-    companyUpdate: '/updateCompany/',
-    companyInfo: '/aboutCompany/',
-    profile: '/profile'
+    allCompanies: '/company/all',
+    companyCreation: '/company/create',
+    companyUpdate: '/company/update/',
+    companyInfo: '/company/about/',
+    profile: '/profile',
+    companyAdminCreation: '/company/:id/admin/creation'
 }
 
 export const apiPaths = {
@@ -31,4 +32,5 @@ export const apiPaths = {
     getCompanyDepartments: (companyId: number): string => `/company/${companyId}/departments/`,
     getCompanyRoles: (companyId: number): string => `/company/${companyId}/roles/`,
     getCompanyTeams: (companyId: number): string => `/company/${companyId}/teams/`,
+    createCompanyAdmin: '/company/admin/create',
 }

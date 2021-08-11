@@ -92,3 +92,10 @@ export interface CustomPaginationProps{
     currentPage: number;
     setPageNumber:  React.Dispatch<React.SetStateAction<number>>;
 }
+
+export interface CompanyAdminCreationFormProps {
+    setAlert: React.Dispatch<React.SetStateAction<string | null>>;
+    alert: string|null;
+    setSuccessMessage: React.Dispatch<React.SetStateAction<string | null>>;
+    companyId: number;
+}

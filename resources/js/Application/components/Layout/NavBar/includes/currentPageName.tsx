@@ -37,6 +37,10 @@ export function getCurrentPageIdentifier(pathname: string): JSX.Element{
                 currentPageName = 'Company update';
                 icon = <CreateIcon/>;
             }
+            if (/^\/company\/[\d]+\/admin\/creation$/g.test(pathname)){
+                currentPageName = 'Company admin creation';
+                icon = <CreateIcon/>;
+            }
             break;
     }
     return <Chip

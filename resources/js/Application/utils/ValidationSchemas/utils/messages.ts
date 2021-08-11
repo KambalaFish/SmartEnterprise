@@ -12,3 +12,4 @@ export const positiveNumberMessage = 'Zip code number must be positive';
 export const integerNumberMessage = 'Zip code number must be integer';
 
 export const numberMessage = 'Input value must be an integer number type';
+export const passwordMessage = 'Password must contain only letters and digits, at least one uppercase letter and one digit must be present.';

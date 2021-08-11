@@ -121,3 +121,20 @@ export interface AuthenticatedUser{
     roles: string[];
 }
 
+export enum UserStatus {
+    works = 'works',
+    onVacation = 'on_vacation',
+    illness = 'illness'
+}
+
+export interface CompanyAdminForm {
+    firstName: string,
+    lastName: string,
+    phone: string,
+    email: string,
+    password: string,
+    passwordConfirmation: string,
+    status: UserStatus
+}
+
+export type CompanyAdminRequest = CompanyAdminForm & {companyId: number};

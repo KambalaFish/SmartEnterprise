@@ -1,6 +1,6 @@
 import {apiPaths} from "./utils";
 import {
-    ApiResponse, AuthenticatedUser,
+    ApiResponse, AuthenticatedUser, CompanyAdminForm, CompanyAdminRequest,
     ContactResponse,
     Credentials,
     ErrorBody,
@@ -28,6 +28,8 @@ interface ClientApi {
     getPaginatedCompanyDepartments(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<IDepartment[]> | ErrorBody>>;
     getPaginatedCompanyRoles(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<IRole[]> | ErrorBody>>;
     getPaginatedCompanyTeams(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<ITeam[]> | ErrorBody>>;
+
+    createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<string|ErrorBody>>;
 }
 
 class ClientApiImpl implements ClientApi {
@@ -172,6 +174,13 @@ class ClientApiImpl implements ClientApi {
                     page: pageNumber
                 }
             })
+            .then(confirmationHandler)
+            .catch(errorHandler);
+    }
+
+    createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<string|ErrorBody>>{
+        return apiInstance
+            .post<string>(apiPaths.createCompanyAdmin, admin)
             .then(confirmationHandler)
             .catch(errorHandler);
     }

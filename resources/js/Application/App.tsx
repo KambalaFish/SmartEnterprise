@@ -13,6 +13,7 @@ import PrivateRoute from "./utils/CustomRoutes/PrivateRoute";
 import {ProvideAuth} from "./components/Auth/Authentication";
 import UnloggedRoute from "./utils/CustomRoutes/UnloggedRoute";
 import Profile from "./components/Profile/Profile";
+import CompanyAdminCreation from "./components/Companies/CompanyAdminCreation/CompanyAdminCreation";
 
 function App(): JSX.Element {
     return (
@@ -21,11 +22,12 @@ function App(): JSX.Element {
             <Switch>
                 <UnloggedRoute path={spaPaths.signIn} component={SignIn}/>
                 <Layout>
-                    <PrivateRoute path={spaPaths.allCompanies} component={CompanyTableLayout}/>
-                    <PrivateRoute path={spaPaths.companyCreation} component={CompanyCreation}/>
-                    <PrivateRoute path={spaPaths.companyUpdate + ':id'} component={CompanyUpdate}/>
-                    <PrivateRoute path={spaPaths.companyInfo + ':id'} component={CompanyInfo}/>
-                    <PrivateRoute path={spaPaths.profile} component={Profile}/>
+                    <PrivateRoute exact path={spaPaths.allCompanies} component={CompanyTableLayout}/>
+                    <PrivateRoute exact path={spaPaths.companyCreation} component={CompanyCreation}/>
+                    <PrivateRoute exact path={spaPaths.companyUpdate + ':id'} component={CompanyUpdate}/>
+                    <PrivateRoute exact path={spaPaths.companyInfo + ':id'} component={CompanyInfo}/>
+                    <PrivateRoute exact path={spaPaths.profile} component={Profile}/>
+                    <PrivateRoute exact path={spaPaths.companyAdminCreation} component={CompanyAdminCreation}/>
                     <PrivateRoute exact path={[spaPaths.home, '/']} component={Home}/>
                 </Layout>
             </Switch>
