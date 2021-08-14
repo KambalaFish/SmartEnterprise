@@ -5,7 +5,7 @@ import {
     Credentials,
     ErrorBody,
     ICompany,
-    ICompanyCreation, ICompanyWithId, IDepartment, IRole, ITeam,
+    ICompanyCreation, ICompanyWithId, IDepartment, IRole, ITeam, StaffCreationResponse,
 } from "./Interfaces/InterfacesApi";
 import {PageResponse} from "./Interfaces/InterfacesApi";
 import {ICompanyFilter} from "./Interfaces/InterfacesApi";
@@ -29,7 +29,7 @@ interface ClientApi {
     getPaginatedCompanyRoles(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<IRole[]> | ErrorBody>>;
     getPaginatedCompanyTeams(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<ITeam[]> | ErrorBody>>;
 
-    createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<string|ErrorBody>>;
+    createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<StaffCreationResponse|ErrorBody>>;
 }
 
 class ClientApiImpl implements ClientApi {
@@ -178,9 +178,9 @@ class ClientApiImpl implements ClientApi {
             .catch(errorHandler);
     }
 
-    createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<string|ErrorBody>>{
+    createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<StaffCreationResponse|ErrorBody>>{
         return apiInstance
-            .post<string>(apiPaths.createCompanyAdmin, admin)
+            .post<StaffCreationResponse>(apiPaths.createCompanyAdmin, admin)
             .then(confirmationHandler)
             .catch(errorHandler);
     }

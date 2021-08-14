@@ -13,8 +13,8 @@ export const instance = axios.create({
 
 instance.interceptors.response.use(function (response){return response}, function (error){
     const originalConfig = error.config;
-    console.log('config: ', originalConfig);
-    console.log('url: ', originalConfig.url);
+    // console.log('config: ', originalConfig);
+    // console.log('url: ', originalConfig.url);
     if (originalConfig.url != '/api/login' && error.response){
         if(error.response.status === 401 && !originalConfig._retry){
             originalConfig._retry = true;
@@ -29,8 +29,8 @@ instance.interceptors.response.use(function (response){return response}, functio
 
 apiInstance.interceptors.response.use(function (response){return response}, function (error){
     const originalConfig = error.config;
-    console.log('config: ', originalConfig);
-    console.log('url: ', originalConfig.url);
+    // console.log('config: ', originalConfig);
+    // console.log('url: ', originalConfig.url);
     if (originalConfig.url != '/api/login' && error.response){
         if(error.response.status === 401 && !originalConfig._retry){
             originalConfig._retry = true;

@@ -130,7 +130,7 @@ export enum UserStatus {
 export interface CompanyAdminForm {
     firstName: string,
     lastName: string,
-    phone: string,
+    phoneNumber: string,
     email: string,
     password: string,
     passwordConfirmation: string,
@@ -138,3 +138,13 @@ export interface CompanyAdminForm {
 }
 
 export type CompanyAdminRequest = CompanyAdminForm & {companyId: number};
+
+export interface StaffCreationResponse {
+    firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    email: string,
+    status: UserStatus,
+    companyId: number,
+    usertype: UserType
+}

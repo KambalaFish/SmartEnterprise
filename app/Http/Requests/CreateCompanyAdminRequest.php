@@ -18,7 +18,7 @@ class CreateCompanyAdminRequest extends FormRequest
     {
         $id = Auth::id();
         $staff = Staff::query()->find($id);
-        logger('create company admin authorization. id: '.$id.' staff: '.$staff);
+//        logger('create company admin authorization. id: '.$id.' staff: '.$staff);
         if ($staff->usertype == 'systemAdmin')
             return true;
         return false;
@@ -44,7 +44,7 @@ class CreateCompanyAdminRequest extends FormRequest
         return [
             'firstName' => $this->nameValidation(),
             'lastName' => $this->nameValidation(),
-            'phone' => ['required', 'string', 'regex:'.$this->phoneRegEx],
+            'phoneNumber' => ['required', 'string', 'regex:'.$this->phoneRegEx],
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string', 'regex:'.$this->passwordRegEx],
             'passwordConfirmation' => ['required', 'string', 'regex:'.$this->passwordRegEx],

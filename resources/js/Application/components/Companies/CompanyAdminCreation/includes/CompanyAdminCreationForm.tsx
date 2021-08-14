@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, Divider, Grid, IconButton, InputAdornment, MenuItem, TextField, Typography} from "@material-ui/core";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {ErrorBody, UserStatus} from "../../../../utils/Interfaces/InterfacesApi";
+import {ErrorBody, StaffCreationResponse, UserStatus} from "../../../../utils/Interfaces/InterfacesApi";
 import {useStyles} from "./styles";
 import {Controller} from "react-hook-form";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
@@ -35,13 +35,13 @@ function CompanyAdminCreationForm({alert, setAlert, setSuccessMessage, companyId
         if (alert){
             setAlert(null);
         }
-        console.log('data', {...data, companyId});
+        // console.log('data', {...data, companyId});
         api()
             .createCompanyAdmin({...data, companyId})
             .then(({code, response}) => {
                 console.log('code: ', code,' response: ', response);
                 if (code==200){
-                    setSuccessMessage(response as string);
+                    setSuccessMessage(`Company admin with ${(response as StaffCreationResponse).email} email was created successfully`);
                 } else {
                     setAlert((response as ErrorBody).error);
                 }
@@ -101,14 +101,14 @@ function CompanyAdminCreationForm({alert, setAlert, setSuccessMessage, companyId
                 <Grid item xs={5}>
                     <TextField
                         defaultValue={""}
-                        {...register('phone')}
+                        {...register('phoneNumber')}
                         fullWidth
                         label={'Phone number'}
                         placeholder={'Type phone number'}
                         margin={'normal'}
                         InputLabelProps={{shrink: true}}
-                        helperText={errors.phone?.message}
-                        error={!!errors.phone}
+                        helperText={errors.phoneNumber?.message}
+                        error={!!errors.phoneNumber}
                         variant="outlined"
                         size={'small'}
                     />
