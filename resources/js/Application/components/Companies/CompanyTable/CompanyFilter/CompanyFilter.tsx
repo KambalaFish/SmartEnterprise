@@ -2,7 +2,7 @@ import React from "react";
 import {ICompanyFilter} from "../../../../utils/Interfaces/InterfacesApi";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Button, Grid, Paper, Typography} from "@material-ui/core";
-import useStyles from "./includes/style";
+import useStyles from "./includes/styles";
 import {CompanyFilterField} from "./includes/CompanyFilterField";
 import {StatusFilterField} from "./includes/StatusFilterField";
 import {useAppDispatch, useAppSelector} from "../../../../redux/reduxHooks";

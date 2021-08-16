@@ -1,5 +1,5 @@
 import React from "react";
-import {spaPaths} from "../../../../utils/utils";
+import {spaPaths} from "../../../utils/utils";
 import {Chip} from "@material-ui/core";
 import HomeIcon from '@material-ui/icons/Home';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
@@ -25,6 +25,10 @@ export function getCurrentPageIdentifier(pathname: string): JSX.Element{
             break;
         case spaPaths.companyCreation:
             currentPageName = 'Company creation';
+            icon = <CreateIcon/>;
+            break;
+        case spaPaths.companyAdminCreation:
+            currentPageName = 'Company admin creation';
             icon = <CreateIcon/>;
             break;
         default:

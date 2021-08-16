@@ -3,30 +3,42 @@ import {makeStyles} from "@material-ui/core/styles";
 export const useStyles = makeStyles(
     {
         table: {
-            // minWidth: 650,
-            // border: '2px solid green',
-            height: 375
+            height: (props: StyleProps) => props.tableCellHeight * props.rowsPerPage + 50
         },
         tableContainer: {
-            marginTop: 100,
-            width: 1500,
-            // border: '2px solid red',
+            width: '100%',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            borderRadius: 30
         },
         tableHeaderCell:{
-          backgroundColor: 'black',
+            backgroundColor: 'black',
             color: 'white',
             fontSize: 'large',
-            border: '1px solid gray'
+            border: '1px solid gray',
+            height: 50
         },
         tableCell:{
-            width: 250,
-            height: 75,
-            border: '1px solid gray'
-        }
+            height: (props: StyleProps) => props.tableCellHeight,
+            border: '1px solid gray',
+        },
+        tableRow:{
+            '&:hover':{
+                backgroundColor: '#ADEFD1FF',
+                color: '#00203FFF',
+                cursor: 'pointer',
+                '& td':{
+                    fontWeight: 'bold',
+                }
+            }
+        },
     }
 
 );
+
+type StyleProps = {
+    rowsPerPage: number;
+    tableCellHeight: number;
+}

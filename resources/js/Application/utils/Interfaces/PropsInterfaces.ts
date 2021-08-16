@@ -70,7 +70,7 @@ export interface ContactProps{
     lastNameMessage: message;
 }
 
-export interface ParagraphHeaderProps{
+export interface HeaderProps {
     headerText: string;
 }
 
@@ -96,6 +96,6 @@ export interface CustomPaginationProps{
 export interface CompanyAdminCreationFormProps {
     setAlert: React.Dispatch<React.SetStateAction<string | null>>;
     alert: string|null;
-    setSuccessMessage: React.Dispatch<React.SetStateAction<string | null>>;
-    companyId: number;
+    setSuccess: React.Dispatch<React.SetStateAction<string | null>>;
+    companyId: number|undefined;
 }

@@ -6,7 +6,7 @@ import {ContactProps} from "../../../../utils/Interfaces/PropsInterfaces";
 export function Contact({who, control, phoneError, phoneErrorMessage, emailError, emailErrorMessage, firstNameError, firstNameMessage, lastNameError, lastNameMessage}: ContactProps): JSX.Element{
     return (
         <>
-            <Grid item container>
+            <Grid item container spacing={2}>
                 <Grid item xs={3}>
                     <Controller
                         control={control}
@@ -15,6 +15,8 @@ export function Contact({who, control, phoneError, phoneErrorMessage, emailError
                             ({field}) =>
                                 <TextField
                                     {...field}
+                                    variant={'outlined'}
+                                    size={'small'}
                                     id={who+"FirstName"}
                                     label="First name"
                                     placeholder='Type first name'
@@ -36,6 +38,8 @@ export function Contact({who, control, phoneError, phoneErrorMessage, emailError
                             ({field}) =>
                                 <TextField
                                     {...field}
+                                    variant={'outlined'}
+                                    size={'small'}
                                     id={who + "LastName"}
                                     label="Last name"
                                     placeholder='Type last name'
@@ -57,6 +61,8 @@ export function Contact({who, control, phoneError, phoneErrorMessage, emailError
                             ({field}) =>
                                 <TextField
                                     {...field}
+                                    variant={'outlined'}
+                                    size={'small'}
                                     id={who + "Email"}
                                     label="Email"
                                     placeholder='Type email'
@@ -78,6 +84,8 @@ export function Contact({who, control, phoneError, phoneErrorMessage, emailError
                             ({field}) =>
                                 <TextField
                                     {...field}
+                                    variant={'outlined'}
+                                    size={'small'}
                                     id={who + "Phone"}
                                     label="Phone number"
                                     placeholder='Type phone number'

@@ -1,8 +1,7 @@
 import React, {useState} from "react";
-import {Button, Divider, Grid, IconButton, InputAdornment, MenuItem, TextField, Typography} from "@material-ui/core";
+import {Button, Grid, IconButton, InputAdornment, MenuItem, TextField} from "@material-ui/core";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {ErrorBody, StaffCreationResponse, UserStatus} from "../../../../utils/Interfaces/InterfacesApi";
-import {useStyles} from "./styles";
 import {Controller} from "react-hook-form";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -10,8 +9,8 @@ import {companyAdminFormValidationSchema} from "../../../../utils/ValidationSche
 import {CompanyAdminForm} from "../../../../utils/Interfaces/InterfacesApi";
 import {CompanyAdminCreationFormProps} from "../../../../utils/Interfaces/PropsInterfaces";
 import api from "../../../../utils/Api";
-
-function CompanyAdminCreationForm({alert, setAlert, setSuccessMessage, companyId}: CompanyAdminCreationFormProps): JSX.Element {
+import {ParagraphHeader} from "../../../Headers/ParagraphHeader/ParagraphHeader";
+function CompanyAdminCreationForm({alert, setAlert, setSuccess, companyId}: CompanyAdminCreationFormProps): JSX.Element {
 
     const {handleSubmit, control, register, formState: {errors}} = useForm<CompanyAdminForm>({
         resolver: yupResolver(companyAdminFormValidationSchema)
@@ -35,13 +34,17 @@ function CompanyAdminCreationForm({alert, setAlert, setSuccessMessage, companyId
         if (alert){
             setAlert(null);
         }
-        // console.log('data', {...data, companyId});
+        if (companyId == undefined){
+            setAlert('You must choose company before creating company admin');
+            return;
+        }
+
         api()
             .createCompanyAdmin({...data, companyId})
             .then(({code, response}) => {
                 console.log('code: ', code,' response: ', response);
                 if (code==200){
-                    setSuccessMessage(`Company admin with ${(response as StaffCreationResponse).email} email was created successfully`);
+                    setSuccess(`Company admin with ${(response as StaffCreationResponse).email} email was created successfully`);
                 } else {
                     setAlert((response as ErrorBody).error);
                 }
@@ -51,20 +54,10 @@ function CompanyAdminCreationForm({alert, setAlert, setSuccessMessage, companyId
                 setAlert(reason.response.error);
             })
     }
-    const ParagraphHeader = ({message}: {message: string;}) => {
-        return (
-            <Grid item xs={11} className={`${classes.mt} ${classes.mb}`}>
-                <Typography variant={'h6'} align={'left'} className={classes.formHeader}>
-                    {message}
-                </Typography>
-                <Divider variant='middle' className={classes.divider}/>
-            </Grid>
-        );
-    }
-    const classes = useStyles();
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <ParagraphHeader message={'General info'}/>
+            <ParagraphHeader headerText={'General info'}/>
             <Grid item xs={12} container direction={'row'} spacing={2} justifyContent={'center'}>
                 <Grid item xs={5}>
                     <TextField
@@ -145,7 +138,7 @@ function CompanyAdminCreationForm({alert, setAlert, setSuccessMessage, companyId
                     />
                 </Grid>
             </Grid>
-            <ParagraphHeader message={'Credentials'}/>
+            <ParagraphHeader headerText={'Credentials'}/>
             <Grid item xs={12} container direction={'row'} spacing={2} justifyContent={'center'}>
                 <Grid item xs={5}>
                     <TextField

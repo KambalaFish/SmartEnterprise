@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCompanyRequest;
+use App\Http\Resources\CompanyCollection;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\CompanyResourceCollection;
 use App\Http\Resources\CustomerManagerContactResource;
@@ -39,6 +40,11 @@ class CompanyController extends Controller
         }
         $paginatedCompanies = empty($query)? Company::paginate(5) : Company::where($query)->paginate(5);
         return CompanyResourceCollection::make($paginatedCompanies);
+    }
+
+    public function indexAll(){
+        return CompanyResource::collection(Company::all());
+//        return CompanyResource::make(Company::all());
     }
 
     private function isNullishObj($obj){

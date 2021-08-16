@@ -111,6 +111,10 @@ export function CompanyTable({
                 })
         }
 
+        function createAdmin(id: number){
+            history.push(spaPaths.selectedCompanyAdminCreation(id));
+        }
+
         function handleClick(event: BaseSyntheticEvent, id: number) {
             if (event.target.value == 0) {
                 updateCompany(id);
@@ -118,7 +122,11 @@ export function CompanyTable({
             if (event.target.value == 1) {
                 removeCompany(id);
             }
+            if (event.target.value == 2) {
+                createAdmin(id);
+            }
         }
+
         return (
             <FormControl key={id} variant={'outlined'} size={'small'}>
                 <Select
@@ -127,6 +135,7 @@ export function CompanyTable({
                 >
                     <MenuItem value={0}>update</MenuItem>
                     <MenuItem value={1}>remove</MenuItem>
+                    <MenuItem value={2}>create admin</MenuItem>
                 </Select>
             </FormControl>
         )

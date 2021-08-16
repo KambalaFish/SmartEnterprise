@@ -2,6 +2,7 @@ import {AxiosError, AxiosResponse} from "axios";
 import {ApiResponse, ErrorBody} from "./Interfaces/InterfacesApi";
 
 export function confirmationHandler<T>(result: AxiosResponse<T>): ApiResponse<T> {
+    // console.log('confirmationHandler result: ', result);
     return {
         code: result.status,
         response: result.data

@@ -44,14 +44,13 @@ interface PageMetaData{
     perPage: number;
 }
 
-export interface PageResponse<T> {
+export interface ResourceCollectionResponse<T>{
     data: T;
+}
+
+export interface PageResponse<T> extends ResourceCollectionResponse<T>{
     meta: PageMetaData;
 }
-// export interface CompanyPageResponse {
-//     data: ICompany[];
-//     meta: PageMetaData;
-// }
 
 
 

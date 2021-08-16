@@ -1,6 +1,5 @@
 import React from "react";
-import {Grid, Typography} from "@material-ui/core";
-import {useStyles} from "./includes/styles";
+import {Grid} from "@material-ui/core";
 import {useForm, SubmitHandler} from "react-hook-form";
 import {ICompanyCreation, ICompanyWithId} from "../../../utils/Interfaces/InterfacesApi";
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -9,9 +8,10 @@ import api from '../../../utils/Api';
 import {CompanyForm} from "./includes/CompanyForm";
 import {useAppDispatch} from "../../../redux/reduxHooks";
 import {removeLastPage} from "../../../redux/slices/companyTableSlice";
+import PageHeader from "../../Headers/PageHeader/PageHeader";
+import FormLayout from "../../Layout/FormLayout/FormLayout";
 
 export function CompanyCreation(): JSX.Element{
-    const classes = useStyles();
     const {handleSubmit, control, formState: {errors} } = useForm<ICompanyCreation>({
         resolver: yupResolver(companyFormValidationSchema),
         defaultValues: {
@@ -57,14 +57,10 @@ export function CompanyCreation(): JSX.Element{
 
     return(
         <Grid container direction='column' justifyContent='flex-end' alignItems='center'>
-            <Grid item className={classes.mt} xs={3}>
-                <Typography variant='h4' align='center'>
-                    Create new company
-                </Typography>
-            </Grid>
-            <Grid item container xs={8}>
+            <PageHeader headerText={`Create new company`}/>
+            <FormLayout xs={6}>
                 <CompanyForm handleSubmit={handleSubmit} control={control} errors={errors} onSubmit={onSubmit} buttonName={'create'}/>
-            </Grid>
+            </FormLayout>
         </Grid>
     )
 }

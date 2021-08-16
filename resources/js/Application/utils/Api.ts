@@ -5,7 +5,7 @@ import {
     Credentials,
     ErrorBody,
     ICompany,
-    ICompanyCreation, ICompanyWithId, IDepartment, IRole, ITeam, StaffCreationResponse,
+    ICompanyCreation, ICompanyWithId, IDepartment, IRole, ITeam, ResourceCollectionResponse, StaffCreationResponse,
 } from "./Interfaces/InterfacesApi";
 import {PageResponse} from "./Interfaces/InterfacesApi";
 import {ICompanyFilter} from "./Interfaces/InterfacesApi";
@@ -28,8 +28,8 @@ interface ClientApi {
     getPaginatedCompanyDepartments(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<IDepartment[]> | ErrorBody>>;
     getPaginatedCompanyRoles(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<IRole[]> | ErrorBody>>;
     getPaginatedCompanyTeams(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<ITeam[]> | ErrorBody>>;
-
     createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<StaffCreationResponse|ErrorBody>>;
+    getAllCompanies(): Promise<ApiResponse<ResourceCollectionResponse<ICompanyWithId[]>|ErrorBody>>;
 }
 
 class ClientApiImpl implements ClientApi {
@@ -185,6 +185,12 @@ class ClientApiImpl implements ClientApi {
             .catch(errorHandler);
     }
 
+    getAllCompanies(): Promise<ApiResponse<ResourceCollectionResponse<ICompanyWithId[]>|ErrorBody>>{
+        return apiInstance
+            .get<ResourceCollectionResponse<ICompanyWithId[]>>(apiPaths.getAllCompanies)
+            .then(confirmationHandler)
+            .catch(errorHandler);
+    }
 }
 
 export default function api(): ClientApi {

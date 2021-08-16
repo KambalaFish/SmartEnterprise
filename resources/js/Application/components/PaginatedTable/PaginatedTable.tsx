@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody} from "@material-ui/core";
-import {useStyles} from './includes/stylesTest';
+import {useStyles} from './includes/styles';
 import {PaginatedTableTestProps} from "../../utils/Interfaces/PropsInterfaces";
 
 export function PaginatedTable({

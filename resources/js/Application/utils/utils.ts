@@ -14,7 +14,9 @@ export const spaPaths = {
     companyUpdate: '/company/update/',
     companyInfo: '/company/about/',
     profile: '/profile',
-    companyAdminCreation: '/company/:id/admin/creation'
+    selectedCompanyAdminCreationPath: '/company/:id/admin/creation',
+    selectedCompanyAdminCreation: (companyId: number): string => `/company/${companyId}/admin/creation`,
+    companyAdminCreation: '/company/admin/creation',
 }
 
 export const apiPaths = {
@@ -33,4 +35,5 @@ export const apiPaths = {
     getCompanyRoles: (companyId: number): string => `/company/${companyId}/roles/`,
     getCompanyTeams: (companyId: number): string => `/company/${companyId}/teams/`,
     createCompanyAdmin: '/company/admin/create',
+    getAllCompanies: '/company/all'
 }
