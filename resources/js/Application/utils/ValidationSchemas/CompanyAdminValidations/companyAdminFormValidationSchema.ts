@@ -8,8 +8,7 @@ import {
 } from "../utils/messages";
 
 export const companyAdminFormValidationSchema = yup.object().shape({
-    firstName: yup.string().matches(nameRegEx, nameMessage).required(requiredMessage).trim(),
-    lastName: yup.string().matches(nameRegEx, nameMessage).required(requiredMessage).trim(),
+    name: yup.string().matches(nameRegEx, nameMessage).required(requiredMessage).trim(),
     phoneNumber: yup.string().matches(phoneRegEx, phoneMessage).required(requiredMessage).trim(),
     email: yup.string().email(emailMessage).required(requiredMessage).trim(),
     password: yup.string().matches(passwordRegEx, passwordMessage).required(requiredMessage).trim(),

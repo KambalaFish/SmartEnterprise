@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('company/{company}/departments', [CompanyController::class, 'companyDepartments']);
     Route::get('company/{company}/roles', [CompanyController::class, 'companyRoles']);
     Route::get('company/{company}/teams', [CompanyController::class, 'companyTeams']);
-    Route::post('company/admin/create', [StaffController::class, 'createCompanyAdmin']);
+    Route::post('staff/companyAdmin/create', [StaffController::class, 'createCompanyAdmin']);
     Route::get('company/all', [CompanyController::class, 'indexAll']);
+    Route::get('staff/companyAdmins', [StaffController::class, 'companyAdmins']);
 });

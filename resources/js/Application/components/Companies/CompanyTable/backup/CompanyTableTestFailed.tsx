@@ -45,7 +45,7 @@ export function CompanyTableTestFailed(): JSX.Element {
         () => {
             getCompanies(page)
                 .then((result) => {
-                    const {data, perPage, lastPage} = result as PaginatedTableFetcher<ICompany[]>;
+                    const {data, perPage, lastPage} = result as PaginatedTableFetcher<ICompany>;
                     setRows(data);
                     setPageCount(lastPage);
                 })

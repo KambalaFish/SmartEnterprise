@@ -2,14 +2,14 @@ import React, {useContext, useEffect, useState} from "react";
 import {Button, Grid, Paper, TextField, Typography} from "@material-ui/core";
 import {Alert, Autocomplete} from "@material-ui/lab";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {ResponseLayout} from "../../../Layout/ResponseLayout/ResponseLayout";
+import {ResponseLayout} from "../../../../Layout/ResponseLayout/ResponseLayout";
 import CompanyAdminCreationForm from "../includes/CompanyAdminCreationForm";
-import {ParagraphHeader} from "../../../Headers/ParagraphHeader/ParagraphHeader";
-import {ICompanyWithId, ResourceCollectionResponse} from "../../../../utils/Interfaces/InterfacesApi";
-import api from "../../../../utils/Api";
+import {ParagraphHeader} from "../../../../Headers/ParagraphHeader/ParagraphHeader";
+import {ICompanyWithId, ResourceCollectionResponse} from "../../../../../utils/Interfaces/InterfacesApi";
+import api from "../../../../../utils/Api";
 import {CircularProgress} from "@material-ui/core";
-import PageHeader from "../../../Headers/PageHeader/PageHeader";
-import FormLayout from "../../../Layout/FormLayout/FormLayout";
+import PageHeader from "../../../../Headers/PageHeader/PageHeader";
+import FormLayout from "../../../../Layout/FormLayout/FormLayout";
 
 function CompanyAdminCreation(): JSX.Element {
     const [selectedCompany, setSelectedCompany] = useState<ICompanyWithId | null>(null);

@@ -112,8 +112,7 @@ export enum UserType {
 
 export interface AuthenticatedUser{
     id: number;
-    firstName: string;
-    lastName: string;
+    name: string;
     phoneNumber: string;
     email: string;
     usertype: UserType;
@@ -127,8 +126,7 @@ export enum UserStatus {
 }
 
 export interface CompanyAdminForm {
-    firstName: string,
-    lastName: string,
+    name: string,
     phoneNumber: string,
     email: string,
     password: string,
@@ -138,12 +136,23 @@ export interface CompanyAdminForm {
 
 export type CompanyAdminRequest = CompanyAdminForm & {companyId: number};
 
-export interface StaffCreationResponse {
-    firstName: string,
-    lastName: string,
+export interface IStaff {
+    name: string,
     phoneNumber: string,
     email: string,
     status: UserStatus,
-    companyId: number,
     usertype: UserType
+    companyId: number,
+}
+
+export interface IStaffWithCompanyName extends IStaff{
+    companyName: string;
+}
+
+export interface ICompanyAdminFilter {
+    name: string;
+    phone: string;
+    email: string;
+    company: string;
+    status: UserStatus;
 }

@@ -3,115 +3,59 @@ import {
     ErrorBody,
     PaginatedTableFetcher,
     PageResponse,
-    ICompany, IDepartment, IRole, ITeam
+    ICompany, IDepartment, IRole, ITeam, IStaffWithCompanyName
 } from "./Interfaces/InterfacesApi";
 import api from "./Api";
 import {ICompanyFilter} from "./Interfaces/InterfacesApi";
+import {result} from "lodash";
 
-export function getCompanies(pageNumber: number, filter?: ICompanyFilter): Promise<PaginatedTableFetcher | ErrorBody> {
+function errorHandler(reason: ApiResponse<ErrorBody>): Promise<ErrorBody>{
+    let {error} = reason.response;
+    error = reason.code ? `HTTP error code: ${reason.code} \nError message: ${error}` : `Error message: ${error}`;
+    return Promise.reject<ErrorBody>({error: error} as ErrorBody);
+}
+
+function confirmationHandler<T>(result: ApiResponse<PageResponse<T[]>|ErrorBody>): PaginatedTableFetcher<T>{
+    const {response} = result as ApiResponse<PageResponse<T[]>>;
+    const {perPage, lastPage} = response.meta;
+    return {
+        data: response.data,
+        perPage: perPage,
+        lastPage: lastPage
+    } as PaginatedTableFetcher<T>;
+}
+
+export function getCompanies(pageNumber: number, filter?: ICompanyFilter): Promise<PaginatedTableFetcher<ICompany> | ErrorBody> {
     return api()
         .getPaginatedCompaniesOld(pageNumber, filter)
-        .then((res) => {
-            const {response} = res as ApiResponse<PageResponse<ICompany[]>>;
-            return {
-                data: response.data,
-                perPage: response.meta.perPage,
-                lastPage: response.meta.lastPage
-            } as PaginatedTableFetcher;
-        })
-        .catch((reason: ApiResponse<ErrorBody>) => {
-            let {error} = reason.response;
-            error = reason.code ? `HTTP error code: ${reason.code} \nError message: ${error}` : `Error message: ${error}`;
-            return Promise.reject({error: error} as ErrorBody);
-        });
+        .then((res) => confirmationHandler(res))
+        .catch(errorHandler);
 }
 
-export function getCompanyDepartments(companyId: number, pageNumber: number): Promise<PaginatedTableFetcher | ErrorBody> {
+export function getCompanyDepartments(companyId: number, pageNumber: number): Promise<PaginatedTableFetcher<IDepartment> | ErrorBody> {
     return api()
         .getPaginatedCompanyDepartments(companyId, pageNumber)
-        .then((res) => {
-            const {response} = res as ApiResponse<PageResponse<IDepartment[]>>;
-            return {
-                data: response.data,
-                perPage: response.meta.perPage,
-                lastPage: response.meta.lastPage
-            } as PaginatedTableFetcher;
-        })
-        .catch((reason: ApiResponse<ErrorBody>) => {
-            let {error} = reason.response;
-            error = reason.code ? `HTTP error code: ${reason.code} \nError message: ${error}` : `Error message: ${error}`;
-            return Promise.reject({error: error} as ErrorBody);
-        });
+        .then((res) => confirmationHandler(res))
+        .catch(errorHandler);
 }
 
-export function getCompanyRoles(companyId: number, pageNumber: number): Promise<PaginatedTableFetcher | ErrorBody> {
+export function getCompanyRoles(companyId: number, pageNumber: number): Promise<PaginatedTableFetcher<IRole> | ErrorBody> {
     return api()
         .getPaginatedCompanyRoles(companyId, pageNumber)
-        .then((res) => {
-            const {response} = res as ApiResponse<PageResponse<IRole[]>>;
-            return {
-                data: response.data,
-                perPage: response.meta.perPage,
-                lastPage: response.meta.lastPage
-            } as PaginatedTableFetcher;
-        })
-        .catch((reason: ApiResponse<ErrorBody>) => {
-            let {error} = reason.response;
-            error = reason.code ? `HTTP error code: ${reason.code} \nError message: ${error}` : `Error message: ${error}`;
-            return Promise.reject({error: error} as ErrorBody);
-        });
+        .then((res) => confirmationHandler(res))
+        .catch(errorHandler);
 }
 
-export function getCompanyTeams(companyId: number, pageNumber: number): Promise<PaginatedTableFetcher | ErrorBody> {
+export function getCompanyTeams(companyId: number, pageNumber: number): Promise<PaginatedTableFetcher<ITeam> | ErrorBody> {
     return api()
         .getPaginatedCompanyTeams(companyId, pageNumber)
-        .then((res) => {
-            const {response} = res as ApiResponse<PageResponse<ITeam[]>>;
-            return {
-                data: response.data,
-                perPage: response.meta.perPage,
-                lastPage: response.meta.lastPage
-            } as PaginatedTableFetcher;
-        })
-        .catch((reason: ApiResponse<ErrorBody>) => {
-            let {error} = reason.response;
-            error = reason.code ? `HTTP error code: ${reason.code} \nError message: ${error}` : `Error message: ${error}`;
-            return Promise.reject({error: error} as ErrorBody);
-        });
+        .then((res) => confirmationHandler(res))
+        .catch(errorHandler);
 }
 
-// export function getCompanies(pageNumber: number, filter?: ICompanyFilter): Promise<PaginatedTableFetcher<ICompany[]> | ErrorBody> {
-//     return api()
-//         .getPaginatedCompanies(pageNumber, filter)
-//         .then((res) => {
-//             const {response} = res as ApiResponse<PageResponse<ICompany[]>>;
-//             return {
-//                 data: response.data,
-//                 perPage: response.meta.perPage,
-//                 lastPage: response.meta.lastPage
-//             } as PaginatedTableFetcher<ICompany[]>;
-//         })
-//         .catch( (reason: ApiResponse<ErrorBody>) => {
-//             let {error} = reason.response;
-//             error = reason.code? `HTTP error code: ${reason.code} \nError message: ${error}`: `Error message: ${error}`;
-//             return Promise.reject({error: error} as ErrorBody);
-//         });
-// }
-//
-// export function getCompanyDepartments(companyId: number, pageNumber: number): Promise<PaginatedTableFetcher<IDepartment[]> | ErrorBody> {
-//     return api()
-//         .getPaginatedCompanyDepartments(companyId, pageNumber)
-//         .then((res) => {
-//             const {response} = res as ApiResponse<PageResponse<IDepartment[]>>;
-//             return {
-//                 data: response.data,
-//                 perPage: response.meta.perPage,
-//                 lastPage: response.meta.lastPage
-//             } as PaginatedTableFetcher<IDepartment[]>;
-//         })
-//         .catch( (reason: ApiResponse<ErrorBody>) => {
-//             let {error} = reason.response;
-//             error = reason.code? `HTTP error code: ${reason.code} \nError message: ${error}`: `Error message: ${error}`;
-//             return Promise.reject({error: error} as ErrorBody);
-//         });
-// }
+export function getCompanyAdmins(pageNumber: number): Promise<PaginatedTableFetcher<IStaffWithCompanyName> | ErrorBody> {
+    return api()
+        .getPaginatedCompanyAdmins(pageNumber)
+        .then((res) => confirmationHandler(res))
+        .catch(errorHandler);
+}

@@ -1,4 +1,4 @@
-import {ErrorBody, ICompanyCreation, PaginatedTableFetcher} from "./InterfacesApi";
+import {ErrorBody, ICompanyAdminFilter, ICompanyCreation, PaginatedTableFetcher} from "./InterfacesApi";
 import {Control, FieldErrors, SubmitHandler, UseFormRegister} from "react-hook-form";
 import {Action} from "./ComponentInterfaces";
 import {ICompanyFilter} from "./InterfacesApi";
@@ -98,4 +98,14 @@ export interface CompanyAdminCreationFormProps {
     alert: string|null;
     setSuccess: React.Dispatch<React.SetStateAction<string | null>>;
     companyId: number|undefined;
+}
+
+export interface FilterProps<T = unknown> {
+    setFilter: React.Dispatch<React.SetStateAction<T>>;
+    companyFilter: T;
+}
+
+export interface CompanyAdminFilterProps{
+    setFilter: React.Dispatch<React.SetStateAction<ICompanyAdminFilter>>;
+    filter: ICompanyAdminFilter;
 }

@@ -77,6 +77,11 @@ export default function NavBar(): JSX.Element {
         handleStaffMenuClose();
     }
 
+    const onAllCompanyAdmins = () => {
+        history.push(spaPaths.allCompanyAdmins);
+        handleStaffMenuClose();
+    }
+
     return (
         <div className={classes.root}>
             <AppBar position="static" style={{margin: 0}}>
@@ -96,6 +101,7 @@ export default function NavBar(): JSX.Element {
                             onClose={handleStaffMenuClose}
                         >
                             <MenuItem onClick={onCompanyAdminCreation}>Create company admin</MenuItem>
+                            <MenuItem onClick={onAllCompanyAdmins}>All administrators</MenuItem>
                         </CustomMenu>
                         <Chip
                             label={"Company"}

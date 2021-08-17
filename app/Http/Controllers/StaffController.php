@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCompanyAdminRequest;
 use App\Http\Resources\StaffResource;
+use App\Http\Resources\StaffResourceCollection;
+use App\Http\Resources\StaffResourceCollectionWithCompanyName;
 use App\Models\Staff;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,8 +18,7 @@ class StaffController extends Controller
             return response('password and password confirmation don`t match', 422);
         try {
             $companyAdmin = Staff::create([
-                'firstName' => $request->input('firstName'),
-                'lastName' => $request->input('lastName'),
+                'name' => $request->input('name'),
                 'phoneNumber' => $request->input('phoneNumber'),
                 'email' => $request->input('email'),
                 'status' => $request->input('status'),
@@ -32,5 +33,9 @@ class StaffController extends Controller
                 return response(['message' => 'Company admin entity with '.$request->input('email').' email already exists'], 500);
             throw $e;
         }
+    }
+
+    public function companyAdmins(){
+        return StaffResourceCollectionWithCompanyName::make(Staff::where(['usertype' => 'companyAdmin'])->paginate(5));
     }
 }

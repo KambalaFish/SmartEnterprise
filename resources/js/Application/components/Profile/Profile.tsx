@@ -20,7 +20,7 @@ export default function Profile(): JSX.Element {
 
     return <Grid container direction={'column'} justifyContent={'center'} alignItems={'flex-start'} spacing={1}>
         <Grid item xs={4}>ID: {user.id}</Grid>
-        <Grid item xs={4}>Name: {`${user.firstName} ${user.lastName}`}</Grid>
+        <Grid item xs={4}>Name: {`${user.name}`}</Grid>
         <Grid item xs={4}>Phone: {user.phoneNumber}</Grid>
         <Grid item xs={4}>Email: {user.email}</Grid>
         {usertype &&

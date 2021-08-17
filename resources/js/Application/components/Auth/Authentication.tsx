@@ -6,8 +6,7 @@ import {useProvideAuthType} from "../../utils/Interfaces/ComponentInterfaces";
 
 const unauthenticatedUser: AuthenticatedUser = {
     id: -1,
-    firstName: 'init',
-    lastName: 'init',
+    name: 'init',
     phoneNumber: 'initphone',
     email: 'init@init.init',
     usertype: UserType.Unauthenticated,

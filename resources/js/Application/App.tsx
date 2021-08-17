@@ -13,8 +13,9 @@ import PrivateRoute from "./utils/CustomRoutes/PrivateRoute";
 import {ProvideAuth} from "./components/Auth/Authentication";
 import UnloggedRoute from "./utils/CustomRoutes/UnloggedRoute";
 import Profile from "./components/Profile/Profile";
-import CompanyAdminCreation from "./components/Staff/CompanyAdmin/CompanyAdminCreation/CompanyAdminCreation";
-import SelectedCompanyAdminCreation from "./components/Staff/CompanyAdmin/SelectedCompanyAdminCreation/SelectedCompanyAdminCreation";
+import CompanyAdminCreation from "./components/Staff/CompanyAdmin/Creation/CompanyAdminCreation/CompanyAdminCreation";
+import SelectedCompanyAdminCreation from "./components/Staff/CompanyAdmin/Creation/SelectedCompanyAdminCreation/SelectedCompanyAdminCreation";
+import CompanyAdminTable from "./components/Staff/CompanyAdmin/CompanyAdminTable/CompanyAdminTable";
 
 function App(): JSX.Element {
     return (
@@ -30,6 +31,7 @@ function App(): JSX.Element {
                     <PrivateRoute exact path={spaPaths.profile} component={Profile}/>
                     <PrivateRoute exact path={spaPaths.companyAdminCreation} component={CompanyAdminCreation}/>
                     <PrivateRoute exact path={spaPaths.selectedCompanyAdminCreationPath} component={SelectedCompanyAdminCreation}/>
+                    <PrivateRoute exact path={spaPaths.allCompanyAdmins} component={CompanyAdminTable}/>
                     <PrivateRoute exact path={[spaPaths.home, '/']} component={Home}/>
                 </MainLayout>
             </Switch>
@@ -37,7 +39,6 @@ function App(): JSX.Element {
     );
 }
 
-//logout after receiving 401 unautharized, interceptor
 export default App;
 
 // cntrl+a, cntrl+alt+l

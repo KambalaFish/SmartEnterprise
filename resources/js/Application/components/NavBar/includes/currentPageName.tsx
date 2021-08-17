@@ -6,6 +6,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import CreateIcon from '@material-ui/icons/Create';
 import InfoIcon from '@material-ui/icons/Info';
+import {AccountBox, SupervisorAccount} from "@material-ui/icons";
 
 export function getCurrentPageIdentifier(pathname: string): JSX.Element{
     let currentPageName;
@@ -30,6 +31,10 @@ export function getCurrentPageIdentifier(pathname: string): JSX.Element{
         case spaPaths.companyAdminCreation:
             currentPageName = 'Company admin creation';
             icon = <CreateIcon/>;
+            break;
+        case spaPaths.allCompanyAdmins:
+            currentPageName = 'Company administrators';
+            icon = <SupervisorAccount/>
             break;
         default:
             currentPageName = 'default'

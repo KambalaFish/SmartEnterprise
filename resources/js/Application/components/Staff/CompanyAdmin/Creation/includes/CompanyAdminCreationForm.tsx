@@ -1,15 +1,15 @@
 import React, {useState} from "react";
 import {Button, Grid, IconButton, InputAdornment, MenuItem, TextField} from "@material-ui/core";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {ErrorBody, StaffCreationResponse, UserStatus} from "../../../../utils/Interfaces/InterfacesApi";
+import {ErrorBody, IStaff, UserStatus} from "../../../../../utils/Interfaces/InterfacesApi";
 import {Controller} from "react-hook-form";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {companyAdminFormValidationSchema} from "../../../../utils/ValidationSchemas/CompanyAdminValidations/companyAdminFormValidationSchema";
-import {CompanyAdminForm} from "../../../../utils/Interfaces/InterfacesApi";
-import {CompanyAdminCreationFormProps} from "../../../../utils/Interfaces/PropsInterfaces";
-import api from "../../../../utils/Api";
-import {ParagraphHeader} from "../../../Headers/ParagraphHeader/ParagraphHeader";
+import {companyAdminFormValidationSchema} from "../../../../../utils/ValidationSchemas/CompanyAdminValidations/companyAdminFormValidationSchema";
+import {CompanyAdminForm} from "../../../../../utils/Interfaces/InterfacesApi";
+import {CompanyAdminCreationFormProps} from "../../../../../utils/Interfaces/PropsInterfaces";
+import api from "../../../../../utils/Api";
+import {ParagraphHeader} from "../../../../Headers/ParagraphHeader/ParagraphHeader";
 function CompanyAdminCreationForm({alert, setAlert, setSuccess, companyId}: CompanyAdminCreationFormProps): JSX.Element {
 
     const {handleSubmit, control, register, formState: {errors}} = useForm<CompanyAdminForm>({
@@ -44,7 +44,7 @@ function CompanyAdminCreationForm({alert, setAlert, setSuccess, companyId}: Comp
             .then(({code, response}) => {
                 console.log('code: ', code,' response: ', response);
                 if (code==200){
-                    setSuccess(`Company admin with ${(response as StaffCreationResponse).email} email was created successfully`);
+                    setSuccess(`Company admin with ${(response as IStaff).email} email was created successfully`);
                 } else {
                     setAlert((response as ErrorBody).error);
                 }
@@ -62,33 +62,19 @@ function CompanyAdminCreationForm({alert, setAlert, setSuccess, companyId}: Comp
                 <Grid item xs={5}>
                     <TextField
                         defaultValue={""}
-                        {...register('firstName')}
+                        {...register('name')}
                         fullWidth
-                        label={'First name'}
-                        placeholder={'Type first name'}
+                        label={'Name'}
+                        placeholder={'Type name'}
                         margin={'normal'}
                         InputLabelProps={{shrink: true}}
-                        helperText={errors.firstName?.message}
-                        error={!!errors.firstName}
+                        helperText={errors.name?.message}
+                        error={!!errors.name}
                         variant="outlined"
                         size={'small'}
                     />
                 </Grid>
-                <Grid item xs={5}>
-                    <TextField
-                        defaultValue={""}
-                        {...register('lastName')}
-                        fullWidth
-                        label={'Last name'}
-                        placeholder={'Type last name'}
-                        margin={'normal'}
-                        InputLabelProps={{shrink: true}}
-                        helperText={errors.lastName?.message}
-                        error={!!errors.lastName}
-                        variant="outlined"
-                        size={'small'}
-                    />
-                </Grid>
+                <Grid item xs={5}/>
             </Grid>
             <Grid item xs={12} container direction={'row'} spacing={2} justifyContent={'center'}>
                 <Grid item xs={5}>
@@ -117,7 +103,7 @@ function CompanyAdminCreationForm({alert, setAlert, setSuccess, companyId}: Comp
                                     {...field}
                                     fullWidth
                                     select
-                                    label="Select status"
+                                    label="Status"
                                     margin={'normal'}
                                     helperText="Please select status"
                                     variant="outlined"

@@ -24,8 +24,7 @@ class StaffFactory extends Factory
     {
         $email = $this->faker->email;
         return [
-            'firstName' => $this->faker->firstName,
-            'lastName' => $this->faker->lastName,
+            'name' => $this->faker->lastName,
             'phoneNumber' => $this->faker->phoneNumber,
             'email' => $email,
             'status' => $this->faker->randomElement(['works', 'on_vacation', 'illness']),

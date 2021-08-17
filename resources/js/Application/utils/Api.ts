@@ -1,11 +1,20 @@
 import {apiPaths} from "./utils";
 import {
-    ApiResponse, AuthenticatedUser, CompanyAdminForm, CompanyAdminRequest,
+    ApiResponse,
+    AuthenticatedUser,
+    CompanyAdminRequest,
     ContactResponse,
     Credentials,
     ErrorBody,
     ICompany,
-    ICompanyCreation, ICompanyWithId, IDepartment, IRole, ITeam, ResourceCollectionResponse, StaffCreationResponse,
+    ICompanyCreation,
+    ICompanyWithId,
+    IDepartment,
+    IRole,
+    ITeam,
+    ResourceCollectionResponse,
+    IStaff,
+    IStaffWithCompanyName, ICompanyAdminFilter,
 } from "./Interfaces/InterfacesApi";
 import {PageResponse} from "./Interfaces/InterfacesApi";
 import {ICompanyFilter} from "./Interfaces/InterfacesApi";
@@ -15,7 +24,6 @@ import {apiInstance, instance} from "./Instances";
 interface ClientApi {
     login(credentials: Credentials) : Promise<ApiResponse<AuthenticatedUser|ErrorBody>>;
     logout(): Promise<ApiResponse<never|ErrorBody>>;
-    // createCompany(company: ICompanyCreation): Promise<ApiResponse<string|ErrorBody>>;
     createCompany(company: ICompanyCreation): Promise<ApiResponse<ICompanyWithId|ErrorBody>>;
     updateCompany(id: number, company: ICompanyCreation): Promise<ApiResponse<ICompanyWithId|ErrorBody>>;
     getPaginatedCompaniesOld(pageNumber: number, filter?: ICompanyFilter): Promise<ApiResponse<PageResponse<ICompany[]> | ErrorBody>>;
@@ -28,8 +36,9 @@ interface ClientApi {
     getPaginatedCompanyDepartments(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<IDepartment[]> | ErrorBody>>;
     getPaginatedCompanyRoles(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<IRole[]> | ErrorBody>>;
     getPaginatedCompanyTeams(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<ITeam[]> | ErrorBody>>;
-    createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<StaffCreationResponse|ErrorBody>>;
     getAllCompanies(): Promise<ApiResponse<ResourceCollectionResponse<ICompanyWithId[]>|ErrorBody>>;
+    createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<IStaff|ErrorBody>>;
+    getPaginatedCompanyAdmins(pageNumber: number, filter?: ICompanyAdminFilter): Promise<ApiResponse<PageResponse<IStaffWithCompanyName[]>|ErrorBody>>;
 }
 
 class ClientApiImpl implements ClientApi {
@@ -178,9 +187,9 @@ class ClientApiImpl implements ClientApi {
             .catch(errorHandler);
     }
 
-    createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<StaffCreationResponse|ErrorBody>>{
+    createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<IStaff|ErrorBody>>{
         return apiInstance
-            .post<StaffCreationResponse>(apiPaths.createCompanyAdmin, admin)
+            .post<IStaff>(apiPaths.createCompanyAdmin, admin)
             .then(confirmationHandler)
             .catch(errorHandler);
     }
@@ -188,6 +197,21 @@ class ClientApiImpl implements ClientApi {
     getAllCompanies(): Promise<ApiResponse<ResourceCollectionResponse<ICompanyWithId[]>|ErrorBody>>{
         return apiInstance
             .get<ResourceCollectionResponse<ICompanyWithId[]>>(apiPaths.getAllCompanies)
+            .then(confirmationHandler)
+            .catch(errorHandler);
+    }
+
+    getPaginatedCompanyAdmins(pageNumber: number, filter?: ICompanyAdminFilter): Promise<ApiResponse<PageResponse<IStaffWithCompanyName[]>|ErrorBody>>{
+        return apiInstance
+            .get<PageResponse<IStaffWithCompanyName[]>>(apiPaths.getPaginatedCompanyAdmins, {
+                params: {
+                    page: pageNumber,
+                    name: filter?.name,
+                    phone: filter?.name,
+                    email: filter?.email,
+                    status: filter?.status
+                }
+            })
             .then(confirmationHandler)
             .catch(errorHandler);
     }
