@@ -56,7 +56,7 @@ export default function SignIn(): JSX.Element {
             <Alert variant={'filled'} severity={'error'} onClose={() => setBackendErrorAlert(null)}>{backendErrorAlert}</Alert>
             }
             <Grid container direction={'row'} component="main" className={classes.root}>
-                <Grid item sm={6} md={9} className={classes.paper}/>
+                <Grid item sm={6} md={9} className={classes.image}/>
                 <Grid item xs={12} sm={6} md={3} component={Paper} elevation={24} square={false}>
                     <div className={classes.paper}>
                         <Avatar className={classes.avatar}>

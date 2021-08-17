@@ -15,7 +15,7 @@ instance.interceptors.response.use(function (response){return response}, functio
     const originalConfig = error.config;
     // console.log('config: ', originalConfig);
     // console.log('url: ', originalConfig.url);
-    if (originalConfig.url != '/api/login' && error.response){
+    if (originalConfig.url != '/login' && error.response){
         if(error.response.status === 401 && !originalConfig._retry){
             originalConfig._retry = true;
             removeUserFromLocalStorage();
@@ -31,7 +31,7 @@ apiInstance.interceptors.response.use(function (response){return response}, func
     const originalConfig = error.config;
     // console.log('config: ', originalConfig);
     // console.log('url: ', originalConfig.url);
-    if (originalConfig.url != '/api/login' && error.response){
+    if (originalConfig.url != '/login' && error.response){
         if(error.response.status === 401 && !originalConfig._retry){
             originalConfig._retry = true;
             removeUserFromLocalStorage();

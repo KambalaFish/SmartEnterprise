@@ -4,6 +4,16 @@ export const useStyles = makeStyles((theme) => ({
     root: {
         height: '100vh',
     },
+    image: {
+        //backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundImage: 'url(/images/factory.jpg)',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        display: 'flex',
+        backgroundColor:
+            theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+    },
     paper: {
         margin: theme.spacing(8, 4),
         display: 'flex',
