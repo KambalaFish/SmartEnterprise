@@ -1,7 +1,7 @@
 import React from "react";
 import {Divider, Grid, Typography} from "@material-ui/core";
 import useStyles from "./includes/styles";
-import {HeaderProps} from "../../../utils/Interfaces/PropsInterfaces";
+import {HeaderProps} from "../../../../utils/Interfaces/PropsInterfaces";
 
 export function ParagraphHeader({headerText}: HeaderProps): JSX.Element{
     const classes = useStyles();

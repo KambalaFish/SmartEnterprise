@@ -104,8 +104,3 @@ export interface FilterProps<T = unknown> {
     setFilter: React.Dispatch<React.SetStateAction<T>>;
     companyFilter: T;
 }
-
-export interface CompanyAdminFilterProps{
-    setFilter: React.Dispatch<React.SetStateAction<ICompanyAdminFilter>>;
-    filter: ICompanyAdminFilter;
-}

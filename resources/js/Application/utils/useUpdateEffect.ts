@@ -1,6 +1,6 @@
 import {useEffect, useRef} from "react";
 
-export default function useUpdateEffect(effect: () => void, dependencies: any[] = []) {
+export default function useUpdateEffect(effect: () => void, dependencies: any[] = []): void {
     const isInitialMount = useRef(true);
 
     useEffect(() => {

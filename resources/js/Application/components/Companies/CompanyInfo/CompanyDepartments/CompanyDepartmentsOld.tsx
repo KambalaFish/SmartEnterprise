@@ -4,8 +4,8 @@ import {ErrorBody, PaginatedTableFetcher} from "../../../../utils/Interfaces/Int
 import {getCompanyDepartments} from "../../../../utils/FetchFunctions";
 import ReactDOM from "react-dom";
 import {Column} from "../../../../utils/Interfaces/PropsInterfaces";
-import {PaginatedTable} from "../../../PaginatedTable/PaginatedTable";
-import {CustomPagination} from "../../../PaginatedTable/CustomPagination/CustomPagination";
+import {PaginatedTable} from "../../../Reusable/Tables/PaginatedTable/PaginatedTable";
+import {CustomPagination} from "../../../Reusable/Tables/PaginatedTable/CustomPagination/CustomPagination";
 
 interface CompanyDepartmentsProps{
     id: number;

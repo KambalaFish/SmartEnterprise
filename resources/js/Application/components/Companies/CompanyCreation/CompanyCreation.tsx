@@ -8,8 +8,8 @@ import api from '../../../utils/Api';
 import {CompanyForm} from "./includes/CompanyForm";
 import {useAppDispatch} from "../../../redux/reduxHooks";
 import {removeLastPage} from "../../../redux/slices/companyTableSlice";
-import PageHeader from "../../Headers/PageHeader/PageHeader";
-import FormLayout from "../../Layout/FormLayout/FormLayout";
+import PageHeader from "../../Reusable/Headers/PageHeader/PageHeader";
+import FormLayout from "../../Reusable/Layout/FormLayout/FormLayout";
 
 export function CompanyCreation(): JSX.Element{
     const {handleSubmit, control, formState: {errors} } = useForm<ICompanyCreation>({

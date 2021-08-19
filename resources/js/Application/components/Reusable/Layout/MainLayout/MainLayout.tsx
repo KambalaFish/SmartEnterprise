@@ -1,6 +1,6 @@
 import React from "react";
 import {Grid} from "@material-ui/core";
-import NavBar from "../../NavBar/NavBar";
+import NavBar from "../../../NavBar/NavBar";
 import {makeStyles} from "@material-ui/core/styles";
 
 export function MainLayout({children, ...props}: {children: JSX.Element[]}): JSX.Element{

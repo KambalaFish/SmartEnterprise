@@ -9,7 +9,7 @@ import {companyAdminFormValidationSchema} from "../../../../../utils/ValidationS
 import {CompanyAdminForm} from "../../../../../utils/Interfaces/InterfacesApi";
 import {CompanyAdminCreationFormProps} from "../../../../../utils/Interfaces/PropsInterfaces";
 import api from "../../../../../utils/Api";
-import {ParagraphHeader} from "../../../../Headers/ParagraphHeader/ParagraphHeader";
+import {ParagraphHeader} from "../../../../Reusable/Headers/ParagraphHeader/ParagraphHeader";
 function CompanyAdminCreationForm({alert, setAlert, setSuccess, companyId}: CompanyAdminCreationFormProps): JSX.Element {
 
     const {handleSubmit, control, register, formState: {errors}} = useForm<CompanyAdminForm>({

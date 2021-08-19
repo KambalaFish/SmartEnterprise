@@ -8,7 +8,7 @@ import {spaPaths} from "../../../../utils/utils";
 import api from "../../../../utils/Api";
 import MenuItem from "@material-ui/core/MenuItem";
 import {ClickableButton} from "../../../../utils/Interfaces/ComponentInterfaces";
-import {AdvancedReusableTable} from "../../../ReusableTable/AdvancedReusableTable";
+import {AdvancedReusableTable} from "../../../Reusable/Tables/ReusableTable/AdvancedReusableTable";
 import {ICompanyFilter} from "../../../../utils/Interfaces/InterfacesApi";
 import {useAppDispatch, useAppSelector} from "../../../../redux/reduxHooks";
 import {initializeFilter} from "../../../../redux/slices/filterSlice";

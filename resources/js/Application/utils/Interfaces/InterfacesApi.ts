@@ -137,6 +137,7 @@ export interface CompanyAdminForm {
 export type CompanyAdminRequest = CompanyAdminForm & {companyId: number};
 
 export interface IStaff {
+    id: number;
     name: string,
     phoneNumber: string,
     email: string,
@@ -151,8 +152,8 @@ export interface IStaffWithCompanyName extends IStaff{
 
 export interface ICompanyAdminFilter {
     name: string;
-    phone: string;
+    phoneNumber: string;
     email: string;
-    company: string;
-    status: UserStatus;
+    companyId: number|null;
+    status: UserStatus|'any';
 }

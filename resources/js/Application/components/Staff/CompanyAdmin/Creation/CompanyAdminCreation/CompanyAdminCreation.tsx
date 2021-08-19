@@ -2,14 +2,15 @@ import React, {useContext, useEffect, useState} from "react";
 import {Button, Grid, Paper, TextField, Typography} from "@material-ui/core";
 import {Alert, Autocomplete} from "@material-ui/lab";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {ResponseLayout} from "../../../../Layout/ResponseLayout/ResponseLayout";
+import {ResponseLayout} from "../../../../Reusable/Layout/ResponseLayout/ResponseLayout";
 import CompanyAdminCreationForm from "../includes/CompanyAdminCreationForm";
-import {ParagraphHeader} from "../../../../Headers/ParagraphHeader/ParagraphHeader";
+import {ParagraphHeader} from "../../../../Reusable/Headers/ParagraphHeader/ParagraphHeader";
 import {ICompanyWithId, ResourceCollectionResponse} from "../../../../../utils/Interfaces/InterfacesApi";
 import api from "../../../../../utils/Api";
 import {CircularProgress} from "@material-ui/core";
-import PageHeader from "../../../../Headers/PageHeader/PageHeader";
-import FormLayout from "../../../../Layout/FormLayout/FormLayout";
+import PageHeader from "../../../../Reusable/Headers/PageHeader/PageHeader";
+import FormLayout from "../../../../Reusable/Layout/FormLayout/FormLayout";
+import CustomAutocomplete from "../../../../Reusable/CustomAutocomplete/CustomAutocomplete";
 
 function CompanyAdminCreation(): JSX.Element {
     const [selectedCompany, setSelectedCompany] = useState<ICompanyWithId | null>(null);
@@ -24,7 +25,6 @@ function CompanyAdminCreation(): JSX.Element {
             .getAllCompanies()
             .then((result) => {
                 const {response, code} = result;
-                console.log('response: ', result);
                 if (code==200){
                     setCompanies((response as ResourceCollectionResponse<ICompanyWithId[]>).data);
                 } else
@@ -36,6 +36,7 @@ function CompanyAdminCreation(): JSX.Element {
             })
         setLoading(false);
     }, []);
+
     function onAlertClose(){
         setAlert(null);
     }
@@ -71,37 +72,13 @@ function CompanyAdminCreation(): JSX.Element {
                             <ParagraphHeader headerText={'Choose company'}/>
                             <Grid item xs={12} container direction={'row'} spacing={2} justifyContent={'center'}>
                                 <Grid item xs={5}>
-                                    <Autocomplete
+                                    <CustomAutocomplete
                                         value={selectedCompany}
-                                        onChange={
-                                            (event: any, newValue) => {
-                                                setSelectedCompany(newValue);
-                                            }
-                                        }
+                                        setValue={setSelectedCompany}
                                         options={companies}
+                                        getOption={(option) => option.name}
+                                        label={'Company'}
                                         loading={loading}
-                                        size={'small'}
-                                        getOptionLabel={option => option.name}
-                                        renderInput={
-                                            (params) =>
-                                                <TextField
-                                                    {...params}
-                                                    margin={'normal'}
-                                                    InputLabelProps={{shrink: true}}
-                                                    fullWidth
-                                                    label={'Company'}
-                                                    variant={'outlined'}
-                                                    InputProps={{
-                                                        ...params.InputProps,
-                                                        endAdornment: (
-                                                            <React.Fragment>
-                                                                {loading ? <CircularProgress color="inherit" size={20}/> : null}
-                                                                {params.InputProps.endAdornment}
-                                                            </React.Fragment>
-                                                        ),
-                                                    }}
-                                                />
-                                        }
                                     />
                                 </Grid>
                                 <Grid item xs={5}/>

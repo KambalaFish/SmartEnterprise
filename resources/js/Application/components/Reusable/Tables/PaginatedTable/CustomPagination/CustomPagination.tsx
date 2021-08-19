@@ -1,7 +1,7 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
 import {useStyles, styleProps} from "./includes/styles";
-import {CustomPaginationProps} from "../../../utils/Interfaces/PropsInterfaces";
+import {CustomPaginationProps} from "../../../../../utils/Interfaces/PropsInterfaces";
 
 export function CustomPagination({pageCount, currentPage, setPageNumber}: CustomPaginationProps): JSX.Element{
     const classes = useStyles(styleProps);

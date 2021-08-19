@@ -3,7 +3,7 @@ import {RouteComponentProps} from 'react-router-dom';
 import {Grid, CircularProgress, Paper} from "@material-ui/core";
 import {Contact, ICompany, ICompanyCreation} from "../../../utils/Interfaces/InterfacesApi";
 import api from "../../../utils/Api";
-import PageHeader from "../../Headers/PageHeader/PageHeader";
+import PageHeader from "../../Reusable/Headers/PageHeader/PageHeader";
 import CompanyUpdateForm from "./includes/CompanyUpdateForm";
 
 export function CompanyUpdate({match, location, history}: RouteComponentProps<Record<'id', string>>): JSX.Element {

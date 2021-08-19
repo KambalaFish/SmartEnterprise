@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCompanyRequest;
-use App\Http\Resources\CompanyCollection;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\CompanyResourceCollection;
 use App\Http\Resources\CustomerManagerContactResource;
@@ -13,8 +12,6 @@ use App\Http\Resources\MainAdminContactResource;
 use App\Http\Resources\RoleResourceCollection;
 use App\Http\Resources\TeamResourceCollection;
 use App\Models\Company;
-use App\Models\Contacts\MainAdminContact;
-use App\Models\Department;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller

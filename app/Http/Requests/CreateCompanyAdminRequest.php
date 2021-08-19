@@ -42,8 +42,7 @@ class CreateCompanyAdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstName' => $this->nameValidation(),
-            'lastName' => $this->nameValidation(),
+            'name' => $this->nameValidation(),
             'phoneNumber' => ['required', 'string', 'regex:'.$this->phoneRegEx],
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string', 'regex:'.$this->passwordRegEx],

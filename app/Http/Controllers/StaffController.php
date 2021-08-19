@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCompanyAdminRequest;
 use App\Http\Resources\StaffResource;
-use App\Http\Resources\StaffResourceCollection;
 use App\Http\Resources\StaffResourceCollectionWithCompanyName;
+use App\Models\Company;
 use App\Models\Staff;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class StaffController extends Controller
@@ -35,7 +36,19 @@ class StaffController extends Controller
         }
     }
 
-    public function companyAdmins(){
-        return StaffResourceCollectionWithCompanyName::make(Staff::where(['usertype' => 'companyAdmin'])->paginate(5));
+    public function companyAdmins(Request $request){
+        $queryRaw = json_decode(json_encode($request->query()));
+        if (isset($queryRaw->status)){
+            if ($queryRaw->status=='any')
+                $queryRaw->status='';
+        }
+        unset($queryRaw->page);
+        $query = array('usertype' => 'companyAdmin');
+        foreach ($queryRaw as $key => $value){
+            if ($value){
+                array_push($query, [$key, $value]);
+            }
+        }
+        return StaffResourceCollectionWithCompanyName::make(Staff::where($query)->paginate(5));
     }
 }

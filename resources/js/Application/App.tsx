@@ -3,7 +3,7 @@ import {CssBaseline} from "@material-ui/core";
 import {Switch} from 'react-router-dom';
 import SignIn from "./components/Auth/SignIn/SignIn";
 import {spaPaths} from "./utils/utils";
-import {MainLayout} from "./components/Layout/MainLayout/MainLayout";
+import {MainLayout} from "./components/Reusable/Layout/MainLayout/MainLayout";
 import Home from "./components/Home/Home";
 import {CompanyCreation} from "./components/Companies/CompanyCreation/CompanyCreation";
 import {CompanyUpdate} from "./components/Companies/CompanyUpdate/CompanyUpdate";

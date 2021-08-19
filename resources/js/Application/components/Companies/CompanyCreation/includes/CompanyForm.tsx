@@ -4,7 +4,7 @@ import {
     Grid,
     TextField
 } from "@material-ui/core";
-import {ParagraphHeader} from "../../../Headers/ParagraphHeader/ParagraphHeader";
+import {ParagraphHeader} from "../../../Reusable/Headers/ParagraphHeader/ParagraphHeader";
 import {Controller} from "react-hook-form";
 import {Contact} from "./Contact";
 import {useStyles} from "./styles";

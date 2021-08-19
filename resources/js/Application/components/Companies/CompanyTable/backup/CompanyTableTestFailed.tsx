@@ -7,7 +7,7 @@ import {
 import {useEffect, useState} from "react";
 import {getCompanies} from "../../../../utils/FetchFunctions";
 import {ICompany, PaginatedTableFetcher} from "../../../../utils/Interfaces/InterfacesApi";
-import {CustomPagination} from "../../../PaginatedTable/CustomPagination/CustomPagination";
+import {CustomPagination} from "../../../Reusable/Tables/PaginatedTable/CustomPagination/CustomPagination";
 import {bool} from "yup";
 // import { useDemoData, GridData } from '@material-ui/x-grid-data-generator';
 

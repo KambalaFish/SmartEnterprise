@@ -207,9 +207,10 @@ class ClientApiImpl implements ClientApi {
                 params: {
                     page: pageNumber,
                     name: filter?.name,
-                    phone: filter?.name,
+                    phoneNumber: filter?.phoneNumber,
                     email: filter?.email,
-                    status: filter?.status
+                    status: filter?.status,
+                    companyId: filter?.companyId
                 }
             })
             .then(confirmationHandler)

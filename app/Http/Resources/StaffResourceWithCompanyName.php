@@ -18,6 +18,7 @@ class StaffResourceWithCompanyName extends JsonResource
         if ($this->status=='on_vacation')
             $status = 'on vacation';
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'phoneNumber' => $this->phoneNumber,
             'email' => $this->email,

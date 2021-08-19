@@ -1,8 +1,8 @@
 import React, {BaseSyntheticEvent, useEffect, useState} from "react";
 import {ICompanyFilter} from "../../../utils/Interfaces/InterfacesApi";
 import {ActionColumn, Column} from "../../../utils/Interfaces/PropsInterfaces";
-import {PaginatedTable} from "../../PaginatedTable/PaginatedTable";
-import {CustomPagination} from "../../PaginatedTable/CustomPagination/CustomPagination";
+import {PaginatedTable} from "../../Reusable/Tables/PaginatedTable/PaginatedTable";
+import {CustomPagination} from "../../Reusable/Tables/PaginatedTable/CustomPagination/CustomPagination";
 import {CircularProgress, FormControl, Select, Typography} from "@material-ui/core";
 import {useAppDispatch, useAppSelector} from "../../../redux/reduxHooks";
 import {

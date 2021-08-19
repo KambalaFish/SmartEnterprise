@@ -1,6 +1,6 @@
 import React from "react";
 import {CompanyForm} from "../../CompanyCreation/includes/CompanyForm";
-import FormLayout from "../../../Layout/FormLayout/FormLayout";
+import FormLayout from "../../../Reusable/Layout/FormLayout/FormLayout";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {ICompanyCreation, ICompanyWithId} from "../../../../utils/Interfaces/InterfacesApi";
 import api from "../../../../utils/Api";

@@ -1,7 +1,7 @@
 import React from "react";
 import {getCompanyDepartments} from "../../../../utils/FetchFunctions";
 import {ErrorBody, PaginatedTableFetcher} from "../../../../utils/Interfaces/InterfacesApi";
-import {ReusableTable} from "../../../ReusableTable/ReusableTable";
+import {ReusableTable} from "../../../Reusable/Tables/ReusableTable/ReusableTable";
 import {Column} from "../../../../utils/Interfaces/PropsInterfaces";
 
 interface CompanyDepartmentsTestProps{

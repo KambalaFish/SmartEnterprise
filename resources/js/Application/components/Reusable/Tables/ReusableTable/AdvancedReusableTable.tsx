@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {ErrorBody, PaginatedTableFetcher} from "../../utils/Interfaces/InterfacesApi";
+import {ErrorBody, PaginatedTableFetcher} from "../../../../utils/Interfaces/InterfacesApi";
 import ReactDOM from "react-dom";
-import {ActionColumn, Column} from "../../utils/Interfaces/PropsInterfaces";
+import {ActionColumn, Column} from "../../../../utils/Interfaces/PropsInterfaces";
 import {PaginatedTable} from "../PaginatedTable/PaginatedTable";
 import {CustomPagination} from "../PaginatedTable/CustomPagination/CustomPagination";
 import {CircularProgress} from "@material-ui/core";

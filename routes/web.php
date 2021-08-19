@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -93,6 +93,6 @@ Route::get('/api/tap', function (){
 
 });
 
-Route::fallback(function (){
-    return 'This is fallback page. Input correct URL!';
+Route::fallback(function (Request $request){
+    return response(['message' => $request->fullUrl().' requested resource was not found'], 404);
 });
