@@ -8,9 +8,9 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {companyAdminFormValidationSchema} from "../../../../../utils/ValidationSchemas/CompanyAdminValidations/companyAdminFormValidationSchema";
 import {CompanyAdminForm} from "../../../../../utils/Interfaces/InterfacesApi";
 import {CompanyAdminCreationFormProps} from "../../../../../utils/Interfaces/PropsInterfaces";
-import api from "../../../../../utils/Api";
 import {ParagraphHeader} from "../../../../Reusable/Headers/ParagraphHeader/ParagraphHeader";
-function CompanyAdminCreationForm({alert, setAlert, setSuccess, companyId}: CompanyAdminCreationFormProps): JSX.Element {
+
+function CompanyAdminCreationForm({onSubmit}: CompanyAdminCreationFormProps): JSX.Element {
 
     const {handleSubmit, control, register, formState: {errors}} = useForm<CompanyAdminForm>({
         resolver: yupResolver(companyAdminFormValidationSchema)
@@ -23,36 +23,6 @@ function CompanyAdminCreationForm({alert, setAlert, setSuccess, companyId}: Comp
 
     function handleMouseDownPassword(event: React.MouseEvent<HTMLButtonElement>){
         event.preventDefault();
-    }
-
-    const onSubmit: SubmitHandler<CompanyAdminForm> = (data: CompanyAdminForm) => {
-        if (data.password != data.passwordConfirmation) {
-            if (!alert)
-                setAlert("Password and password confirmation don't match");
-            return;
-        }
-        if (alert){
-            setAlert(null);
-        }
-        if (companyId == undefined){
-            setAlert('You must choose company before creating company admin');
-            return;
-        }
-
-        api()
-            .createCompanyAdmin({...data, companyId})
-            .then(({code, response}) => {
-                console.log('code: ', code,' response: ', response);
-                if (code==200){
-                    setSuccess(`Company admin with ${(response as IStaff).email} email was created successfully`);
-                } else {
-                    setAlert((response as ErrorBody).error);
-                }
-            })
-            .catch((reason) => {
-                console.log('companyAdminCreation reason: ', reason);
-                setAlert(reason.response.error);
-            })
     }
 
     return (
