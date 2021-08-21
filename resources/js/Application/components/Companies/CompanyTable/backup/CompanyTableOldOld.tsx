@@ -25,7 +25,7 @@ export {};
 //     {name: 'Status', property: 'status', percent: 8},
 // ]
 //
-// export function CompanyTableOld({history}: RouteComponentProps): JSX.Element{
+// export function CompanyTable({history}: RouteComponentProps): JSX.Element{
 //
 //     const [companyFilter, setFilter] = useState<ICompanyFilter>({});
 //     // const [data, setData] = useState<ICompany[]>();

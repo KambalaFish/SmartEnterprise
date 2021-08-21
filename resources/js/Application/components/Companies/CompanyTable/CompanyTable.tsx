@@ -1,136 +1,104 @@
 import React, {BaseSyntheticEvent, useEffect, useState} from "react";
-import {ICompanyFilter} from "../../../utils/Interfaces/InterfacesApi";
+import {getCompanies} from "../../../utils/FetchFunctions";
 import {ActionColumn, Column} from "../../../utils/Interfaces/PropsInterfaces";
-import {PaginatedTable} from "../../Reusable/Tables/PaginatedTable/PaginatedTable";
-import {CustomPagination} from "../../Reusable/Tables/PaginatedTable/CustomPagination/CustomPagination";
-import {CircularProgress, FormControl, Select, Typography} from "@material-ui/core";
-import {useAppDispatch, useAppSelector} from "../../../redux/reduxHooks";
-import {
-    fetchCompanyPage,
-    removeFrom,
-    selectData,
-    selectLastPage,
-    selectPerPage,
-    selectStatus,
-} from "../../../redux/slices/companyTableSlice";
-import useUpdateEffect from "../../../utils/useUpdateEffect";
-import {useHistory} from "react-router-dom";
+import {FormControl, Grid, Select} from "@material-ui/core";
+import {useHistory} from 'react-router-dom';
 import {spaPaths} from "../../../utils/utils";
 import api from "../../../utils/Api";
-import {ClickableButton} from "../../../utils/Interfaces/ComponentInterfaces";
 import MenuItem from "@material-ui/core/MenuItem";
-import {createSelector} from "@reduxjs/toolkit";
-import {RootState} from "../../../redux/configureStore";
-import {removeCompany as removeCompanyFromStore} from "../../../redux/slices/companySlice";
+import {ClickableButton} from "../../../utils/Interfaces/ComponentInterfaces";
+import {AdvancedReusableTable} from "../../Reusable/Tables/ReusableTable/AdvancedReusableTable";
+import {ICompanyFilter} from "../../../utils/Interfaces/InterfacesApi";
+import {SelectFilterField, TableFilter, TextFilterField} from "../../Reusable/TableFilter/TableFilter";
+import {SubmitHandler, useForm} from "react-hook-form";
+import TablePageHeader from "../../Reusable/Headers/TablePageHeader/TablePageHeader";
+import CustomAlert from "../../Reusable/CustomAlert/CustomAlert";
+import CustomSuccessMessage from "../../Reusable/CustomSuccessMessage/CustomSuccessMessage";
+import ReactDOM from "react-dom";
 
-interface CompanyTableReduxProps {
-    filter: ICompanyFilter;
-    tableCellHeight: number;
-}
-
-export function CompanyTable({
-                                      filter,
-                                      tableCellHeight, /*actionColumns, activateRowRemovalEffect*/
-                                  }: CompanyTableReduxProps): JSX.Element {
-    const [pageNumber, setPageNumber] = useState<number>(1);
-    const [error, setError] = useState<string | null>(null);
+function CompanyTable(): JSX.Element{
     const history = useHistory();
-    const dispatch = useAppDispatch();
-    const perPage = useAppSelector(selectPerPage);
-    const pageCount = useAppSelector(selectLastPage);
-    const companyIds = useAppSelector(state => selectData(state, pageNumber));
-
-    // https://redux.js.org/tutorials/essentials/part-6-performance-normalization#showing-new-notifications
-    // We know that useSelector will re-run every time an action is dispatched, and that it forces the component to re-render if we return a new reference value.
-    // We're calling filter() inside of our useSelector hook, so that we only return the list of posts that belong to this user.
-    // Unfortunately, this means that useSelector always returns a new array reference, and so our component will re-render after every action even if the posts data hasn't changed!.
-    const selectCompanies = createSelector(
-        [(state: RootState, pageNumber: number) => selectData(state, pageNumber), (state: RootState) => state.companies.entities],
-        (compIds, companies) => (compIds?.map(item => companies[item]? companies[item] : null) )
-    );
-    const companies = useAppSelector(state => selectCompanies(state, pageNumber));
-    // const companies = useAppSelector(state => {
-    //     return companyIds?.map(item => {
-    //         if (state.companies.entities[item])
-    //             return state.companies.entities[item];
-    //         return;
-    //     });
-    // });
-    const status = useAppSelector(selectStatus);
-    const emptyRowsNumber = companyIds ? perPage - companyIds.length : perPage;
-
-
-
-    function fetchData(pageNumber: number) {
-        dispatch(fetchCompanyPage({pageNumber, filter}))
-            .unwrap()
-            .catch((reason) => {
-                setError(reason.message);
-            })
-    }
-
-    useEffect(() => {
-        if (!companyIds && status!='loading') {
-            fetchData(pageNumber);
+    const [activateFilterEffect, setFilterEffectActivation] = useState<boolean>(false);
+    const [activateRemovalEffect, setActivateRemovalEffect] = useState<boolean>(false);
+    const [alert, setAlert] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const [companyFilter, setCompanyFilter] = useState<ICompanyFilter>({
+        name: '',
+        country: '',
+        city: '',
+        address: '',
+        zipCode: '',
+        status: 'any'
+    });
+    const {handleSubmit, control} = useForm<ICompanyFilter>({
+        defaultValues: {
+            ...companyFilter
         }
-    }, [pageNumber, companyIds]);
-    // }, [pageNumber]);
-
-    useUpdateEffect(() => {
-        dispatch(removeFrom(1));
-        // dispatch(fetchCompanyPage({pageNumber: 1, filter}));
-        fetchData(1);
-        setPageNumber(1);
-    }, [filter]);
-
-
-    const columns: Column[] = [
-        {name: 'Name', property: 'name', percent: 20},
-        {name: 'Country', property: 'country', percent: 14},
-        {name: 'City', property: 'city', percent: 14},
-        {name: 'Address', property: 'address', percent: 30},
-        {name: 'ZIP code', property: 'zipCode', percent: 8},
-        {name: 'Status', property: 'status', percent: 8},
+    });
+    const onSubmit: SubmitHandler<ICompanyFilter> = data => {
+        setCompanyFilter(data);
+    }
+    const textFields: TextFilterField<ICompanyFilter>[] = [
+        {name: 'name', label: 'Name', placeholder: 'Name filter'},
+        {name: 'country', label: 'Country', placeholder: 'Country filter'},
+        {name: 'city', label: 'City', placeholder: 'City filter'},
+        {name: 'address', label: 'Address', placeholder: 'Address filter'},
+        {name: 'zipCode', label: 'Zip code', placeholder: 'Zip code filter'},
+    ]
+    const selectFields: SelectFilterField<ICompanyFilter>[] = [
+        {
+            name: 'status', label: 'Status', defaultValue: 'any', options: [
+                {value: 'any', optionName: 'any'},
+                {value: 'served', optionName: 'served'},
+                {value: 'not served', optionName: 'not served'},
+            ]
+        }
     ]
 
-    const CompanyTableMenu: ClickableButton = (id: number) => {
-        function updateCompany(id: number) {
-            history.push(spaPaths.companyUpdate(id));
-        }
+    useEffect(() => {
+        setFilterEffectActivation(!activateFilterEffect);
+    }, [companyFilter]);
 
-        function removeCompany(id: number) {
+    const CompanyTableMenu: ClickableButton = (id: number) =>{
+
+        function removeCompany(){
             api()
                 .deleteCompany(id)
                 .then(result => {
-                    alert(result.response);
-                    dispatch(removeFrom(pageNumber));
-                    dispatch(removeCompanyFromStore(id));
-                    if (companyIds?.length===1 && pageNumber!=1){
-                        setPageNumber(value => value - 1);
-                    }
+                    ReactDOM.unstable_batchedUpdates(
+                        ()=>{
+                            setSuccessMessage(result.response as string);
+                            setActivateRemovalEffect(!activateRemovalEffect);
+                        }
+                    );
                 })
+                .catch((reason) => setAlert(reason.response.error));
         }
 
-        function createAdmin(id: number){
+        const updateCompany = ()=>{
+            history.push(spaPaths.companyUpdate(id));
+        }
+
+        function createAdmin(){
             history.push(spaPaths.selectedCompanyAdminCreation(id));
         }
 
-        function handleClick(event: BaseSyntheticEvent, id: number) {
-            if (event.target.value == 0) {
-                updateCompany(id);
+        function handleClick(event: BaseSyntheticEvent){
+            if (event.target.value==0){
+                updateCompany();
             }
-            if (event.target.value == 1) {
-                removeCompany(id);
+            if (event.target.value==1){
+                removeCompany();
             }
             if (event.target.value == 2) {
-                createAdmin(id);
+                createAdmin();
             }
         }
 
         return (
             <FormControl key={id} variant={'outlined'} size={'small'}>
                 <Select
-                    onClick={(event) => handleClick(event, id)}
+                    onClick={handleClick}
                     defaultValue={0}
                 >
                     <MenuItem value={0}>update</MenuItem>
@@ -145,56 +113,62 @@ export function CompanyTable({
         {name: 'Action', actions: [{clickableButton: CompanyTableMenu, targetProperty: 'id'}], percent: 6}
     ]
 
-    let content;
-    switch (status) {
-        case "idle":
-        case 'loading':
-            content = <CircularProgress/>;
-            break;
-        case "succeeded":
-            content = companyIds ?
-                <PaginatedTable
-                    // companyIds={companyIds}
-                    data={companies}
-                    perPage={perPage}
-                    emptyRowsNumber={emptyRowsNumber}
-                    pageCount={pageCount}
-                    columns={columns}
-                    actionColumns={actionColumns}
-                    tableCellHeight={tableCellHeight}
-                >
-                    <CustomPagination
-                        pageCount={pageCount}
-                        currentPage={pageNumber - 1}
-                        setPageNumber={setPageNumber}
-                    />
-                </PaginatedTable> : <Typography variant='h1'>Empty data</Typography>;
-            break;
-        case "failed":
-            content = <Typography variant={'h5'} style={{color: 'red'}}>Error: {error}</Typography>
-            break;
-        default:
-            content = <Typography variant={'h1'}>initial value...</Typography>;
+    function fetcher(pageNumber: number){
+        return getCompanies(pageNumber, companyFilter);
     }
 
-    return content;
+    const columns: Column[] = [
+        {name: 'Name', property: 'name', percent: 20},
+        {name: 'Country', property: 'country', percent: 14},
+        {name: 'City', property: 'city', percent: 14},
+        {name: 'Address', property: 'address', percent: 30},
+        {name: 'ZIP code', property: 'zipCode', percent: 8},
+        {name: 'Status', property: 'status', percent: 8},
+    ]
+
+    function onRequestCatch(message: string): void{
+        setAlert(message);
+    }
+
+    function onAlertClose(){
+        setAlert(null);
+    }
+
+    function onSuccessMessageClose(){
+        setSuccessMessage(null);
+    }
+
+    return (
+        <>
+            <CustomAlert alert={alert} onAlertClose={onAlertClose}/>
+            <CustomSuccessMessage message={successMessage} onClose={onSuccessMessageClose}/>
+            <TablePageHeader header={'Registered companies:'}/>
+            <Grid item container direction={'row'} justifyContent={'center'}>
+                <Grid item xs={10}>
+                    <TableFilter
+                        handleSubmit={handleSubmit}
+                        control={control}
+                        onSubmit={onSubmit}
+                        textFields={textFields}
+                        selectFields={selectFields}
+                        customAutocompleteFields={[]}
+                    />
+                </Grid>
+            </Grid>
+            <Grid item container direction={'row'} justifyContent={'center'}>
+                <Grid item xs={10}>
+                    <AdvancedReusableTable
+                        fetcher={fetcher}
+                        tableCellHeight={75}
+                        columns={columns}
+                        actionColumns={actionColumns}
+                        activateFilterEffect={activateFilterEffect}
+                        activateRowRemovalEffect={activateRemovalEffect}
+                        onCatch={onRequestCatch}
+                    />
+                </Grid>
+            </Grid>
+        </>
+    );
 }
-
-
-// function fetchData(pageNumber: number){
-//     dispatch(fetchCompanyPage({pageNumber, filter}))
-//         .unwrap()
-//         .then((result) =>{
-//             const {perPage: perPageResponse, lastPage} = result.response.meta;
-//             ReactDOM.unstable_batchedUpdates(
-//                 () => {
-//                     if (perPageResponse!=perPage)
-//                         setPerPage(perPageResponse);
-//                     if (lastPage!=pageCount)
-//                         setPageCount(lastPage);
-//                 })
-//         })
-//         .catch((reason) => {
-//             setError(reason.message);
-//         })
-// }
+export default CompanyTable;

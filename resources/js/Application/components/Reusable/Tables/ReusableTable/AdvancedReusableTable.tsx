@@ -11,11 +11,12 @@ interface AdvancedReusableTableProps{
     tableCellHeight: number;
     columns: Column[];
     actionColumns: ActionColumn[];
+    onCatch: (message: string) => void;
     activateFilterEffect?: boolean;
     activateRowRemovalEffect?: boolean;
 }
 
-export function AdvancedReusableTable({fetcher, tableCellHeight, columns, actionColumns, activateFilterEffect, activateRowRemovalEffect}: AdvancedReusableTableProps): JSX.Element{
+export function AdvancedReusableTable({fetcher, tableCellHeight, columns, actionColumns, activateFilterEffect, activateRowRemovalEffect, onCatch}: AdvancedReusableTableProps): JSX.Element{
     const [data, setData] = useState<unknown[]>();
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [pageCount, setPageCount] = useState<number>(1);
@@ -40,7 +41,7 @@ export function AdvancedReusableTable({fetcher, tableCellHeight, columns, action
                 );
             })
             .catch( (reason: ErrorBody) => {
-                alert('reason: ' + reason.error);
+                onCatch(reason.error);
             });
     }, [pageNumber]);
 
@@ -60,7 +61,7 @@ export function AdvancedReusableTable({fetcher, tableCellHeight, columns, action
                        setEmptyRowsN(dif);
                 });
             })
-            .catch((reason: ErrorBody) => alert(`reason: ${reason.error}`));
+            .catch((reason: ErrorBody) => onCatch(reason.error));
     }, [activateFilterEffect]);
 
     useEffect(() => {
@@ -103,7 +104,7 @@ export function AdvancedReusableTable({fetcher, tableCellHeight, columns, action
                     }
                 }
             })
-            .catch((reason: ErrorBody) => alert(`reason: ${reason.error}`));
+            .catch((reason: ErrorBody) => onCatch(reason.error));
     }, [activateRowRemovalEffect]);
 
     return (

@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {Grid} from "@material-ui/core";
-import {ICompanyFilter} from "../../../utils/Interfaces/InterfacesApi";
-import {CompanyTable} from "./CompanyTable";
-import {SelectFilterField, TableFilter, TextFilterField} from "../../Reusable/TableFilter/TableFilter";
+import {ICompanyFilter} from "../../../../utils/Interfaces/InterfacesApi";
+import {CompanyTableReduxVersion} from "./CompanyTableReduxVersion";
+import {SelectFilterField, TableFilter, TextFilterField} from "../../../Reusable/TableFilter/TableFilter";
 import {SubmitHandler, useForm} from "react-hook-form";
-import TablePageHeader from "../../Reusable/Headers/TablePageHeader/TablePageHeader";
-export function CompanyTableLayout(): JSX.Element{
+import TablePageHeader from "../../../Reusable/Headers/TablePageHeader/TablePageHeader";
+export function CompanyTableLayoutReduxVersion(): JSX.Element{
     const [companyFilter, setCompanyFilter] = useState<ICompanyFilter>({
         name: '',
         country: '',
@@ -56,7 +56,7 @@ export function CompanyTableLayout(): JSX.Element{
             </Grid>
             <Grid item container direction={'row'} justifyContent={'center'}>
                 <Grid item xs={10}>
-                    <CompanyTable
+                    <CompanyTableReduxVersion
                         filter={companyFilter}
                         tableCellHeight={75}
                     />

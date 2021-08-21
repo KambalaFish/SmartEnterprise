@@ -1,9 +1,8 @@
 import React, {BaseSyntheticEvent, useEffect, useState} from "react";
 import {getCompanyAdmins} from "../../../../utils/FetchFunctions";
 import {ActionColumn, Column} from "../../../../utils/Interfaces/PropsInterfaces";
-import {FormControl, Grid, Typography, Select, MenuItem} from "@material-ui/core";
+import {FormControl, Grid, Select, MenuItem} from "@material-ui/core";
 import {AdvancedReusableTable} from "../../../Reusable/Tables/ReusableTable/AdvancedReusableTable";
-import {useStyles} from "./includes/styles";
 import {
     TableFilter,
     CustomAutocompleteFilterField,
@@ -24,6 +23,7 @@ import CustomSuccessMessage from "../../../Reusable/CustomSuccessMessage/CustomS
 import ReactDOM from "react-dom";
 import {useHistory} from "react-router-dom";
 import {spaPaths} from "../../../../utils/utils";
+import TablePageHeader from "../../../Reusable/Headers/TablePageHeader/TablePageHeader";
 
 function CompanyAdminTable(): JSX.Element {
     const [activateFilterEffect, setFilterEffectActivation] = useState<boolean>(false);
@@ -161,18 +161,21 @@ function CompanyAdminTable(): JSX.Element {
         {name: 'Action', actions: [{clickableButton: CompanyAdminTableMenu, targetProperty: 'id'}], percent: 7}
     ]
 
-    const classes = useStyles();
+    function onRequestCatch(message: string): void{
+        setAlert(message);
+    }
+
+    function onAlertClose(){
+        setAlert(null);
+    }
+    function onSuccessMessageClose(){
+        setSuccessMessage(null);
+    }
 
     return <>
-        <CustomAlert alert={alert} onAlertClose={() => setAlert(null)}/>
-        <CustomSuccessMessage message={successMessage} onClose={() => setSuccessMessage(null)}/>
-        <Grid item container direction={'row'} justifyContent={'center'} className={`${classes.mt} ${classes.mb}`}>
-            <Grid item xs={10}>
-                <Typography variant={'h4'} color={'primary'}>
-                    Company administrators:
-                </Typography>
-            </Grid>
-        </Grid>
+        <CustomAlert alert={alert} onAlertClose={onAlertClose}/>
+        <CustomSuccessMessage message={successMessage} onClose={onSuccessMessageClose}/>
+        <TablePageHeader header={'Company administrators:'}/>
         <Grid item container direction={'row'} justifyContent={'center'}>
             <Grid item xs={10}>
                 <TableFilter
@@ -194,6 +197,7 @@ function CompanyAdminTable(): JSX.Element {
                     actionColumns={actionColumns}
                     activateFilterEffect={activateFilterEffect}
                     activateRowRemovalEffect={activateRemovalEffect}
+                    onCatch={onRequestCatch}
                 />
             </Grid>
         </Grid>
