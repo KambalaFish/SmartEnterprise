@@ -48,12 +48,6 @@ export default function NavBar(): JSX.Element {
         handleCompanyMenuClose();
     }
 
-    const onCompanyInfo = () => {
-        const id = 1;
-        history.push(spaPaths.companyInfo(id));
-        handleCompanyMenuClose();
-    }
-
     const onHomeHandle = () => {
         history.push(spaPaths.home);
     }
@@ -115,7 +109,6 @@ export default function NavBar(): JSX.Element {
                         >
                             <MenuItem onClick={onAllCompanies}>All companies</MenuItem>
                             <MenuItem onClick={onCompanyCreation}>Create a company</MenuItem>
-                            <MenuItem onClick={onCompanyInfo}>Company info</MenuItem>
                         </CustomMenu>
 
                         <IconButton

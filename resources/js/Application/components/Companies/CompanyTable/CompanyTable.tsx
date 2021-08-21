@@ -60,38 +60,32 @@ function CompanyTable(): JSX.Element{
     }, [companyFilter]);
 
     const CompanyTableMenu: ClickableButton = (id: number) =>{
-
-        function removeCompany(){
-            api()
-                .deleteCompany(id)
-                .then(result => {
-                    ReactDOM.unstable_batchedUpdates(
-                        ()=>{
-                            setSuccessMessage(result.response as string);
-                            setActivateRemovalEffect(!activateRemovalEffect);
-                        }
-                    );
-                })
-                .catch((reason) => setAlert(reason.response.error));
-        }
-
-        const updateCompany = ()=>{
-            history.push(spaPaths.companyUpdate(id));
-        }
-
-        function createAdmin(){
-            history.push(spaPaths.selectedCompanyAdminCreation(id));
-        }
-
         function handleClick(event: BaseSyntheticEvent){
-            if (event.target.value==0){
-                updateCompany();
-            }
-            if (event.target.value==1){
-                removeCompany();
-            }
-            if (event.target.value == 2) {
-                createAdmin();
+            switch (event.target.value){
+                case 0:
+                    history.push(spaPaths.companyUpdate(id));
+                    break
+                case 1:
+                    api()
+                        .deleteCompany(id)
+                        .then(result => {
+                            ReactDOM.unstable_batchedUpdates(
+                                ()=>{
+                                    setSuccessMessage(result.response as string);
+                                    setActivateRemovalEffect(!activateRemovalEffect);
+                                }
+                            );
+                        })
+                        .catch((reason) => setAlert(reason.response.error));
+                    break;
+                case 2:
+                    history.push(spaPaths.selectedCompanyAdminCreation(id));
+                    break;
+                case 3:
+                    history.push(spaPaths.companyInfo(id));
+                    break;
+                default:
+                    return;
             }
         }
 
@@ -104,6 +98,7 @@ function CompanyTable(): JSX.Element{
                     <MenuItem value={0}>update</MenuItem>
                     <MenuItem value={1}>remove</MenuItem>
                     <MenuItem value={2}>create admin</MenuItem>
+                    <MenuItem value={3}>info</MenuItem>
                 </Select>
             </FormControl>
         )
