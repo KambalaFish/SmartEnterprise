@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         padding: theme.spacing(4),
-        borderRadius: 16
+        borderRadius: theme.spacing(4)
     }
 }));
 

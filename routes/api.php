@@ -29,11 +29,13 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('company/{company}/mainAdmin', [CompanyController::class, 'mainAdminContact']);
     Route::get('company/{company}/itHead', [CompanyController::class, 'itHeadContact']);
     Route::get('company/{company}/customerManager', [CompanyController::class, 'customerManagerContact']);
-    Route::post('company/update', [CompanyController::class, 'update']);
     Route::get('company/{company}/departments', [CompanyController::class, 'companyDepartments']);
     Route::get('company/{company}/roles', [CompanyController::class, 'companyRoles']);
     Route::get('company/{company}/teams', [CompanyController::class, 'companyTeams']);
     Route::post('staff/companyAdmin/create', [StaffController::class, 'createCompanyAdmin']);
     Route::get('company/all', [CompanyController::class, 'indexAll']);
     Route::get('staff/companyAdmins', [StaffController::class, 'companyAdmins']);
+    Route::delete('staff/{staff}', [StaffController::class, 'destroy']);
+    Route::get('staff/{staff}', [StaffController::class, 'show']);
+    Route::put('staff/{staff}', [StaffController::class,'update']);
 });

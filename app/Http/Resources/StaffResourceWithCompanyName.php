@@ -14,9 +14,7 @@ class StaffResourceWithCompanyName extends JsonResource
      * @return array
      */
     public function toArray($request){
-        $status = $this->status;
-        if ($this->status=='on_vacation')
-            $status = 'on vacation';
+        $status = $this->status == 'on_vacation'? 'on vacation' : $this->status;
         return [
             'id' => $this->id,
             'name' => $this->name,

@@ -12,9 +12,9 @@ export function CompanyUpdate({match, location, history}: RouteComponentProps<Re
 
     useEffect(() => {
         const companyPromise = api().getCompany(id);
-        const mainAdminPromise = api().getCompanyMainAdmin(id);
-        const itHeadPromise = api().getCompanyItHead(id);
-        const customerManagerPromise = api().getCompanyCustomerManager(id);
+        const mainAdminPromise = api().getCompanyMainAdminContact(id);
+        const itHeadPromise = api().getCompanyItHeadContact(id);
+        const customerManagerPromise = api().getCompanyCustomerManagerContact(id);
         Promise
             .all([companyPromise, mainAdminPromise, itHeadPromise, customerManagerPromise])
             .then(

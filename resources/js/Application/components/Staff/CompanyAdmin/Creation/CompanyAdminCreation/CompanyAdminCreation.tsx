@@ -1,16 +1,19 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Button, Grid, Paper, TextField, Typography} from "@material-ui/core";
-import {Alert, Autocomplete} from "@material-ui/lab";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {ResponseLayout} from "../../../../Reusable/Layout/ResponseLayout/ResponseLayout";
-import CompanyAdminCreationForm from "../includes/CompanyAdminCreationForm";
+import React, {useEffect, useState} from "react";
+import {Grid} from "@material-ui/core";
+import {SubmitHandler} from "react-hook-form";
+import CompanyAdminForm from "../includes/CompanyAdminForm";
 import {ParagraphHeader} from "../../../../Reusable/Headers/ParagraphHeader/ParagraphHeader";
-import {ICompanyWithId, ResourceCollectionResponse} from "../../../../../utils/Interfaces/InterfacesApi";
+import {
+    IStaffForm, ErrorBody,
+    ICompanyWithId, IStaff,
+    ResourceCollectionResponse, UserStatus
+} from "../../../../../utils/Interfaces/InterfacesApi";
 import api from "../../../../../utils/Api";
-import {CircularProgress} from "@material-ui/core";
 import PageHeader from "../../../../Reusable/Headers/PageHeader/PageHeader";
 import FormLayout from "../../../../Reusable/Layout/FormLayout/FormLayout";
 import CustomAutocomplete from "../../../../Reusable/CustomAutocomplete/CustomAutocomplete";
+import CustomAlert from "../../../../Reusable/CustomAlert/CustomAlert";
+import CustomSuccessMessage from "../../../../Reusable/CustomSuccessMessage/CustomSuccessMessage";
 
 function CompanyAdminCreation(): JSX.Element {
     const [selectedCompany, setSelectedCompany] = useState<ICompanyWithId | null>(null);
@@ -20,7 +23,6 @@ function CompanyAdminCreation(): JSX.Element {
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(()=>{
-        setLoading(true);
         api()
             .getAllCompanies()
             .then((result) => {
@@ -46,26 +48,35 @@ function CompanyAdminCreation(): JSX.Element {
 
     console.log('page load');
 
+    const onSubmit: SubmitHandler<IStaffForm> = (data: IStaffForm) => {
+        if (alert){
+            setAlert(null);
+        }
+        if (selectedCompany?.id == undefined){
+            setAlert('You must choose company before creating company admin');
+            return;
+        }
+
+        api()
+            .createCompanyAdmin({...data, companyId: selectedCompany.id})
+            .then(({code, response}) => {
+                console.log('code: ', code,' response: ', response);
+                if (code==200){
+                    setSuccess(`Company admin with ${(response as IStaff).email} email was created successfully`);
+                } else {
+                    setAlert((response as ErrorBody).error);
+                }
+            })
+            .catch((reason) => {
+                console.log('companyAdminCreation reason: ', reason);
+                setAlert(reason.response.error);
+            })
+    }
+
         return (
             <>
-                {alert &&
-                <Grid container direction={'row'} item>
-                    <Grid item xs={12}>
-                        <Alert variant={'filled'} severity={'warning'} onClose={onAlertClose}>
-                            {alert}
-                        </Alert>
-                    </Grid>
-                </Grid>
-                }
-                {success &&
-                <Grid container direction={'row'} item>
-                    <Grid item xs={12}>
-                        <Alert variant={'filled'} severity={'success'} onClose={onSuccessClose}>
-                            {success}
-                        </Alert>
-                    </Grid>
-                </Grid>
-                }
+                <CustomAlert alert={alert} onAlertClose={onAlertClose}/>
+                <CustomSuccessMessage message={success} onClose={onSuccessClose}/>
                 <>
                     <PageHeader headerText={`Choose company and create administrator for the company`}/>
                     <FormLayout xs={6}>
@@ -83,11 +94,15 @@ function CompanyAdminCreation(): JSX.Element {
                                 </Grid>
                                 <Grid item xs={5}/>
                             </Grid>
-                            <CompanyAdminCreationForm
-                                alert={alert}
-                                setAlert={setAlert}
-                                setSuccess={setSuccess}
-                                companyId={selectedCompany?.id}
+                            <CompanyAdminForm
+                                onSubmit={onSubmit}
+                                buttonName={'create'}
+                                defaultValues={{
+                                    name: '',
+                                    phoneNumber: '',
+                                    status: UserStatus.works,
+                                    email: '',
+                                }}
                             />
                     </FormLayout>
                 </>

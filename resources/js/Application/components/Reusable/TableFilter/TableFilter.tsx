@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {
-    ICompanyAdminFilter,
+    IStaffFilter,
     ICompanyWithId,
     ResourceCollectionResponse
 } from "../../../utils/Interfaces/InterfacesApi";

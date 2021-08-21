@@ -2,7 +2,7 @@ import {apiPaths} from "./utils";
 import {
     ApiResponse,
     AuthenticatedUser,
-    CompanyAdminRequest,
+    StaffRequest,
     ContactResponse,
     Credentials,
     ErrorBody,
@@ -14,7 +14,7 @@ import {
     ITeam,
     ResourceCollectionResponse,
     IStaff,
-    IStaffWithCompanyName, ICompanyAdminFilter,
+    IStaffWithCompanyName, IStaffFilter,
 } from "./Interfaces/InterfacesApi";
 import {PageResponse} from "./Interfaces/InterfacesApi";
 import {ICompanyFilter} from "./Interfaces/InterfacesApi";
@@ -29,16 +29,19 @@ interface ClientApi {
     getPaginatedCompaniesOld(pageNumber: number, filter?: ICompanyFilter): Promise<ApiResponse<PageResponse<ICompany[]> | ErrorBody>>;
     getPaginatedCompanies(pageNumber: number, filter?: ICompanyFilter): Promise<ApiResponse<PageResponse<ICompanyWithId[]> | ErrorBody>>;
     getCompany(id: number): Promise<ApiResponse<ICompany | ErrorBody>>;
-    getCompanyMainAdmin(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>;
-    getCompanyItHead(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>;
-    getCompanyCustomerManager(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>;
+    getCompanyMainAdminContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>;
+    getCompanyItHeadContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>;
+    getCompanyCustomerManagerContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>;
     deleteCompany(companyId: number): Promise<ApiResponse<string|ErrorBody>>;
     getPaginatedCompanyDepartments(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<IDepartment[]> | ErrorBody>>;
     getPaginatedCompanyRoles(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<IRole[]> | ErrorBody>>;
     getPaginatedCompanyTeams(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<ITeam[]> | ErrorBody>>;
     getAllCompanies(): Promise<ApiResponse<ResourceCollectionResponse<ICompanyWithId[]>|ErrorBody>>;
-    createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<IStaff|ErrorBody>>;
-    getPaginatedCompanyAdmins(pageNumber: number, filter?: ICompanyAdminFilter): Promise<ApiResponse<PageResponse<IStaffWithCompanyName[]>|ErrorBody>>;
+    createCompanyAdmin(admin: StaffRequest): Promise<ApiResponse<IStaff|ErrorBody>>;
+    getPaginatedCompanyAdmins(pageNumber: number, filter?: IStaffFilter): Promise<ApiResponse<PageResponse<IStaffWithCompanyName[]>|ErrorBody>>;
+    deleteStaff(staffId: number): Promise<ApiResponse<string|ErrorBody>>;
+    getStaff(id: number): Promise<ApiResponse<IStaffWithCompanyName|ErrorBody>>;
+    updateStaff(staff: StaffRequest, staffId: number): Promise<ApiResponse<IStaffWithCompanyName|ErrorBody>>;
 }
 
 class ClientApiImpl implements ClientApi {
@@ -128,19 +131,19 @@ class ClientApiImpl implements ClientApi {
             .catch(errorHandler);
     }
 
-    getCompanyMainAdmin(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>{
+    getCompanyMainAdminContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>{
         return apiInstance
             .get<ContactResponse>(apiPaths.getCompanyMainAdmin(companyId))
             .then(confirmationHandler)
             .catch(errorHandler);
     }
-    getCompanyItHead(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>{
+    getCompanyItHeadContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>{
         return apiInstance
             .get<ContactResponse>(apiPaths.getCompanyItHead(companyId))
             .then(confirmationHandler)
             .catch(errorHandler);
     }
-    getCompanyCustomerManager(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>{
+    getCompanyCustomerManagerContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>{
         return apiInstance
             .get<ContactResponse>(apiPaths.getCompanyCustomerManager(companyId))
             .then(confirmationHandler)
@@ -187,7 +190,7 @@ class ClientApiImpl implements ClientApi {
             .catch(errorHandler);
     }
 
-    createCompanyAdmin(admin: CompanyAdminRequest): Promise<ApiResponse<IStaff|ErrorBody>>{
+    createCompanyAdmin(admin: StaffRequest): Promise<ApiResponse<IStaff|ErrorBody>>{
         return apiInstance
             .post<IStaff>(apiPaths.createCompanyAdmin, admin)
             .then(confirmationHandler)
@@ -201,7 +204,7 @@ class ClientApiImpl implements ClientApi {
             .catch(errorHandler);
     }
 
-    getPaginatedCompanyAdmins(pageNumber: number, filter?: ICompanyAdminFilter): Promise<ApiResponse<PageResponse<IStaffWithCompanyName[]>|ErrorBody>>{
+    getPaginatedCompanyAdmins(pageNumber: number, filter?: IStaffFilter): Promise<ApiResponse<PageResponse<IStaffWithCompanyName[]>|ErrorBody>>{
         return apiInstance
             .get<PageResponse<IStaffWithCompanyName[]>>(apiPaths.getPaginatedCompanyAdmins, {
                 params: {
@@ -216,6 +219,28 @@ class ClientApiImpl implements ClientApi {
             .then(confirmationHandler)
             .catch(errorHandler);
     }
+
+    deleteStaff(staffId: number): Promise<ApiResponse<string|ErrorBody>>{
+        return apiInstance
+            .delete<string>(apiPaths.removeStaff(staffId))
+            .then(confirmationHandler)
+            .catch(errorHandler);
+    }
+
+    getStaff(id: number): Promise<ApiResponse<IStaffWithCompanyName|ErrorBody>>{
+        return apiInstance
+            .get<IStaffWithCompanyName>(apiPaths.getCompanyAdmin(id))
+            .then(confirmationHandler)
+            .catch(errorHandler);
+    }
+
+    updateStaff(staff: StaffRequest, staffId: number): Promise<ApiResponse<IStaffWithCompanyName|ErrorBody>>{
+        return apiInstance
+            .put<IStaffWithCompanyName>(apiPaths.updateStaff(staffId), staff)
+            .then(confirmationHandler)
+            .catch(errorHandler);
+    }
+
 }
 
 export default function api(): ClientApi {

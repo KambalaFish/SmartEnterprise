@@ -1,23 +1,29 @@
-import {ErrorBody, ICompanyAdminFilter, ICompanyCreation, PaginatedTableFetcher} from "./InterfacesApi";
+import {
+    IStaffForm,
+    ErrorBody,
+    IStaffFilter,
+    ICompanyCreation,
+    PaginatedTableFetcher, UserStatus
+} from "./InterfacesApi";
 import {Control, FieldErrors, SubmitHandler, UseFormRegister} from "react-hook-form";
-import {Action} from "./ComponentInterfaces";
+import {Action, CompanyAdminFormDefaultValues} from "./ComponentInterfaces";
 import {ICompanyFilter} from "./InterfacesApi";
 import React from "react";
 import {UseFormHandleSubmit} from "react-hook-form/dist/types/form";
 
-export interface Column{
+export interface Column {
     name: string;
     property: string;
     percent: number;
 }
 
-export interface ActionColumn{
+export interface ActionColumn {
     name: string;
     actions: Action[];
     percent: number;
 }
 
-export interface PaginatedTableTestProps{
+export interface PaginatedTableTestProps {
     data: any;
     children: JSX.Element;
     perPage: number;
@@ -29,8 +35,8 @@ export interface PaginatedTableTestProps{
 }
 
 
-
 type message = string | undefined;
+
 export interface ContactPropsOld {
     who: string;
     register: UseFormRegister<ICompanyCreation>;
@@ -49,7 +55,7 @@ export interface CompanyFilterProps {
     companyFilter: ICompanyFilter;
 }
 
-export interface CompanyFormProps{
+export interface CompanyFormProps {
     handleSubmit: UseFormHandleSubmit<ICompanyCreation>;
     errors: FieldErrors<ICompanyCreation>;
     control: Control<ICompanyCreation>;
@@ -57,7 +63,7 @@ export interface CompanyFormProps{
     buttonName: string;
 }
 
-export interface ContactProps{
+export interface ContactProps {
     who: string;
     control: Control<ICompanyCreation>;
     phoneError: boolean;
@@ -79,25 +85,25 @@ export interface UpdateFormProps {
     company: ICompanyCreation;
 }
 
-export interface ContactInfoProps{
+export interface ContactInfoProps {
     role: string;
-    firstName: string|undefined;
-    lastName: string|undefined;
-    email: string|undefined;
-    phone: string|undefined;
+    firstName: string | undefined;
+    lastName: string | undefined;
+    email: string | undefined;
+    phone: string | undefined;
 }
 
-export interface CustomPaginationProps{
+export interface CustomPaginationProps {
     pageCount: number;
     currentPage: number;
-    setPageNumber:  React.Dispatch<React.SetStateAction<number>>;
+    setPageNumber: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export interface CompanyAdminCreationFormProps {
-    setAlert: React.Dispatch<React.SetStateAction<string | null>>;
-    alert: string|null;
-    setSuccess: React.Dispatch<React.SetStateAction<string | null>>;
-    companyId: number|undefined;
+export interface CompanyAdminFormProps {
+    onSubmit: SubmitHandler<IStaffForm>;
+    buttonName: string;
+    defaultValues: CompanyAdminFormDefaultValues;
+    passwordFieldLabel?: string;
 }
 
 export interface FilterProps<T = unknown> {

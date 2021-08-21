@@ -11,9 +11,10 @@ interface CustomAutocompleteProps<T>{
     loading: boolean;
     margin?: 'none' | 'dense' | 'normal';
     placeholder?: string;
+    defaultValue?: T|null;
 }
 
-function CustomAutocomplete<T>({value, setValue, options, getOption, label, loading, margin, placeholder}: CustomAutocompleteProps<T>): JSX.Element{
+function CustomAutocomplete<T>({value, setValue, options, getOption, label, loading, margin, placeholder, defaultValue}: CustomAutocompleteProps<T>): JSX.Element{
     return (
         <Autocomplete
             value={value}
@@ -26,6 +27,7 @@ function CustomAutocomplete<T>({value, setValue, options, getOption, label, load
             loading={loading}
             size={'small'}
             getOptionLabel={getOption}
+            defaultValue={defaultValue}
             renderInput={
                 (params) =>
                     <TextField

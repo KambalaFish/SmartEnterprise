@@ -12,18 +12,11 @@ export interface ErrorBody {
     error: string;
 }
 
-
 export interface PaginatedTableFetcher<T = unknown> {
     data: T[],
     perPage: number,
     lastPage: number,
 }
-
-// export interface PaginatedTableFetcher<T> {
-//     data: T,
-//     perPage: number,
-//     lastPage: number,
-// }
 
 type Status = 'served' | 'not served';
 export interface ICompany{
@@ -52,8 +45,6 @@ export interface PageResponse<T> extends ResourceCollectionResponse<T>{
     meta: PageMetaData;
 }
 
-
-
 export interface Contact{
     firstName: string;
     lastName: string;
@@ -61,7 +52,9 @@ export interface Contact{
     phone: string;
 }
 
-export type ContactResponse = Contact & {companyId: number};
+export interface ContactResponse extends Contact{
+    companyId: number;
+}
 
 export interface ICompanyCreation {
     name: string;
@@ -82,7 +75,6 @@ export interface ICompanyFilter {
     address: string;
     zipCode: number|string;
     status: 'any'|'served'|'not served';
-    // status: string;
 }
 
 export interface IDepartment {
@@ -125,7 +117,7 @@ export enum UserStatus {
     illness = 'illness'
 }
 
-export interface CompanyAdminForm {
+export interface IStaffForm {
     name: string,
     phoneNumber: string,
     email: string,
@@ -134,7 +126,9 @@ export interface CompanyAdminForm {
     status: UserStatus
 }
 
-export type CompanyAdminRequest = CompanyAdminForm & {companyId: number};
+export interface StaffRequest extends IStaffForm{
+    companyId: number;
+}
 
 export interface IStaff {
     id: number;
@@ -142,15 +136,15 @@ export interface IStaff {
     phoneNumber: string,
     email: string,
     status: UserStatus,
-    usertype: UserType
     companyId: number,
+    usertype: UserType
 }
 
 export interface IStaffWithCompanyName extends IStaff{
     companyName: string;
 }
 
-export interface ICompanyAdminFilter {
+export interface IStaffFilter {
     name: string;
     phoneNumber: string;
     email: string;

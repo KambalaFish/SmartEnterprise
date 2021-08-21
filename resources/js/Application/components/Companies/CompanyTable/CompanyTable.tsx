@@ -95,7 +95,7 @@ export function CompanyTable({
 
     const CompanyTableMenu: ClickableButton = (id: number) => {
         function updateCompany(id: number) {
-            history.push(spaPaths.companyUpdate + id);
+            history.push(spaPaths.companyUpdate(id));
         }
 
         function removeCompany(id: number) {

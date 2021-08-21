@@ -2,7 +2,6 @@ import React, {BaseSyntheticEvent, useEffect, useState} from "react";
 import {getCompanies} from "../../../../utils/FetchFunctions";
 import {ActionColumn, Column} from "../../../../utils/Interfaces/PropsInterfaces";
 import {FormControl, Grid, Select, Typography} from "@material-ui/core";
-import {CompanyFilter} from "../CompanyFilter/CompanyFilter";
 import {RouteComponentProps} from 'react-router-dom';
 import {spaPaths} from "../../../../utils/utils";
 import api from "../../../../utils/Api";
@@ -47,7 +46,7 @@ export function CompanyTableOld({history}: RouteComponentProps): JSX.Element{
     }
 
     const updateCompany = (id: number)=>{
-        history.push(spaPaths.companyUpdate+id);
+        history.push(spaPaths.companyUpdate(id));
     }
 
     const CompanyTableMenu: ClickableButton = (id: number) =>{
@@ -95,10 +94,10 @@ export function CompanyTableOld({history}: RouteComponentProps): JSX.Element{
                 <Typography variant={'h4'}  color='secondary'>Registered companies:</Typography>
             </Grid>
             <Grid item xs={10}>
-                <CompanyFilter
-                    setFilter={setCompanyFilter}
-                    companyFilter={companyFilter}
-                />
+                {/*<CompanyFilter*/}
+                {/*    setFilter={setCompanyFilter}*/}
+                {/*    companyFilter={companyFilter}*/}
+                {/*/>*/}
             </Grid>
             <Grid item xs={10}>
                 <AdvancedReusableTable

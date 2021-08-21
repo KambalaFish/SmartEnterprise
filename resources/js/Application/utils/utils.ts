@@ -11,13 +11,17 @@ export const spaPaths = {
     signIn: '/sign-in',
     allCompanies: '/company/all',
     companyCreation: '/company/create',
-    companyUpdate: '/company/update/',
-    companyInfo: '/company/about/',
+    companyUpdatePath: `/company/:id/update/`,
+    companyUpdate: (id: number): string => `/company/${id}/update/`,
+    companyInfoPath: `/company/:id/about/`,
+    companyInfo: (id: number): string => `/company/${id}/about/`,
     profile: '/profile',
     selectedCompanyAdminCreationPath: '/company/:id/admin/creation',
     selectedCompanyAdminCreation: (companyId: number): string => `/company/${companyId}/admin/creation`,
     companyAdminCreation: '/company/admin/creation',
-    allCompanyAdmins: '/company/admin/all'
+    allCompanyAdmins: '/company/admin/all',
+    companyAdminUpdatePath: `/company/admin/:id/update`,
+    companyAdminUpdate: (id: number): string => `/company/admin/${id}/update`,
 }
 
 export const apiPaths = {
@@ -37,5 +41,8 @@ export const apiPaths = {
     getCompanyTeams: (companyId: number): string => `/company/${companyId}/teams/`,
     createCompanyAdmin: '/staff/companyAdmin/create',
     getAllCompanies: '/company/all',
-    getPaginatedCompanyAdmins: '/staff/companyAdmins'
+    getPaginatedCompanyAdmins: '/staff/companyAdmins',
+    removeStaff: (staffId: number): string => `/staff/${staffId}`,
+    getCompanyAdmin: (id: number): string => `/staff/${id}`,
+    updateStaff: (id: number): string => `/staff/${id}`
 }

@@ -6,7 +6,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import CreateIcon from '@material-ui/icons/Create';
 import InfoIcon from '@material-ui/icons/Info';
-import {AccountBox, SupervisorAccount} from "@material-ui/icons";
+import {SupervisorAccount} from "@material-ui/icons";
 
 export function getCurrentPageIdentifier(pathname: string): JSX.Element{
     let currentPageName;
@@ -38,16 +38,20 @@ export function getCurrentPageIdentifier(pathname: string): JSX.Element{
             break;
         default:
             currentPageName = 'default'
-            if (pathname.includes(spaPaths.companyInfo)) {
+            if (/^\/company\/[\d]+\/about\/?$/g.test(pathname)) {
                 currentPageName = 'Company info';
                 icon = <InfoIcon/>;
             }
-            if (pathname.includes(spaPaths.companyUpdate)) {
+            if (/^\/company\/[\d]+\/update\/?$/g.test(pathname)) {
                 currentPageName = 'Company update';
                 icon = <CreateIcon/>;
             }
-            if (/^\/company\/[\d]+\/admin\/creation$/g.test(pathname)){
+            if (/^\/company\/[\d]+\/admin\/creation\/?$/g.test(pathname)){
                 currentPageName = 'Company admin creation';
+                icon = <CreateIcon/>;
+            }
+            if (/^\/company\/admin\/[\d]+\/update\/?$/g.test(pathname)){
+                currentPageName = 'Company admin update';
                 icon = <CreateIcon/>;
             }
             break;

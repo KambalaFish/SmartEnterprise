@@ -50,7 +50,7 @@ export default function NavBar(): JSX.Element {
 
     const onCompanyInfo = () => {
         const id = 1;
-        history.push(`${spaPaths.companyInfo}${id}`);
+        history.push(spaPaths.companyInfo(id));
         handleCompanyMenuClose();
     }
 
@@ -90,7 +90,7 @@ export default function NavBar(): JSX.Element {
                     <div className={classes.title}/>
                     <div>
                         <Chip
-                            label={'Staff'}
+                            label={'Company administrators'}
                             onClick={handleStaffMenuClick}
                             icon={<ExpandMoreRoundedIcon/>}
                             style={{marginRight: 10}}
@@ -100,8 +100,8 @@ export default function NavBar(): JSX.Element {
                             open={isStaffMenuOpen}
                             onClose={handleStaffMenuClose}
                         >
-                            <MenuItem onClick={onCompanyAdminCreation}>Create company admin</MenuItem>
                             <MenuItem onClick={onAllCompanyAdmins}>All administrators</MenuItem>
+                            <MenuItem onClick={onCompanyAdminCreation}>Create administrator</MenuItem>
                         </CustomMenu>
                         <Chip
                             label={"Company"}

@@ -13,14 +13,14 @@ class StaffResource extends JsonResource
      * @param \Illuminate\Http\Request $request
      * @return array
      */
-    public function toArray($request)
-    {
+    public function toArray($request){
+        $status = $this->status == 'on_vacation'? 'on vacation' : $this->status;
         return [
             'id' => $this->id,
             'name' => $this->name,
             'phoneNumber' => $this->phoneNumber,
             'email' => $this->email,
-            'status' => $this->status,
+            'status' => $status,
             'companyId' => $this->companyId,
             'usertype' => $this->usertype
         ];

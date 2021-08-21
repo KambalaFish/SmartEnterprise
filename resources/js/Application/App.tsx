@@ -16,6 +16,7 @@ import Profile from "./components/Profile/Profile";
 import CompanyAdminCreation from "./components/Staff/CompanyAdmin/Creation/CompanyAdminCreation/CompanyAdminCreation";
 import SelectedCompanyAdminCreation from "./components/Staff/CompanyAdmin/Creation/SelectedCompanyAdminCreation/SelectedCompanyAdminCreation";
 import CompanyAdminTable from "./components/Staff/CompanyAdmin/CompanyAdminTable/CompanyAdminTable";
+import CompanyAdminUpdate from "./components/Staff/CompanyAdmin/Update/CompanyAdminUpdate";
 
 function App(): JSX.Element {
     return (
@@ -26,12 +27,13 @@ function App(): JSX.Element {
                 <MainLayout>
                     <PrivateRoute exact path={spaPaths.allCompanies} component={CompanyTableLayout}/>
                     <PrivateRoute exact path={spaPaths.companyCreation} component={CompanyCreation}/>
-                    <PrivateRoute exact path={spaPaths.companyUpdate + ':id'} component={CompanyUpdate}/>
-                    <PrivateRoute exact path={spaPaths.companyInfo + ':id'} component={CompanyInfo}/>
+                    <PrivateRoute exact path={spaPaths.companyUpdatePath} component={CompanyUpdate}/>
+                    <PrivateRoute exact path={spaPaths.companyInfoPath} component={CompanyInfo}/>
                     <PrivateRoute exact path={spaPaths.profile} component={Profile}/>
                     <PrivateRoute exact path={spaPaths.companyAdminCreation} component={CompanyAdminCreation}/>
                     <PrivateRoute exact path={spaPaths.selectedCompanyAdminCreationPath} component={SelectedCompanyAdminCreation}/>
                     <PrivateRoute exact path={spaPaths.allCompanyAdmins} component={CompanyAdminTable}/>
+                    <PrivateRoute exact path={spaPaths.companyAdminUpdatePath} component={CompanyAdminUpdate}/>
                     <PrivateRoute exact path={[spaPaths.home, '/']} component={Home}/>
                 </MainLayout>
             </Switch>
