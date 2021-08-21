@@ -1,13 +1,9 @@
 import {
     IStaffForm,
-    ErrorBody,
-    IStaffFilter,
     ICompanyCreation,
-    PaginatedTableFetcher, UserStatus
 } from "./InterfacesApi";
 import {Control, FieldErrors, SubmitHandler, UseFormRegister} from "react-hook-form";
 import {Action, CompanyAdminFormDefaultValues} from "./ComponentInterfaces";
-import {ICompanyFilter} from "./InterfacesApi";
 import React from "react";
 import {UseFormHandleSubmit} from "react-hook-form/dist/types/form";
 
@@ -48,11 +44,6 @@ export interface ContactPropsOld {
     firstNameMessage: message;
     lastNameError: boolean;
     lastNameMessage: message;
-}
-
-export interface CompanyFilterProps {
-    setFilter: React.Dispatch<React.SetStateAction<ICompanyFilter>>;
-    companyFilter: ICompanyFilter;
 }
 
 export interface CompanyFormProps {
@@ -106,7 +97,6 @@ export interface CompanyAdminFormProps {
     passwordFieldLabel?: string;
 }
 
-export interface FilterProps<T = unknown> {
-    setFilter: React.Dispatch<React.SetStateAction<T>>;
-    companyFilter: T;
+export interface TablePageHeaderProps{
+    header: string;
 }

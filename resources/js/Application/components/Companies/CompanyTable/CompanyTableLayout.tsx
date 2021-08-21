@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import {Grid, Typography} from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 import {ICompanyFilter} from "../../../utils/Interfaces/InterfacesApi";
 import {CompanyTable} from "./CompanyTable";
-import {useStyles} from "./includes/styles";
 import {SelectFilterField, TableFilter, TextFilterField} from "../../Reusable/TableFilter/TableFilter";
 import {SubmitHandler, useForm} from "react-hook-form";
+import TablePageHeader from "../../Reusable/Headers/TablePageHeader/TablePageHeader";
 export function CompanyTableLayout(): JSX.Element{
     const [companyFilter, setCompanyFilter] = useState<ICompanyFilter>({
         name: '',
@@ -38,17 +38,10 @@ export function CompanyTableLayout(): JSX.Element{
             ]
         }
     ]
-    const classes = useStyles();
 
     return (
         <>
-            <Grid item container direction={'row'} justifyContent={'center'} className={`${classes.mt} ${classes.mb}`}>
-                <Grid item xs={10}>
-                    <Typography variant={'h4'} color='primary'>
-                        Registered companies:
-                    </Typography>
-                </Grid>
-            </Grid>
+            <TablePageHeader header={'Registered companies:'}/>
             <Grid item container direction={'row'} justifyContent={'center'}>
                 <Grid item xs={10}>
                     <TableFilter
