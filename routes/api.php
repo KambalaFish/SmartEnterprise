@@ -26,9 +26,6 @@ Route::post('logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource('companies', CompanyController::class);
-    Route::get('company/{company}/mainAdmin', [CompanyController::class, 'mainAdminContact']);
-    Route::get('company/{company}/itHead', [CompanyController::class, 'itHeadContact']);
-    Route::get('company/{company}/customerManager', [CompanyController::class, 'customerManagerContact']);
     Route::get('company/{company}/info', [CompanyController::class, 'info']);
     Route::get('company/{company}/departments', [CompanyController::class, 'companyDepartments']);
     Route::get('company/{company}/roles', [CompanyController::class, 'companyRoles']);

@@ -67,6 +67,12 @@ function CompanyAdminTable(): JSX.Element {
             .then((result) => {
                 const {response, code} = result;
                 if (code == 200) {
+                    ReactDOM.unstable_batchedUpdates(
+                        ()=>{
+                            setCompanies((response as ResourceCollectionResponse<ICompanyWithId[]>).data);
+                            setLoadingCompanies(false);
+                        }
+                    );
                     setCompanies((response as ResourceCollectionResponse<ICompanyWithId[]>).data);
                 } else {
                     Promise.reject({error: `error code: ${code}`});
@@ -76,7 +82,6 @@ function CompanyAdminTable(): JSX.Element {
                 console.log('reason: ', reason);
                 setAlert(reason.response.error);
             })
-        setLoadingCompanies(false);
     }, []);
 
     const CompanyAdminTableMenu: ClickableButton = (id: number) => {

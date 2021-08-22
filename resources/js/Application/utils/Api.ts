@@ -25,13 +25,9 @@ interface ClientApi {
     logout(): Promise<ApiResponse<never|ErrorBody>>;
     createCompany(company: ICompanyInfo): Promise<ApiResponse<ICompanyWithId|ErrorBody>>;
     updateCompany(id: number, company: ICompanyInfo): Promise<ApiResponse<ICompanyWithId|ErrorBody>>;
-    getPaginatedCompaniesOld(pageNumber: number, filter?: ICompanyFilter): Promise<ApiResponse<PageResponse<ICompany[]> | ErrorBody>>;
     getPaginatedCompanies(pageNumber: number, filter?: ICompanyFilter): Promise<ApiResponse<PageResponse<ICompanyWithId[]> | ErrorBody>>;
     getCompany(id: number): Promise<ApiResponse<ICompany | ErrorBody>>;
     getCompanyInfo(id: number): Promise<ApiResponse<ICompanyInfo | ErrorBody>>;
-    getCompanyMainAdminContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>;
-    getCompanyItHeadContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>;
-    getCompanyCustomerManagerContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>;
     deleteCompany(companyId: number): Promise<ApiResponse<string|ErrorBody>>;
     getPaginatedCompanyDepartments(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<IDepartment[]> | ErrorBody>>;
     getPaginatedCompanyRoles(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<IRole[]> | ErrorBody>>;
@@ -90,23 +86,6 @@ class ClientApiImpl implements ClientApi {
             .catch(errorHandler);
     }
 
-    getPaginatedCompaniesOld(pageNumber: number, filter?: ICompanyFilter): Promise<ApiResponse<PageResponse<ICompany[]> | ErrorBody>>{
-        return apiInstance
-            .get<PageResponse<ICompany[]>>(apiPaths.getCompanies, {
-                params: {
-                    page: pageNumber,
-                    name: filter?.name,
-                    country: filter?.country,
-                    city: filter?.city,
-                    address: filter?.address,
-                    status: filter?.status,
-                    zipCode: filter?.zipCode
-                }
-            })
-            .then(confirmationHandler)
-            .catch(errorHandler);
-    }
-
     getPaginatedCompanies(pageNumber: number, filter?: ICompanyFilter): Promise<ApiResponse<PageResponse<ICompanyWithId[]> | ErrorBody>>{
         return apiInstance
             .get<PageResponse<ICompanyWithId[]>>(apiPaths.getCompanies, {
@@ -134,25 +113,6 @@ class ClientApiImpl implements ClientApi {
     getCompanyInfo(id: number): Promise<ApiResponse<ICompanyInfo | ErrorBody>>{
         return apiInstance
             .get<ICompanyInfo>(apiPaths.getCompanyInfo(id))
-            .then(confirmationHandler)
-            .catch(errorHandler);
-    }
-
-    getCompanyMainAdminContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>{
-        return apiInstance
-            .get<ContactResponse>(apiPaths.getCompanyMainAdmin(companyId))
-            .then(confirmationHandler)
-            .catch(errorHandler);
-    }
-    getCompanyItHeadContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>{
-        return apiInstance
-            .get<ContactResponse>(apiPaths.getCompanyItHead(companyId))
-            .then(confirmationHandler)
-            .catch(errorHandler);
-    }
-    getCompanyCustomerManagerContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>{
-        return apiInstance
-            .get<ContactResponse>(apiPaths.getCompanyCustomerManager(companyId))
             .then(confirmationHandler)
             .catch(errorHandler);
     }

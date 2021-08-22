@@ -129,29 +129,6 @@ class CompanyController extends Controller
         return response($name.' company was deleted successfully');
     }
 
-    /**
-    * @param  \App\Models\Company  $company
-    * @return \Illuminate\Http\Response
-    */
-    public function mainAdminContact(Company $company){
-        return response(MainAdminContactResource::make($company->mainAdminContact));
-    }
-
-    /**
-    * @param  \App\Models\Company  $company
-    * @return \Illuminate\Http\Response
-    */
-    public function itHeadContact(Company $company){
-        return response(ItHeadContactResource::make($company->itHeadContact));
-    }
-
-    /**
-    * @param  \App\Models\Company  $company
-    * @return \Illuminate\Http\Response
-    */
-    public function customerManagerContact(Company $company){
-        return response(CustomerManagerContactResource::make($company->customerManagerContact));
-    }
     public function companyDepartments(Company $company){
         return DepartmentResourceCollection::make($company->departments()->paginate(5));
     }

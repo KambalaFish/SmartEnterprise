@@ -3,7 +3,7 @@ import {
     ErrorBody,
     PaginatedTableFetcher,
     PageResponse,
-    ICompany, IDepartment, IRole, ITeam, IStaffWithCompanyName, IStaffFilter
+    ICompany, IDepartment, IRole, ITeam, IStaffWithCompanyName, IStaffFilter, ICompanyWithId
 } from "./Interfaces/InterfacesApi";
 import api from "./Api";
 import {ICompanyFilter} from "./Interfaces/InterfacesApi";
@@ -25,9 +25,9 @@ function confirmationHandler<T>(result: ApiResponse<PageResponse<T[]>|ErrorBody>
     } as PaginatedTableFetcher<T>;
 }
 
-export function getCompanies(pageNumber: number, filter?: ICompanyFilter): Promise<PaginatedTableFetcher<ICompany> | ErrorBody> {
+export function getCompanies(pageNumber: number, filter?: ICompanyFilter): Promise<PaginatedTableFetcher<ICompanyWithId> | ErrorBody> {
     return api()
-        .getPaginatedCompaniesOld(pageNumber, filter)
+        .getPaginatedCompanies(pageNumber, filter)
         .then((res) => confirmationHandler(res))
         .catch(errorHandler);
 }
