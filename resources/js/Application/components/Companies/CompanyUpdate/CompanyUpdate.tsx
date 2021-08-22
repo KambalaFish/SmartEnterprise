@@ -1,48 +1,65 @@
-import React, {useEffect, useState} from 'react';
-import {RouteComponentProps} from 'react-router-dom';
-import {Grid, CircularProgress, Paper} from "@material-ui/core";
-import {Contact, ICompany, ICompanyCreation} from "../../../utils/Interfaces/InterfacesApi";
+import React, {useEffect, useState} from "react";
 import api from "../../../utils/Api";
+import {ApiResponse, ICompanyInfo} from "../../../utils/Interfaces/InterfacesApi";
+import {RouteComponentProps} from "react-router-dom";
+import {CircularProgress, Grid} from "@material-ui/core";
+import FormLayout from "../../Reusable/Layout/FormLayout/FormLayout";
 import PageHeader from "../../Reusable/Headers/PageHeader/PageHeader";
 import CompanyUpdateForm from "./includes/CompanyUpdateForm";
+import CustomAlert from "../../Reusable/CustomAlert/CustomAlert";
+import CustomSuccessMessage from "../../Reusable/CustomSuccessMessage/CustomSuccessMessage";
 
-export function CompanyUpdate({match, location, history}: RouteComponentProps<Record<'id', string>>): JSX.Element {
+function CompanyUpdate({match}: RouteComponentProps<Record<'id', string>>): JSX.Element{
     const id: number = parseInt(match.params.id);
-    const [company, setCompany] = useState<ICompanyCreation>();
+    const [company, setCompany] = useState<ICompanyInfo>();
+    const [success, setSuccess] = useState<string|null>(null);
+    const [alert, setAlert] = useState<string|null>(null);
+    function onSuccessClose() {
+        setSuccess(null);
+    }
+    function onAlertClose(){
+        setAlert(null);
+    }
 
     useEffect(() => {
-        const companyPromise = api().getCompany(id);
-        const mainAdminPromise = api().getCompanyMainAdminContact(id);
-        const itHeadPromise = api().getCompanyItHeadContact(id);
-        const customerManagerPromise = api().getCompanyCustomerManagerContact(id);
-        Promise
-            .all([companyPromise, mainAdminPromise, itHeadPromise, customerManagerPromise])
-            .then(
-                values => {
-                    const companyInfo: ICompany = values[0].response as ICompany;
-                    const mainAdminInfo: Contact = values[1].response as Contact;
-                    const itHeadInfo: Contact = values[2].response as Contact;
-                    const customerManagerInfo: Contact = values[3].response as Contact;
-                    const result: ICompanyCreation = {
-                        ...companyInfo,
-                        admin: mainAdminInfo,
-                        itHead: itHeadInfo,
-                        customerManager: customerManagerInfo
-                    }
-                    setCompany(result);
-                }
-            )
+        api()
+            .getCompanyInfo(id)
+            .then((result) => {
+                const {response} = result as ApiResponse<ICompanyInfo>;
+                setCompany(response)
+            })
+            .catch(reason => setAlert(reason.response.error));
     }, [id]);
 
-    return company ?
-        <Grid container direction={'column'} alignItems={'center'} justifyContent={'center'}>
-            <PageHeader headerText={`Update ${company.name} company`}/>
-            <CompanyUpdateForm id={id} company={company}/>
-        </Grid>
-        :
-        <Grid container direction={'column'} alignItems={'center'} justifyContent={'center'}>
-            <Grid item xs={6}>
-                <CircularProgress/>
+    function onSuccess(message: string): void{
+        setSuccess(message);
+    }
+    function onFailure(message: string): void{
+        setAlert(message);
+    }
+
+    return (
+        company?
+            <>
+                <CustomSuccessMessage message={success} onClose={onSuccessClose}/>
+                <CustomAlert alert={alert} onAlertClose={onAlertClose}/>
+                <PageHeader headerText={`Update ${company.name} company`}/>
+                <FormLayout xs={6}>
+                    <CompanyUpdateForm
+                        id={id}
+                        company={company}
+                        onSuccess={onSuccess}
+                        onFailure={onFailure}
+                    />
+                </FormLayout>
+            </>
+            :
+            <Grid item container direction={'row'} justifyContent={'center'} alignContent={'center'}>
+                <Grid item xs={6}>
+                    <CircularProgress/>
+                </Grid>
             </Grid>
-        </Grid>
+    )
 }
+
+export default CompanyUpdate;

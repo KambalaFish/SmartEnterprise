@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Contacts\CustomerManagerContact;
-use App\Models\Contacts\ItHeadContact;
+use App\Models\Contacts\ItDepartmentContact;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Contacts\MainAdminContact;
@@ -27,8 +27,8 @@ class Company extends Model
 //        return $this->hasOne(MainAdminContact::class, 'companyId', 'id');
         return $this->hasOne(MainAdminContact::class, $this->foreignKey, $this->primaryKey);
     }
-    public function itHeadContact(){
-        return $this->hasOne(ItHeadContact::class, $this->foreignKey, $this->primaryKey);
+    public function itDepartmentContact(){
+        return $this->hasOne(ItDepartmentContact::class, $this->foreignKey, $this->primaryKey);
     }
     public function customerManagerContact(){
         return $this->hasOne(CustomerManagerContact::class, $this->foreignKey, $this->primaryKey);

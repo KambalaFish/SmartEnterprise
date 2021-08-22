@@ -2,13 +2,13 @@
 
 namespace App\Models\Contacts;
 
-use Database\Factories\Contacts\ItHeadContactFactory;
+use Database\Factories\Contacts\ItDepartmentContactFactory;
 use Illuminate\Support\Facades\DB;
 
-class ItHeadContact extends Contact{
+class ItDepartmentContact extends Contact{
 
     protected static function newFactory(){
-        return ItHeadContactFactory::new();
+        return ItDepartmentContactFactory::new();
     }
 
     protected $table = 'itDepartmentContact';

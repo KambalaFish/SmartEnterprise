@@ -1,39 +1,43 @@
 import React from "react";
-import {CompanyForm} from "../../CompanyCreation/includes/CompanyForm";
-import FormLayout from "../../../Reusable/Layout/FormLayout/FormLayout";
+import {CompanyForm} from "../../CompanyForm/CompanyForm";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {ICompanyCreation, ICompanyWithId} from "../../../../utils/Interfaces/InterfacesApi";
+import {ICompanyInfo, ICompanyWithId} from "../../../../utils/Interfaces/InterfacesApi";
 import api from "../../../../utils/Api";
-import {upsertCompany} from "../../../../redux/slices/companySlice";
-import {useAppDispatch} from "../../../../redux/reduxHooks";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {companyFormValidationSchema} from "../../../../utils/ValidationSchemas/CompanyValidations/companyFormValidationSchema";
-import {UpdateFormProps} from "../../../../utils/Interfaces/PropsInterfaces";
 
-function CompanyUpdateForm({id, company}: UpdateFormProps): JSX.Element {
+interface CompanyUpdateFormProps {
+    id: number,
+    company: ICompanyInfo;
+    onSuccess: (message: string) => void;
+    onFailure: (message: string) => void;
+}
 
-    const dispatch = useAppDispatch();
-    const {handleSubmit, control, formState: {errors}} = useForm<ICompanyCreation>(
+function CompanyUpdateForm({id, company, onSuccess, onFailure}: CompanyUpdateFormProps): JSX.Element {
+
+    const {handleSubmit, control, formState: {errors}} = useForm<ICompanyInfo>(
         {
             resolver: yupResolver(companyFormValidationSchema),
             defaultValues: company
         }
     );
-    const onSubmit: SubmitHandler<ICompanyCreation> = (data: ICompanyCreation) => {
+    const onSubmit: SubmitHandler<ICompanyInfo> = (data: ICompanyInfo) => {
         api()
             .updateCompany(id, data)
             .then((value) => {
                 const response = value.response as ICompanyWithId;
-                dispatch(upsertCompany(response));
-                alert(`updated company with id: ${response.id}`);
+                onSuccess(`${response.name} company was updated successfully`);
             })
-            .catch((reason) => alert('Error message: ' + reason.response.error));
+            .catch(reason => onFailure(reason.response.error));
     }
 
-    return <FormLayout xs={6}>
-        <CompanyForm handleSubmit={handleSubmit} control={control} errors={errors} onSubmit={onSubmit}
-                     buttonName={'update'}/>
-    </FormLayout>
+    return <CompanyForm
+        handleSubmit={handleSubmit}
+        control={control}
+        errors={errors}
+        onSubmit={onSubmit}
+        buttonName={'update'}
+    />;
 }
 
 export default CompanyUpdateForm;

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Company;
 use App\Models\Contacts\CustomerManagerContact;
-use App\Models\Contacts\ItHeadContact;
+use App\Models\Contacts\ItDepartmentContact;
 use App\Models\Role;
 use App\Models\Staff;
 use App\Models\Team;
@@ -62,12 +62,12 @@ class CompanySeeder extends Seeder
                 'mainAdminContact'
             )
             ->has(
-                ItHeadContact::factory()
+                ItDepartmentContact::factory()
                     ->count(1)
                     ->state(function (array $attributes, Company $company) {
                         return ['companyId' => $company->id];
                     }),
-                'itHeadContact'
+                'itDepartmentContact'
             )
             ->has(
                 CustomerManagerContact::factory()

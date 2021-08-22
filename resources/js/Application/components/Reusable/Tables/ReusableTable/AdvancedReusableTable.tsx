@@ -5,6 +5,7 @@ import {ActionColumn, Column} from "../../../../utils/Interfaces/PropsInterfaces
 import {PaginatedTable} from "../PaginatedTable/PaginatedTable";
 import {CustomPagination} from "../PaginatedTable/CustomPagination/CustomPagination";
 import {CircularProgress} from "@material-ui/core";
+import useUpdateEffect from "../../../../utils/useUpdateEffect";
 
 interface AdvancedReusableTableProps{
     fetcher: (pageNumber: number) => Promise<PaginatedTableFetcher | ErrorBody>;
@@ -45,26 +46,26 @@ export function AdvancedReusableTable({fetcher, tableCellHeight, columns, action
             });
     }, [pageNumber]);
 
-    useEffect(() => {
-        fetcher(1)
-            .then((result) => {
-                const {data, perPage: perPageResponse, lastPage} = result as PaginatedTableFetcher;
-                const dif = perPageResponse - data.length;
-                ReactDOM.unstable_batchedUpdates(()=>{
-                   setData(data);
-                   setPageNumber(1);
-                   if(lastPage!=pageCount)
-                       setPageCount(lastPage);
-                   if(perPageResponse!=perPage)
-                       setPerPage(perPageResponse);
-                   if (dif!=emptyRowsNumber)
-                       setEmptyRowsN(dif);
-                });
-            })
-            .catch((reason: ErrorBody) => onCatch(reason.error));
+    useUpdateEffect(() => {
+            fetcher(1)
+                .then((result) => {
+                    const {data, perPage: perPageResponse, lastPage} = result as PaginatedTableFetcher;
+                    const dif = perPageResponse - data.length;
+                    ReactDOM.unstable_batchedUpdates(()=>{
+                       setData(data);
+                       setPageNumber(1);
+                       if(lastPage!=pageCount)
+                           setPageCount(lastPage);
+                       if(perPageResponse!=perPage)
+                           setPerPage(perPageResponse);
+                       if (dif!=emptyRowsNumber)
+                           setEmptyRowsN(dif);
+                    });
+                })
+                .catch((reason: ErrorBody) => onCatch(reason.error));
     }, [activateFilterEffect]);
 
-    useEffect(() => {
+    useUpdateEffect(() => {
         fetcher(pageNumber)
             .then((result)=>{
                 const {data, perPage: perPageResponse, lastPage} = result as PaginatedTableFetcher;

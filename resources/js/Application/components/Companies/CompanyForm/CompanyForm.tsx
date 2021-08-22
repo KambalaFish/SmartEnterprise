@@ -4,11 +4,11 @@ import {
     Grid,
     TextField
 } from "@material-ui/core";
-import {ParagraphHeader} from "../../../Reusable/Headers/ParagraphHeader/ParagraphHeader";
+import {ParagraphHeader} from "../../Reusable/Headers/ParagraphHeader/ParagraphHeader";
 import {Controller} from "react-hook-form";
-import {Contact} from "./Contact";
-import {useStyles} from "./styles";
-import {CompanyFormProps} from "../../../../utils/Interfaces/PropsInterfaces";
+import {Contact} from "./includes/Contact";
+import {useStyles} from "./includes/styles";
+import {CompanyFormProps} from "../../../utils/Interfaces/PropsInterfaces";
 
 export function CompanyForm({handleSubmit, errors, control, onSubmit, buttonName}: CompanyFormProps): JSX.Element{
     const classes = useStyles();
@@ -159,44 +159,44 @@ export function CompanyForm({handleSubmit, errors, control, onSubmit, buttonName
 
             <ParagraphHeader headerText={'Administrator contact:'}/>
             <Contact
-                who={'admin'}
+                who={'mainAdminContact'}
                 control={control}
-                firstNameError={!!errors.admin?.firstName}
-                firstNameMessage={errors.admin?.firstName?.message}
-                lastNameError={!!errors.admin?.lastName?.message}
-                lastNameMessage={errors.admin?.lastName?.message}
-                emailError={!!errors.admin?.email}
-                emailErrorMessage={errors.admin?.email?.message}
-                phoneError={!!errors.admin?.phone}
-                phoneErrorMessage={errors.admin?.phone?.message}
+                firstNameError={!!errors.mainAdminContact?.firstName}
+                firstNameMessage={errors.mainAdminContact?.firstName?.message}
+                lastNameError={!!errors.mainAdminContact?.lastName?.message}
+                lastNameMessage={errors.mainAdminContact?.lastName?.message}
+                emailError={!!errors.mainAdminContact?.email}
+                emailErrorMessage={errors.mainAdminContact?.email?.message}
+                phoneError={!!errors.mainAdminContact?.phoneNumber}
+                phoneErrorMessage={errors.mainAdminContact?.phoneNumber?.message}
             />
 
             <ParagraphHeader headerText={'IT head contact:'}/>
             <Contact
-                who={'itHead'}
+                who={'itDepartmentContact'}
                 control={control}
-                firstNameError={!!errors.itHead?.firstName}
-                firstNameMessage={errors.itHead?.firstName?.message}
-                lastNameError={!!errors.itHead?.lastName?.message}
-                lastNameMessage={errors.itHead?.lastName?.message}
-                emailError={!!errors.itHead?.email}
-                emailErrorMessage={errors.itHead?.email?.message}
-                phoneError={!!errors.itHead?.phone}
-                phoneErrorMessage={errors.itHead?.phone?.message}
+                firstNameError={!!errors.itDepartmentContact?.firstName}
+                firstNameMessage={errors.itDepartmentContact?.firstName?.message}
+                lastNameError={!!errors.itDepartmentContact?.lastName?.message}
+                lastNameMessage={errors.itDepartmentContact?.lastName?.message}
+                emailError={!!errors.itDepartmentContact?.email}
+                emailErrorMessage={errors.itDepartmentContact?.email?.message}
+                phoneError={!!errors.itDepartmentContact?.phoneNumber}
+                phoneErrorMessage={errors.itDepartmentContact?.phoneNumber?.message}
             />
 
             <ParagraphHeader headerText={'Customer manager contact:'}/>
             <Contact
-                who={'customerManager'}
+                who={'customerManagerContact'}
                 control={control}
-                firstNameError={!!errors.customerManager?.firstName}
-                firstNameMessage={errors.customerManager?.firstName?.message}
-                lastNameError={!!errors.customerManager?.lastName?.message}
-                lastNameMessage={errors.customerManager?.lastName?.message}
-                emailError={!!errors.customerManager?.email}
-                emailErrorMessage={errors.customerManager?.email?.message}
-                phoneError={!!errors.customerManager?.phone}
-                phoneErrorMessage={errors.customerManager?.phone?.message}
+                firstNameError={!!errors.customerManagerContact?.firstName}
+                firstNameMessage={errors.customerManagerContact?.firstName?.message}
+                lastNameError={!!errors.customerManagerContact?.lastName?.message}
+                lastNameMessage={errors.customerManagerContact?.lastName?.message}
+                emailError={!!errors.customerManagerContact?.email}
+                emailErrorMessage={errors.customerManagerContact?.email?.message}
+                phoneError={!!errors.customerManagerContact?.phoneNumber}
+                phoneErrorMessage={errors.customerManagerContact?.phoneNumber?.message}
             />
 
             <Grid item container direction={'row'} xs={12} spacing={2} justifyContent={'center'} className={classes.mt}>

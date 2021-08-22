@@ -5,8 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreCompanyRequest extends FormRequest
-{
+class CompanyRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -40,7 +39,7 @@ class StoreCompanyRequest extends FormRequest
                 'regex:'.$this->nameRegEx,
                 'nullable'
             ],
-            $name.'.phone' => [
+            $name.'.phoneNumber' => [
                 'required_with:'.$name.'.firstName,'.$name.'.lastName,'.$name.'.email',
                 'string',
                 'regex:'.$this->phoneRegEx,
@@ -65,7 +64,7 @@ class StoreCompanyRequest extends FormRequest
         return [
             $name.'.firstName' => $this->nameValidation(),
             $name.'.lastName' => $this->nameValidation(),
-            $name.'.phone' => ['required', 'string', 'regex:'.$this->phoneRegEx],
+            $name.'.phoneNumber' => ['required', 'string', 'regex:'.$this->phoneRegEx],
             $name.'.email' => ['required', 'string', 'email']
         ];
     }
@@ -78,18 +77,17 @@ class StoreCompanyRequest extends FormRequest
     public function rules(){
         return [
             'name' => $this->nameValidation(),
-//            'country' => ['required', 'string', 'regex:'.$this->countryRegEx],
             'country' => $this->nameValidation(),
             'city' => $this->nameValidation(),
             'address' => ['required', 'string'],
             'zipCode' => ['required', 'integer','min:1'],
             'status' => ['required', Rule::in(['served', 'not served'])],
             ]
-            + $this->contactRequiredAll('admin')
-            + $this->contactRequiredAll('itHead')
-            + $this->contactRequiredAll('customerManager');
-//        + $this->contactRequiredRow('admin')
-//        + $this->contactRequiredRow('itHead')
-//        + $this->contactRequiredRow('customerManager');
+            + $this->contactRequiredAll('mainAdminContact')
+            + $this->contactRequiredAll('itDepartmentContact')
+            + $this->contactRequiredAll('customerManagerContact');
+//        + $this->contactRequiredRow('mainAdminContact')
+//        + $this->contactRequiredRow('itDepartmentContact')
+//        + $this->contactRequiredRow('customerManagerContact');
     }
 }

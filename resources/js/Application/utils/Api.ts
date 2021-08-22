@@ -7,14 +7,13 @@ import {
     Credentials,
     ErrorBody,
     ICompany,
-    ICompanyCreation,
     ICompanyWithId,
     IDepartment,
     IRole,
     ITeam,
     ResourceCollectionResponse,
     IStaff,
-    IStaffWithCompanyName, IStaffFilter,
+    IStaffWithCompanyName, IStaffFilter, ICompanyInfo,
 } from "./Interfaces/InterfacesApi";
 import {PageResponse} from "./Interfaces/InterfacesApi";
 import {ICompanyFilter} from "./Interfaces/InterfacesApi";
@@ -24,11 +23,12 @@ import {apiInstance, instance} from "./Instances";
 interface ClientApi {
     login(credentials: Credentials) : Promise<ApiResponse<AuthenticatedUser|ErrorBody>>;
     logout(): Promise<ApiResponse<never|ErrorBody>>;
-    createCompany(company: ICompanyCreation): Promise<ApiResponse<ICompanyWithId|ErrorBody>>;
-    updateCompany(id: number, company: ICompanyCreation): Promise<ApiResponse<ICompanyWithId|ErrorBody>>;
+    createCompany(company: ICompanyInfo): Promise<ApiResponse<ICompanyWithId|ErrorBody>>;
+    updateCompany(id: number, company: ICompanyInfo): Promise<ApiResponse<ICompanyWithId|ErrorBody>>;
     getPaginatedCompaniesOld(pageNumber: number, filter?: ICompanyFilter): Promise<ApiResponse<PageResponse<ICompany[]> | ErrorBody>>;
     getPaginatedCompanies(pageNumber: number, filter?: ICompanyFilter): Promise<ApiResponse<PageResponse<ICompanyWithId[]> | ErrorBody>>;
     getCompany(id: number): Promise<ApiResponse<ICompany | ErrorBody>>;
+    getCompanyInfo(id: number): Promise<ApiResponse<ICompanyInfo | ErrorBody>>;
     getCompanyMainAdminContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>;
     getCompanyItHeadContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>;
     getCompanyCustomerManagerContact(companyId: number): Promise<ApiResponse<ContactResponse | ErrorBody>>;
@@ -76,14 +76,14 @@ class ClientApiImpl implements ClientApi {
             .catch(errorHandler);
     }
 
-    createCompany(company: ICompanyCreation): Promise<ApiResponse<ICompanyWithId|ErrorBody>>{
+    createCompany(company: ICompanyInfo): Promise<ApiResponse<ICompanyWithId|ErrorBody>>{
         return apiInstance
             .post<ICompanyWithId>(apiPaths.createCompany, company)
             .then(confirmationHandler)
             .catch(errorHandler);
     }
 
-    updateCompany(id: number, company: ICompanyCreation): Promise<ApiResponse<ICompanyWithId | ErrorBody>> {
+    updateCompany(id: number, company: ICompanyInfo): Promise<ApiResponse<ICompanyWithId | ErrorBody>> {
         return apiInstance
             .put<ICompanyWithId>(apiPaths.updateCompany+id, company)
             .then(confirmationHandler)
@@ -127,6 +127,13 @@ class ClientApiImpl implements ClientApi {
     getCompany(id: number): Promise<ApiResponse<ICompany | ErrorBody>>{
         return apiInstance
             .get<ICompany>(apiPaths.getCompany+id)
+            .then(confirmationHandler)
+            .catch(errorHandler);
+    }
+
+    getCompanyInfo(id: number): Promise<ApiResponse<ICompanyInfo | ErrorBody>>{
+        return apiInstance
+            .get<ICompanyInfo>(apiPaths.getCompanyInfo(id))
             .then(confirmationHandler)
             .catch(errorHandler);
     }

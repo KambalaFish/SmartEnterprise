@@ -8,7 +8,7 @@ function contactRequired(){
         {
             firstName: yup.string().matches(nameRegEx, nameMessage).required(requiredMessage).trim(),
             lastName: yup.string().matches(nameRegEx, nameMessage).required(requiredMessage).trim(),
-            phone: yup.string().matches(phoneRegEx, phoneMessage).required(requiredMessage).trim(),
+            phoneNumber: yup.string().matches(phoneRegEx, phoneMessage).required(requiredMessage).trim(),
             email: yup.string().email(emailMessage).required(requiredMessage).trim(),
         }
     )
@@ -22,9 +22,9 @@ export const companyFormValidationSchema = yup.object().shape({
     address: yup.string().required(requiredMessage).trim(),
     zipCode: yup.number().positive(positiveNumberMessage).integer(integerNumberMessage).required(requiredMessage).typeError(numberMessage),
 
-    admin: contactRequired(),
-    itHead: contactRequired(),
-    customerManager: contactRequired(),
+    mainAdminContact: contactRequired(),
+    itDepartmentContact: contactRequired(),
+    customerManagerContact: contactRequired(),
 });
 
 // function contact(){

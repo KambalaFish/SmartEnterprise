@@ -32,6 +32,7 @@ export const apiPaths = {
     updateCompany: '/companies/',
     getCompanies: '/companies',
     getCompany: '/companies/',
+    getCompanyInfo: (id: number): string => `/company/${id}/info`,
     getCompanyMainAdmin: (companyId: number): string => `/company/${companyId}/mainAdmin/`,
     getCompanyItHead: (companyId: number): string => `/company/${companyId}/itHead`,
     getCompanyCustomerManager: (companyId: number): string => `/company/${companyId}/customerManager/`,

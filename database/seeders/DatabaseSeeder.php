@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Company;
 use App\Models\Contacts\CustomerManagerContact;
-use App\Models\Contacts\ItHeadContact;
+use App\Models\Contacts\ItDepartmentContact;
 use App\Models\Contacts\MainAdminContact;
 use App\Models\Department;
 use App\Models\Role;
@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         Company::truncateTable();
         Department::truncateTable();
         MainAdminContact::truncateTable();
-        ItHeadContact::truncateTable();
+        ItDepartmentContact::truncateTable();
         CustomerManagerContact::truncateTable();
         Staff::truncateTable();
         Role::truncateTable();

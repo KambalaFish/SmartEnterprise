@@ -19,7 +19,7 @@ class ItHeadContactResource extends JsonResource
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
             'email' => $this->email,
-            'phone' => $this->phoneNumber,
+            'phoneNumber' => $this->phoneNumber,
         ];
     }
 }

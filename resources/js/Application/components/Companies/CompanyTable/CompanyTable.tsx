@@ -1,4 +1,4 @@
-import React, {BaseSyntheticEvent, useEffect, useState} from "react";
+import React, {BaseSyntheticEvent, useState} from "react";
 import {getCompanies} from "../../../utils/FetchFunctions";
 import {ActionColumn, Column} from "../../../utils/Interfaces/PropsInterfaces";
 import {FormControl, Grid, Select} from "@material-ui/core";
@@ -15,6 +15,7 @@ import TablePageHeader from "../../Reusable/Headers/TablePageHeader/TablePageHea
 import CustomAlert from "../../Reusable/CustomAlert/CustomAlert";
 import CustomSuccessMessage from "../../Reusable/CustomSuccessMessage/CustomSuccessMessage";
 import ReactDOM from "react-dom";
+import useUpdateEffect from "../../../utils/useUpdateEffect";
 
 function CompanyTable(): JSX.Element{
     const history = useHistory();
@@ -55,9 +56,9 @@ function CompanyTable(): JSX.Element{
         }
     ]
 
-    useEffect(() => {
+    useUpdateEffect(() => {
         setFilterEffectActivation(!activateFilterEffect);
-    }, [companyFilter]);
+    }, [companyFilter])
 
     const CompanyTableMenu: ClickableButton = (id: number) =>{
         function handleClick(event: BaseSyntheticEvent){

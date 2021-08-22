@@ -5,8 +5,9 @@ import SignIn from "./components/Auth/SignIn/SignIn";
 import {spaPaths} from "./utils/utils";
 import {MainLayout} from "./components/Reusable/Layout/MainLayout/MainLayout";
 import Home from "./components/Home/Home";
-import {CompanyCreation} from "./components/Companies/CompanyCreation/CompanyCreation";
-import {CompanyUpdate} from "./components/Companies/CompanyUpdate/CompanyUpdate";
+import CompanyCreationReduxVersion from "./components/Companies/CompanyCreation/ReduxVersion/CompanyCreationReduxVersion";
+import {CompanyUpdateReduxVersion} from "./components/Companies/CompanyUpdate/ReduxVersion/CompanyUpdateReduxVersion";
+import CompanyCreation from "./components/Companies/CompanyCreation/CompanyCreation";
 import CompanyInfo from "./components/Companies/CompanyInfo/CompanyInfo";
 import PrivateRoute from "./utils/CustomRoutes/PrivateRoute";
 import {ProvideAuth} from "./components/Auth/Authentication";
@@ -17,6 +18,7 @@ import SelectedCompanyAdminCreation from "./components/Staff/CompanyAdmin/Creati
 import CompanyAdminTable from "./components/Staff/CompanyAdmin/CompanyAdminTable/CompanyAdminTable";
 import CompanyAdminUpdate from "./components/Staff/CompanyAdmin/Update/CompanyAdminUpdate";
 import CompanyTable from "./components/Companies/CompanyTable/CompanyTable";
+import CompanyUpdate from "./components/Companies/CompanyUpdate/CompanyUpdate";
 
 function App(): JSX.Element {
     return (

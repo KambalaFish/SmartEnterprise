@@ -10,7 +10,7 @@ export function Contact({who, control, phoneError, phoneErrorMessage, emailError
                 <Grid item xs={3}>
                     <Controller
                         control={control}
-                        name={(who+'.firstName') as 'admin.firstName' | 'itHead.firstName' | 'customerManager.firstName'}
+                        name={(who+'.firstName') as 'mainAdminContact.firstName' | 'itDepartmentContact.firstName' | 'customerManagerContact.firstName'}
                         render={
                             ({field}) =>
                                 <TextField
@@ -33,7 +33,7 @@ export function Contact({who, control, phoneError, phoneErrorMessage, emailError
                 <Grid item xs={3}>
                     <Controller
                         control={control}
-                        name={(who+'.lastName') as 'admin.lastName' | 'itHead.lastName' | 'customerManager.lastName'}
+                        name={(who+'.lastName') as 'mainAdminContact.lastName' | 'itDepartmentContact.lastName' | 'customerManagerContact.lastName'}
                         render={
                             ({field}) =>
                                 <TextField
@@ -56,7 +56,7 @@ export function Contact({who, control, phoneError, phoneErrorMessage, emailError
                 <Grid item xs={3}>
                     <Controller
                         control={control}
-                        name={(who+'.email') as 'admin.email' | 'itHead.email' | 'customerManager.email'}
+                        name={(who+'.email') as 'mainAdminContact.email' | 'itDepartmentContact.email' | 'customerManagerContact.email'}
                         render={
                             ({field}) =>
                                 <TextField
@@ -79,7 +79,7 @@ export function Contact({who, control, phoneError, phoneErrorMessage, emailError
                 <Grid item xs={3}>
                     <Controller
                         control={control}
-                        name={(who+'.phone') as 'admin.phone' | 'itHead.phone' | 'customerManager.phone'}
+                        name={(who+'.phoneNumber') as 'mainAdminContact.phoneNumber' | 'itDepartmentContact.phoneNumber' | 'customerManagerContact.phoneNumber'}
                         render={
                             ({field}) =>
                                 <TextField

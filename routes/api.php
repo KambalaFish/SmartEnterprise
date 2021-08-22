@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('company/{company}/mainAdmin', [CompanyController::class, 'mainAdminContact']);
     Route::get('company/{company}/itHead', [CompanyController::class, 'itHeadContact']);
     Route::get('company/{company}/customerManager', [CompanyController::class, 'customerManagerContact']);
+    Route::get('company/{company}/info', [CompanyController::class, 'info']);
     Route::get('company/{company}/departments', [CompanyController::class, 'companyDepartments']);
     Route::get('company/{company}/roles', [CompanyController::class, 'companyRoles']);
     Route::get('company/{company}/teams', [CompanyController::class, 'companyTeams']);

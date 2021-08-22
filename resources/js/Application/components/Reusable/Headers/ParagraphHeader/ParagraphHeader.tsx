@@ -6,7 +6,7 @@ import {HeaderProps} from "../../../../utils/Interfaces/PropsInterfaces";
 export function ParagraphHeader({headerText}: HeaderProps): JSX.Element{
     const classes = useStyles();
     return (
-        <Grid item xs={11} className={`${classes.mt} ${classes.mb}`}>
+        <Grid item xs={12} className={`${classes.mt} ${classes.mb}`}>
             <Typography variant={'h6'} align={'left'} className={classes.formHeader}>
                 {headerText}
             </Typography>

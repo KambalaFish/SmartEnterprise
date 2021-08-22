@@ -21,15 +21,32 @@ export interface PaginatedTableFetcher<T = unknown> {
 type Status = 'served' | 'not served';
 export interface ICompany{
     name: string;
-    status: Status;
     country: string;
     city: string;
     address: string;
-    zipCode: number;
+    zipCode: number|'';
+    status: Status;
 }
 
 export interface ICompanyWithId extends ICompany{
     id: number;
+}
+
+export interface ICompanyInfo extends ICompanyWithId{
+    mainAdminContact: ContactResponse;
+    itDepartmentContact: ContactResponse;
+    customerManagerContact: ContactResponse;
+}
+
+export interface Contact{
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+}
+
+export interface ContactResponse extends Contact{
+    companyId: number;
 }
 
 interface PageMetaData{
@@ -43,29 +60,6 @@ export interface ResourceCollectionResponse<T>{
 
 export interface PageResponse<T> extends ResourceCollectionResponse<T>{
     meta: PageMetaData;
-}
-
-export interface Contact{
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-}
-
-export interface ContactResponse extends Contact{
-    companyId: number;
-}
-
-export interface ICompanyCreation {
-    name: string;
-    status: Status;
-    country: string;
-    city: string;
-    address: string;
-    zipCode: number|string;
-    admin?: Contact;
-    itHead?: Contact;
-    customerManager?: Contact;
 }
 
 export interface ICompanyFilter {

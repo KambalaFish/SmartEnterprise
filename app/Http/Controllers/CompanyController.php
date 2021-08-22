@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCompanyRequest;
+use App\Http\Requests\CompanyRequest;
+use App\Http\Resources\CompanyInfoResource;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\CompanyResourceCollection;
 use App\Http\Resources\CustomerManagerContactResource;
@@ -16,6 +17,11 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    private function extractArrayElement(array & $validatedData, string $property){
+        $extracted = $validatedData[$property];
+        unset($validatedData[$property]);
+        return $extracted;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,18 +29,15 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
-        $queryRaw = json_decode(json_encode($request->query()));
-        if (isset($queryRaw->status)){
-            if ($queryRaw->status=='any')
-                $queryRaw->status='';
+        $query = $request->query();
+        if ($query['status']=='any')
+            unset($query['status']);
+        unset($query['page']);
+        foreach($query as $key => $value){
+            if(is_null($value))
+                unset($query[$key]);
         }
-        unset($queryRaw->page);
-        $query = array();
-        foreach ($queryRaw as $key => $value){
-            if ($value){
-                array_push($query, [$key, $value]);
-            }
-        }
+        logger($query);
         $paginatedCompanies = empty($query)? Company::paginate(5) : Company::where($query)->paginate(5);
         return CompanyResourceCollection::make($paginatedCompanies);
     }
@@ -62,41 +65,22 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCompanyRequest $request)
+    public function store(CompanyRequest $request)
     {
-        $data = json_decode(json_encode($request->input()));
-        $company = Company::create([
-            'name' => $data->name,
-            'country' => $data->country,
-            'city' => $data->city,
-            'address' => $data->address,
-            'zipCode' => $data->zipCode,
-            'usersNumber' => 1,
-            'beaconsNumber' => 1,
-            'status' => $data->status
-        ]);
-        $admin = $data->admin;
-        $company->mainAdminContact()->create([
-            'firstName' => $admin->firstName,
-            'lastName' => $admin->lastName,
-            'email' => $admin->email,
-            'phoneNumber' => $admin->phone,
-        ]);
-
-        $itHead = $data->itHead;
-        $company->itHeadContact()->create([
-            'firstName' => $itHead->firstName,
-            'lastName' => $itHead->lastName,
-            'email' => $itHead->email,
-            'phoneNumber' => $itHead->phone,
-        ]);
-        $customerManager = $data->customerManager;
-        $company->customerManagerContact()->create([
-            'firstName' => $customerManager->firstName,
-            'lastName' => $customerManager->lastName,
-            'email' => $customerManager->email,
-            'phoneNumber' => $customerManager->phone,
-        ]);
+        $validatedData = $request->validated();
+        $mainAdminContact = $this->extractArrayElement($validatedData, 'mainAdminContact');
+        $itDepartmentContact = $this->extractArrayElement($validatedData, 'itDepartmentContact');
+        $customerManagerContact = $this->extractArrayElement($validatedData, 'customerManagerContact');
+        $validatedData['usersNumber'] = 1;
+        $validatedData['beaconsNumber'] = 1;
+        logger($validatedData);
+        logger($mainAdminContact);
+        logger($itDepartmentContact);
+        logger($customerManagerContact);
+        $company = Company::create($validatedData);
+        $company->mainAdminContact()->create($mainAdminContact);
+        $company->itDepartmentContact()->create($itDepartmentContact);
+        $company->customerManagerContact()->create($customerManagerContact);
         return response(CompanyResource::make($company));
     }
 
@@ -118,39 +102,17 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update(CompanyRequest $request, Company $company)
     {
-        $data = json_decode(json_encode($request->input()));
-        $company->name = $data->name;
-        $company->country = $data->country;
-        $company->city = $data->city;
-        $company->address = $data->address;
-        $company->zipCode = $data->zipCode;
-        $company->status = $data->status;
-
-        $admin = $data->admin;
-        $company->mainAdminContact->firstName = $admin->firstName;
-        $company->mainAdminContact->lastName = $admin->lastName;
-        $company->mainAdminContact->email = $admin->email;
-        $company->mainAdminContact->phoneNumber = $admin->phone;
-        $company->mainAdminContact->save();
-
-        $itHead = $data->itHead;
-        $company->itHeadContact->firstName = $itHead->firstName;
-        $company->itHeadContact->lastName = $itHead->lastName;
-        $company->itHeadContact->email = $itHead->email;
-        $company->itHeadContact->phoneNumber = $itHead->phone;
-        $company->itHeadContact->save();
-
-        $customerManager = $data->customerManager;
-        $company->customerManagerContact->firstName = $customerManager->firstName;
-        $company->customerManagerContact->lastName = $customerManager->lastName;
-        $company->customerManagerContact->email = $customerManager->email;
-        $company->customerManagerContact->phoneNumber = $customerManager->phone;
-        $company->customerManagerContact->save();
-
-        $company->save();
-//        return response('Company with id: '.$company->id.' was updated successfully');
+        $validatedData = $request->validated();
+        $mainAdminContact = $this->extractArrayElement($validatedData, 'mainAdminContact');
+        $itDepartmentContact = $this->extractArrayElement($validatedData, 'itDepartmentContact');
+        $customerManagerContact = $this->extractArrayElement($validatedData, 'customerManagerContact');
+        logger($validatedData);
+        $company->mainAdminContact()->update($mainAdminContact);
+        $company->itDepartmentContact()->update($itDepartmentContact);
+        $company->customerManagerContact()->update($customerManagerContact);
+        $company->update($validatedData);
         return response(CompanyResource::make($company));
     }
 
@@ -198,6 +160,10 @@ class CompanyController extends Controller
     }
     public function companyTeams(Company $company){
         return TeamResourceCollection::make($company->teams()->paginate(5));
+    }
+
+    public function info(Company $company){
+        return response(CompanyInfoResource::make($company));
     }
 }
 
