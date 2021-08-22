@@ -107,5 +107,3 @@ export default function CompanyInfo({match}: RouteComponentProps<Record<'id', st
             </Grid>
         )
 }
-//Too many requests error handling
-//Too many requests issue?

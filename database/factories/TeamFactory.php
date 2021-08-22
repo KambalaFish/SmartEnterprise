@@ -22,7 +22,7 @@ class TeamFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->unique()->name,
             'usersNumber' => $this->faker->numberBetween(1,15)
         ];
     }

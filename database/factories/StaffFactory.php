@@ -22,7 +22,7 @@ class StaffFactory extends Factory
      */
     public function definition()
     {
-        $email = $this->faker->email;
+        $email = $this->faker->unique()->email;
         return [
             'name' => $this->faker->lastName,
             'phoneNumber' => $this->faker->phoneNumber,

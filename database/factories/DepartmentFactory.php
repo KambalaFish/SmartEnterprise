@@ -22,7 +22,7 @@ class DepartmentFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->jobTitle,
+            'name' => $this->faker->unique()->jobTitle,
             'usersNumber' => $this->faker->numberBetween(1,10)
         ];
     }
