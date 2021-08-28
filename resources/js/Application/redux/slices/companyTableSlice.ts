@@ -5,7 +5,7 @@ import {
     PageResponse
 } from "../../utils/Interfaces/InterfacesApi";
 import {AppDispatch, RootState} from "../configureStore";
-import api from "../../utils/Api";
+import api from "../../utils/api/api";
 import {upsertCompanies} from "./companySlice";
 
 export type FetchingStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -45,7 +45,7 @@ export const fetchCompanyPage = createAsyncThunk<fetchCompanyPageReturnType, fet
     'companyTable/fetchCompanyPage',
     async ({pageNumber, filter}, apiThunk) => {
         try {
-            const result = await api().getPaginatedCompanies(pageNumber, filter);
+            const result = await api().getCompanyApi().getPaginatedCompanies(pageNumber, filter);
             const response : PageResponse<ICompanyWithId[]> = result.response as PageResponse<ICompanyWithId[]>;
             apiThunk.dispatch(upsertCompanies(response.data));
             const {perPage, lastPage} = response.meta;

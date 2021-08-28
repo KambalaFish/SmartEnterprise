@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {RouteComponentProps} from 'react-router-dom';
 import {Grid, CircularProgress, Paper} from "@material-ui/core";
 import {ApiResponse, ICompanyInfo} from "../../../../utils/Interfaces/InterfacesApi";
-import api from "../../../../utils/Api";
+import api from "../../../../utils/api/api";
 import PageHeader from "../../../Reusable/Headers/PageHeader/PageHeader";
 import CompanyUpdateFormRedux from "./includes/CompanyUpdateFormRedux";
 
@@ -11,7 +11,7 @@ export function CompanyUpdateReduxVersion({match, location, history}: RouteCompo
     const [company, setCompany] = useState<ICompanyInfo>();
 
     useEffect(() => {
-        api()
+        api().getCompanyApi()
             .getCompanyInfo(id)
             .then((result) => {
                 const {response} = result as ApiResponse<ICompanyInfo>;

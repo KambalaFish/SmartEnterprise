@@ -7,7 +7,7 @@ import {
 import {Control, Controller, Path, SubmitHandler, useForm, UseFormRegister} from "react-hook-form";
 import {Button, Grid, GridSize, MenuItem, Paper, TextField, Typography} from "@material-ui/core";
 import useStyles from "./includes/styles";
-import api from "../../../utils/Api";
+import api from "../../../utils/api/api";
 import CustomAutocomplete from "../CustomAutocomplete/CustomAutocomplete";
 import {UseFormHandleSubmit} from "react-hook-form/dist/types/form";
 

@@ -8,7 +8,7 @@ import {
     ICompanyWithId, IStaff,
     ResourceCollectionResponse, UserStatus
 } from "../../../../../utils/Interfaces/InterfacesApi";
-import api from "../../../../../utils/Api";
+import api from "../../../../../utils/api/api";
 import PageHeader from "../../../../Reusable/Headers/PageHeader/PageHeader";
 import FormLayout from "../../../../Reusable/Layout/FormLayout/FormLayout";
 import CustomAutocomplete from "../../../../Reusable/CustomAutocomplete/CustomAutocomplete";
@@ -23,7 +23,7 @@ function CompanyAdminCreation(): JSX.Element {
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(()=>{
-        api()
+        api().getCompanyApi()
             .getAllCompanies()
             .then((result) => {
                 const {response, code} = result;
@@ -57,7 +57,7 @@ function CompanyAdminCreation(): JSX.Element {
             return;
         }
 
-        api()
+        api().getStaffApi()
             .createCompanyAdmin({...data, companyId: selectedCompany.id})
             .then(({code, response}) => {
                 console.log('code: ', code,' response: ', response);

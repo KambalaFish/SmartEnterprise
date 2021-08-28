@@ -1,7 +1,7 @@
 import React, {createContext, useContext, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {AuthenticatedUser, Credentials, ErrorBody, UserType} from "../../utils/Interfaces/InterfacesApi";
-import api from "../../utils/Api";
+import api from "../../utils/api/api";
 import {useProvideAuthType} from "../../utils/Interfaces/ComponentInterfaces";
 
 const unauthenticatedUser: AuthenticatedUser = {
@@ -70,7 +70,7 @@ function useProvideAuth(): useProvideAuthType {
 
     //signin should redirect to page corresponding to user role
     const signin = (creds: Credentials,cb: ()=>void): Promise<ErrorBody|boolean> => {
-        return api()
+        return api().getAuthApi()
             .login(creds)
             .then<boolean|ErrorBody>( ({code, response}) => {
                 console.log('signin.then response: ', response, 'code: ', code)
@@ -89,7 +89,7 @@ function useProvideAuth(): useProvideAuthType {
     };
 
     const signout = (cb: () => void): Promise<ErrorBody|boolean> => {
-        return api()
+        return api().getAuthApi()
             .logout()
             .then<boolean|ErrorBody>(({code,response}) => {
                 if (code === 200){

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import api from "../../../utils/Api";
+import api from "../../../utils/api/api";
 import {ApiResponse, ICompanyInfo} from "../../../utils/Interfaces/InterfacesApi";
 import {RouteComponentProps} from "react-router-dom";
 import {CircularProgress, Grid} from "@material-ui/core";
@@ -22,7 +22,7 @@ function CompanyUpdate({match}: RouteComponentProps<Record<'id', string>>): JSX.
     }
 
     useEffect(() => {
-        api()
+        api().getCompanyApi()
             .getCompanyInfo(id)
             .then((result) => {
                 const {response} = result as ApiResponse<ICompanyInfo>;

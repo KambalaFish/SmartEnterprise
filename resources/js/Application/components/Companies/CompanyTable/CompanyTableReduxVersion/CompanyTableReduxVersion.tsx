@@ -16,7 +16,7 @@ import {
 import useUpdateEffect from "../../../../utils/useUpdateEffect";
 import {useHistory} from "react-router-dom";
 import {spaPaths} from "../../../../utils/utils";
-import api from "../../../../utils/Api";
+import api from "../../../../utils/api/api";
 import {ClickableButton} from "../../../../utils/Interfaces/ComponentInterfaces";
 import MenuItem from "@material-ui/core/MenuItem";
 import {createSelector} from "@reduxjs/toolkit";
@@ -99,7 +99,7 @@ export function CompanyTableReduxVersion({
         }
 
         function removeCompany(id: number) {
-            api()
+            api().getCompanyApi()
                 .deleteCompany(id)
                 .then(result => {
                     alert(result.response);

@@ -16,7 +16,7 @@ import {
 } from "../../../../utils/Interfaces/InterfacesApi";
 import useUpdateEffect from "../../../../utils/useUpdateEffect";
 import {SubmitHandler, useForm} from "react-hook-form";
-import api from "../../../../utils/Api";
+import api from "../../../../utils/api/api";
 import CustomAlert from "../../../Reusable/CustomAlert/CustomAlert";
 import {ClickableButton} from "../../../../utils/Interfaces/ComponentInterfaces";
 import CustomSuccessMessage from "../../../Reusable/CustomSuccessMessage/CustomSuccessMessage";
@@ -62,7 +62,7 @@ function CompanyAdminTable(): JSX.Element {
         });
     }
     useEffect(() => {
-        api()
+        api().getCompanyApi()
             .getAllCompanies()
             .then((result) => {
                 const {response, code} = result;
@@ -87,7 +87,7 @@ function CompanyAdminTable(): JSX.Element {
     const CompanyAdminTableMenu: ClickableButton = (id: number) => {
         function removeCompany(){
             console.log('remove company id: ', id);
-            api()
+            api().getStaffApi()
                 .deleteStaff(id)
                 .then( ({response}) => {
                     ReactDOM.unstable_batchedUpdates(

@@ -4,7 +4,7 @@ import {useForm, SubmitHandler} from "react-hook-form";
 import {ICompanyInfo, ICompanyWithId} from "../../../../utils/Interfaces/InterfacesApi";
 import {yupResolver} from '@hookform/resolvers/yup';
 import {companyFormValidationSchema} from "../../../../utils/ValidationSchemas/CompanyValidations/companyFormValidationSchema";
-import api from '../../../../utils/Api';
+import api from '../../../../utils/api/api';
 import {CompanyForm} from "../../CompanyForm/CompanyForm";
 import {useAppDispatch} from "../../../../redux/reduxHooks";
 import {removeLastPage} from "../../../../redux/slices/companyTableSlice";
@@ -44,7 +44,7 @@ function CompanyCreationReduxVersion(): JSX.Element{
     const dispatch = useAppDispatch();
     const onSubmit: SubmitHandler<ICompanyInfo> = (data: ICompanyInfo) => {
         console.log('data: ',data);
-        api()
+        api().getCompanyApi()
             .createCompany(data)
             .then( (value) => {
                 const company = value.response as ICompanyWithId;

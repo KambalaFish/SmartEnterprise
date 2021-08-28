@@ -9,7 +9,7 @@ import {
     ResourceCollectionResponse,
     UserStatus
 } from "../../../../utils/Interfaces/InterfacesApi";
-import api from "../../../../utils/Api";
+import api from "../../../../utils/api/api";
 import CustomAlert from "../../../Reusable/CustomAlert/CustomAlert";
 import CompanyAdminForm from "../Creation/includes/CompanyAdminForm";
 import {SubmitHandler} from "react-hook-form";
@@ -37,7 +37,7 @@ function CompanyAdminUpdate({match}: RouteComponentProps<Record<'id', string>>):
     }
 
     useEffect(()=>{
-        api()
+        api().getCompanyApi()
             .getAllCompanies()
             .then((result) => {
                 const {response, code} = result;
@@ -54,7 +54,7 @@ function CompanyAdminUpdate({match}: RouteComponentProps<Record<'id', string>>):
     }, []);
 
     useEffect(() => {
-        api()
+        api().getStaffApi()
             .getStaff(id)
             .then((result) => {
                 const val = result.response as IStaffWithCompanyName;
@@ -81,7 +81,7 @@ function CompanyAdminUpdate({match}: RouteComponentProps<Record<'id', string>>):
             setAlert('You must choose company before creating company admin');
             return;
         }
-        api()
+        api().getStaffApi()
             .updateStaff({...data, companyId: selectedCompany.id}, id)
             .then(({code, response}) => {
                 if (code==200){

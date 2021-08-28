@@ -4,7 +4,7 @@ import {ActionColumn, Column} from "../../../utils/Interfaces/PropsInterfaces";
 import {FormControl, Grid, Select} from "@material-ui/core";
 import {useHistory} from 'react-router-dom';
 import {spaPaths} from "../../../utils/utils";
-import api from "../../../utils/Api";
+import api from "../../../utils/api/api";
 import MenuItem from "@material-ui/core/MenuItem";
 import {ClickableButton} from "../../../utils/Interfaces/ComponentInterfaces";
 import {AdvancedReusableTable} from "../../Reusable/Tables/ReusableTable/AdvancedReusableTable";
@@ -67,7 +67,7 @@ function CompanyTable(): JSX.Element{
                     history.push(spaPaths.companyUpdate(id));
                     break
                 case 1:
-                    api()
+                    api().getCompanyApi()
                         .deleteCompany(id)
                         .then(result => {
                             ReactDOM.unstable_batchedUpdates(

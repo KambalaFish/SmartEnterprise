@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {RouteComponentProps} from "react-router-dom";
 import {CircularProgress} from "@material-ui/core";
-import api from "../../../../../utils/Api";
+import api from "../../../../../utils/api/api";
 import {
     IStaffForm,
     ErrorBody,
@@ -34,7 +34,7 @@ function SelectedCompanyAdminCreation({match}: RouteComponentProps<Record<'id', 
     }
 
     useEffect(() => {
-        api()
+        api().getCompanyApi()
             .getCompany(id)
             .then((result) => {
                 setCompany(result.response as ICompany);
@@ -47,7 +47,7 @@ function SelectedCompanyAdminCreation({match}: RouteComponentProps<Record<'id', 
             setAlert(null);
         }
 
-        api()
+        api().getStaffApi()
             .createCompanyAdmin({...data, companyId: id})
             .then(({code, response}) => {
                 console.log('code: ', code,' response: ', response);

@@ -1,28 +1,16 @@
-import {apiPaths} from "./utils";
 import {
     ApiResponse,
-    AuthenticatedUser,
-    StaffRequest,
-    ContactResponse,
-    Credentials,
-    ErrorBody,
-    ICompany,
-    ICompanyWithId,
-    IDepartment,
-    IRole,
-    ITeam,
-    ResourceCollectionResponse,
-    IStaff,
-    IStaffWithCompanyName, IStaffFilter, ICompanyInfo,
-} from "./Interfaces/InterfacesApi";
-import {PageResponse} from "./Interfaces/InterfacesApi";
-import {ICompanyFilter} from "./Interfaces/InterfacesApi";
-import {confirmationHandler, errorHandler, logginErrorHandler} from "./Handlers";
-import {apiInstance, instance} from "./Instances";
+    ErrorBody, ICompany,
+    ICompanyFilter,
+    ICompanyInfo,
+    ICompanyWithId, IDepartment, IRole, ITeam,
+    PageResponse, ResourceCollectionResponse
+} from "../Interfaces/InterfacesApi";
+import {apiInstance} from "../Instances";
+import {apiPaths} from "../utils";
+import {confirmationHandler, errorHandler} from "../Handlers";
 
-interface ClientApi {
-    login(credentials: Credentials) : Promise<ApiResponse<AuthenticatedUser|ErrorBody>>;
-    logout(): Promise<ApiResponse<never|ErrorBody>>;
+export interface CompanyApi{
     createCompany(company: ICompanyInfo): Promise<ApiResponse<ICompanyWithId|ErrorBody>>;
     updateCompany(id: number, company: ICompanyInfo): Promise<ApiResponse<ICompanyWithId|ErrorBody>>;
     getPaginatedCompanies(pageNumber: number, filter?: ICompanyFilter): Promise<ApiResponse<PageResponse<ICompanyWithId[]> | ErrorBody>>;
@@ -33,44 +21,9 @@ interface ClientApi {
     getPaginatedCompanyRoles(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<IRole[]> | ErrorBody>>;
     getPaginatedCompanyTeams(companyId: number, pageNumber: number): Promise<ApiResponse<PageResponse<ITeam[]> | ErrorBody>>;
     getAllCompanies(): Promise<ApiResponse<ResourceCollectionResponse<ICompanyWithId[]>|ErrorBody>>;
-    createCompanyAdmin(admin: StaffRequest): Promise<ApiResponse<IStaff|ErrorBody>>;
-    getPaginatedCompanyAdmins(pageNumber: number, filter?: IStaffFilter): Promise<ApiResponse<PageResponse<IStaffWithCompanyName[]>|ErrorBody>>;
-    deleteStaff(staffId: number): Promise<ApiResponse<string|ErrorBody>>;
-    getStaff(id: number): Promise<ApiResponse<IStaffWithCompanyName|ErrorBody>>;
-    updateStaff(staff: StaffRequest, staffId: number): Promise<ApiResponse<IStaffWithCompanyName|ErrorBody>>;
 }
 
-class ClientApiImpl implements ClientApi {
-
-    private static api: ClientApi;
-
-    public static getInstance(): ClientApi{
-        if (ClientApiImpl.api == null){
-            ClientApiImpl.api = new ClientApiImpl();
-        }
-        return ClientApiImpl.api;
-    }
-
-    login(credentials: Credentials): Promise<ApiResponse<AuthenticatedUser | ErrorBody>> {
-        return instance
-            .get<never>(apiPaths.XSRFCookie)
-            .then(response => {
-                return apiInstance.post<AuthenticatedUser>(apiPaths.login, {...credentials})
-            })
-            .then(confirmationHandler)
-            .catch(logginErrorHandler);
-            // .catch(errorHandler);
-    }
-
-    logout(): Promise<ApiResponse<never|ErrorBody>> {
-        return instance
-            .get(apiPaths.XSRFCookie)
-            .then(response => {
-                return apiInstance.post(apiPaths.logout);
-            })
-            .then(confirmationHandler)
-            .catch(errorHandler);
-    }
+export class CompanyApiImpl implements CompanyApi {
 
     createCompany(company: ICompanyInfo): Promise<ApiResponse<ICompanyWithId|ErrorBody>>{
         return apiInstance
@@ -157,13 +110,6 @@ class ClientApiImpl implements ClientApi {
             .catch(errorHandler);
     }
 
-    createCompanyAdmin(admin: StaffRequest): Promise<ApiResponse<IStaff|ErrorBody>>{
-        return apiInstance
-            .post<IStaff>(apiPaths.createCompanyAdmin, admin)
-            .then(confirmationHandler)
-            .catch(errorHandler);
-    }
-
     getAllCompanies(): Promise<ApiResponse<ResourceCollectionResponse<ICompanyWithId[]>|ErrorBody>>{
         return apiInstance
             .get<ResourceCollectionResponse<ICompanyWithId[]>>(apiPaths.getAllCompanies)
@@ -171,47 +117,4 @@ class ClientApiImpl implements ClientApi {
             .catch(errorHandler);
     }
 
-    getPaginatedCompanyAdmins(pageNumber: number, filter?: IStaffFilter): Promise<ApiResponse<PageResponse<IStaffWithCompanyName[]>|ErrorBody>>{
-        return apiInstance
-            .get<PageResponse<IStaffWithCompanyName[]>>(apiPaths.getPaginatedCompanyAdmins, {
-                params: {
-                    page: pageNumber,
-                    name: filter?.name,
-                    phoneNumber: filter?.phoneNumber,
-                    email: filter?.email,
-                    status: filter?.status,
-                    companyId: filter?.companyId
-                }
-            })
-            .then(confirmationHandler)
-            .catch(errorHandler);
-    }
-
-    deleteStaff(staffId: number): Promise<ApiResponse<string|ErrorBody>>{
-        return apiInstance
-            .delete<string>(apiPaths.removeStaff(staffId))
-            .then(confirmationHandler)
-            .catch(errorHandler);
-    }
-
-    getStaff(id: number): Promise<ApiResponse<IStaffWithCompanyName|ErrorBody>>{
-        return apiInstance
-            .get<IStaffWithCompanyName>(apiPaths.getCompanyAdmin(id))
-            .then(confirmationHandler)
-            .catch(errorHandler);
-    }
-
-    updateStaff(staff: StaffRequest, staffId: number): Promise<ApiResponse<IStaffWithCompanyName|ErrorBody>>{
-        return apiInstance
-            .put<IStaffWithCompanyName>(apiPaths.updateStaff(staffId), staff)
-            .then(confirmationHandler)
-            .catch(errorHandler);
-    }
-
 }
-
-export default function api(): ClientApi {
-    return ClientApiImpl.getInstance();
-}
-
-//as a workaround I try to transform api into useApi hook

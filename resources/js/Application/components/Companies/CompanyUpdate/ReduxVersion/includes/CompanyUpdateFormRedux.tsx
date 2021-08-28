@@ -3,7 +3,7 @@ import {CompanyForm} from "../../../CompanyForm/CompanyForm";
 import FormLayout from "../../../../Reusable/Layout/FormLayout/FormLayout";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {ICompanyInfo, ICompanyWithId} from "../../../../../utils/Interfaces/InterfacesApi";
-import api from "../../../../../utils/Api";
+import api from "../../../../../utils/api/api";
 import {upsertCompany} from "../../../../../redux/slices/companySlice";
 import {useAppDispatch} from "../../../../../redux/reduxHooks";
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -23,7 +23,7 @@ function CompanyUpdateFormRedux({id, company}: CompanyUpdateFormReduxProps): JSX
         }
     );
     const onSubmit: SubmitHandler<ICompanyInfo> = (data: ICompanyInfo) => {
-        api()
+        api().getCompanyApi()
             .updateCompany(id, data)
             .then((value) => {
                 const response = value.response as ICompanyWithId;

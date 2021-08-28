@@ -6,7 +6,7 @@ import {
     ErrorBody,
     ICompanyInfo
 } from "../../../utils/Interfaces/InterfacesApi";
-import api from "../../../utils/Api";
+import api from "../../../utils/api/api";
 import {ContactInfo} from "./includes/ContactInfo";
 import {CompanyTabs} from "./CompanyTabs/CompanyTabs";
 import {CircularProgress} from "@material-ui/core";
@@ -20,7 +20,7 @@ export default function CompanyInfo({match}: RouteComponentProps<Record<'id', st
         setAlert(null);
     }
     useEffect(() => {
-        api()
+        api().getCompanyApi()
             .getCompanyInfo(id)
             .then((result) => {
                 const {response} = result as ApiResponse<ICompanyInfo>;
