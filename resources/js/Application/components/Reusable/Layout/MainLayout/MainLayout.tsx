@@ -6,7 +6,7 @@ import {makeStyles} from "@material-ui/core/styles";
 export function MainLayout({children, ...props}: {children: JSX.Element[]}): JSX.Element{
     const useStyles = makeStyles({
         border: {
-            // border: '2px solid blue',
+            // border: '3px solid red',
             // paddingRight: 40,
             // paddingLeft: 40
         }

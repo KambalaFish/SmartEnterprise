@@ -3,6 +3,7 @@ import {getCompanyDepartments} from "../../../../utils/FetchFunctions";
 import {ErrorBody, PaginatedTableFetcher} from "../../../../utils/Interfaces/InterfacesApi";
 import {ReusableTable} from "../../../Reusable/Tables/ReusableTable/ReusableTable";
 import {Column} from "../../../../utils/Interfaces/PropsInterfaces";
+import {Typography} from "@material-ui/core";
 
 interface CompanyDepartmentsTestProps{
     id: number;

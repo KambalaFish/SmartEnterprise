@@ -61,6 +61,19 @@ export function ReusableTable({fetcher, tableCellHeight, columns}: ReusableTable
                 />
             </PaginatedTable>
             :
-            <CircularProgress/>
+            <PaginatedTable
+                data={[]}
+                perPage={5}
+                emptyRowsNumber={5}
+                pageCount={1}
+                columns={columns}
+                tableCellHeight={tableCellHeight}
+            >
+                <CustomPagination
+                    pageCount={pageCount}
+                    currentPage={pageNumber - 1}
+                    setPageNumber={setPageNumber}
+                />
+            </PaginatedTable>
     )
 }

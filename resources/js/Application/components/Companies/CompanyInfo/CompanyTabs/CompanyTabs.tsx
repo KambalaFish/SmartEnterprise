@@ -20,18 +20,16 @@ interface TabPanelProps {
 function TabPanel(props: TabPanelProps): JSX.Element {
     const { children, value, index} = props;
     return (
-        <Grid item xs={12} hidden={value !== index} style={{marginTop: 8}}>
-             {value === index && (
-                 children
-             )}
-        </Grid>
+            <Grid item xs={12} hidden={value!==index} style={{marginTop: 8}}>
+                {value === index && (children)}
+            </Grid>
     );
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         // flexGrow: 1,
-        // backgroundColor: theme.palette.background.paper,
+        backgroundColor: theme.palette.background.paper,
         marginTop: theme.spacing(4)
     },
 }));
@@ -52,7 +50,8 @@ export function CompanyTabs({id}: CompanyTabsProps): JSX.Element{
         // <Grid item container direction={'row'} className={classes.root} alignItems={'center'} justifyContent={'center'}>
         <Grid item container direction={'row'} className={classes.root} alignItems={'center'} justifyContent={'center'} style={{height: 450}}>
             <Grid item container direction={'column'} xs={9}>
-                <AppBar position="relative" component={Paper} elevation={6}>
+                {/*<AppBar position="relative" component={Paper} elevation={6}>*/}
+                <AppBar position="static" component={Paper} elevation={6}>
                     <Tabs value={tabNumber} variant={'fullWidth'} centered onChange={handleChange}>
                         <Tab label="Departments"/>
                         <Tab label="Roles"/>

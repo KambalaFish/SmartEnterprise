@@ -15,16 +15,17 @@ import CustomAlert from "../../Reusable/CustomAlert/CustomAlert";
 export default function CompanyInfo({match}: RouteComponentProps<Record<'id', string>>): JSX.Element {
     const id: number = parseInt(match.params.id);
     const [company, setCompany] = useState<ICompanyInfo | null>(null);
-    const [alert, setAlert] = useState<string|null>(null);
-    function onAlertClose(){
+    const [alert, setAlert] = useState<string | null>(null);
+
+    function onAlertClose() {
         setAlert(null);
     }
+
     useEffect(() => {
         api().getCompanyApi()
             .getCompanyInfo(id)
             .then((result) => {
                 const {response} = result as ApiResponse<ICompanyInfo>;
-                console.log('result: ', result);
                 setCompany(response);
             })
             .catch((reason: ApiResponse<ErrorBody>) => {
@@ -38,6 +39,10 @@ export default function CompanyInfo({match}: RouteComponentProps<Record<'id', st
             },
             status: {
                 color: theme.palette.secondary.main
+            },
+            container: {
+                margin: theme.spacing(5),
+                padding: theme.spacing(4),
             }
         })
     );
@@ -45,8 +50,8 @@ export default function CompanyInfo({match}: RouteComponentProps<Record<'id', st
     return company ? (
             <>
                 <CustomAlert alert={alert} onAlertClose={onAlertClose}/>
-                <Grid container item xs={9} direction={'column'} alignItems={'flex-start'} style={{marginTop: 25, padding: 20}}
-                      component={Paper} elevation={5}>
+                <Grid container item xs={9} direction={'column'} alignItems={'flex-start'}
+                      className={classes.container} component={Paper} elevation={5}>
                     <Grid item xs={12}>
                         <Typography variant={"h4"}>{company.name}</Typography>
                     </Grid>
@@ -62,7 +67,7 @@ export default function CompanyInfo({match}: RouteComponentProps<Record<'id', st
                                 className={classes.status}>{company.status}</span></Typography>
                         </Grid>
                     </Grid>
-                    <Grid container direction={'row'} item>
+                    <Grid item container direction={'row'}>
                         <Grid item xs={12}>
                             {/*<Divider/>*/}
                             <Divider classes={{root: classes.divider}}/>
@@ -92,18 +97,14 @@ export default function CompanyInfo({match}: RouteComponentProps<Record<'id', st
                             phone={company.mainAdminContact.phoneNumber}
                         />
                     </Grid>
-                    <CompanyTabs
-                        id={id}
-                    />
+                    <CompanyTabs id={id}/>
                 </Grid>
             </>
         )
         :
         (
-            <Grid container direction={'column'} alignItems={'center'} justifyContent={'center'}>
-                <Grid item xs={6}>
-                    <CircularProgress/>
-                </Grid>
+            <Grid item xs={6}>
+                <CircularProgress/>
             </Grid>
         )
 }
