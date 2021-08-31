@@ -12,6 +12,8 @@ export function getCurrentPageIdentifier(pathname: string): JSX.Element{
     let currentPageName;
     let icon;
     switch (pathname) {
+        case '':
+        case '/':
         case spaPaths.home:
             currentPageName = 'Home';
             icon = <HomeIcon/>;

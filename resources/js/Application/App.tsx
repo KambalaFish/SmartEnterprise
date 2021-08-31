@@ -36,7 +36,7 @@ function App(): JSX.Element {
                     <PrivateRoute exact path={spaPaths.selectedCompanyAdminCreationPath} component={SelectedCompanyAdminCreation}/>
                     <PrivateRoute exact path={spaPaths.allCompanyAdmins} component={CompanyAdminTable}/>
                     <PrivateRoute exact path={spaPaths.companyAdminUpdatePath} component={CompanyAdminUpdate}/>
-                    <PrivateRoute exact path={[spaPaths.home, '/']} component={Home}/>
+                    <PrivateRoute exact path={[spaPaths.home, '/', '']} component={Home}/>
                 </MainLayout>
             </Switch>
         </ProvideAuth>
