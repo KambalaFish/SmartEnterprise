@@ -6,14 +6,13 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {useStyles} from "./includes/styles";
 import {Copyright} from "./includes/Copyright";
 import {useHistory} from "react-router-dom";
-import {spaPaths} from "../../../utils/utils";
 import {removeSessionExpiration, useAuth, wasSessionExpired} from "../Authentication";
 import Alert from '@material-ui/lab/Alert';
-import {useForm, SubmitHandler} from "react-hook-form";
-import {Credentials} from "../../../utils/Interfaces/InterfacesApi";
+import {Controller, SubmitHandler, useForm} from "react-hook-form";
+import {Credentials, UserType} from "../../../utils/Interfaces/InterfacesApi";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {loginFormValidationSchema} from "../../../utils/ValidationSchemas/LoginValidations/loginFormValidationSchema";
-import {Controller} from "react-hook-form";
+import {spaPaths} from "../../../utils/utils";
 
 export default function SignIn(): JSX.Element {
     const classes = useStyles();
@@ -33,8 +32,15 @@ export default function SignIn(): JSX.Element {
 
     const onSubmit: SubmitHandler<Credentials> = (data: Credentials) => {
         auth
-            .signin(data, () => {
-                history.replace(spaPaths.home);
+            .signin(data, (user)=>{
+                switch (user.usertype){
+                    case UserType.SystemAdmin:
+                        history.replace(spaPaths.allCompanies);
+                        break;
+                    case UserType.CompanyAdmin:
+                        history.replace(spaPaths.home)
+                        break;
+                }
             })
             .catch((reason) => {
                 console.log('signin reason: ', reason);

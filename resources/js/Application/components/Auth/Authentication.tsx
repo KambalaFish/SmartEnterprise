@@ -19,7 +19,7 @@ const SESSIONWASEXPIRED = 'sessionwasexpired';
 const authContext = createContext<useProvideAuthType>(
     {
         user: unauthenticatedUser,
-        signin: (creds, cb: () => void) => {return Promise.reject({error: `Initial signin`})},
+        signin: (creds, cb: (user: AuthenticatedUser) => void) => {return Promise.reject({error: `Initial signin`})},
         signout: (cb: () => void) => {return Promise.reject({error: `Initial signout`})}
     }
 )
@@ -69,7 +69,7 @@ function useProvideAuth(): useProvideAuthType {
     const history = useHistory();
 
     //signin should redirect to page corresponding to user role
-    const signin = (creds: Credentials,cb: ()=>void): Promise<ErrorBody|boolean> => {
+    const signin = (creds: Credentials,cb: (user: AuthenticatedUser)=>void): Promise<ErrorBody|boolean> => {
         return api().getAuthApi()
             .login(creds)
             .then<boolean|ErrorBody>( ({code, response}) => {
@@ -77,7 +77,7 @@ function useProvideAuth(): useProvideAuthType {
                 if (code==200){
                     setUser(response as AuthenticatedUser);
                     setUserToLocalStorage(response as AuthenticatedUser);
-                    cb();
+                    cb(response as AuthenticatedUser);
                     return true;
                 }
                 return Promise.reject<ErrorBody>({error: `Error occurred during sign-in. Error code: ${code}. Error message: ${(response as ErrorBody).error}`});
