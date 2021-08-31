@@ -7,8 +7,9 @@ import {Typography} from "@material-ui/core";
 
 interface CompanyRolesProps{
     id: number;
+    onAlert(message: string): void;
 }
-export function CompanyRoles({id}: CompanyRolesProps): JSX.Element{
+export function CompanyRoles({id, onAlert}: CompanyRolesProps): JSX.Element{
 
     function fetcher(pageNumber: number): Promise<PaginatedTableFetcher | ErrorBody>{
         return getCompanyRoles(id, pageNumber);
@@ -18,5 +19,5 @@ export function CompanyRoles({id}: CompanyRolesProps): JSX.Element{
         {name: 'Name', property: 'name', percent: 70},
         {name: 'Number of users', property: 'usersNumber', percent: 20},
     ]
-    return <ReusableTable fetcher={fetcher} tableCellHeight={50} columns={columns}/>
+    return <ReusableTable fetcher={fetcher} tableCellHeight={50} columns={columns} onAlert={onAlert}/>
 }

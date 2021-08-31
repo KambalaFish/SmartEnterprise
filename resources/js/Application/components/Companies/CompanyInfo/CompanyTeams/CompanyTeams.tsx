@@ -7,9 +7,10 @@ import {Typography} from "@material-ui/core";
 
 interface CompanyTeamsProps{
     id: number;
+    onAlert(message: string): void;
 }
 
-export function CompanyTeams({id}: CompanyTeamsProps): JSX.Element{
+export function CompanyTeams({id, onAlert}: CompanyTeamsProps): JSX.Element{
 
     function fetcher(pageNumber: number): Promise<PaginatedTableFetcher | ErrorBody>{
         return getCompanyTeams(id, pageNumber);
@@ -19,5 +20,5 @@ export function CompanyTeams({id}: CompanyTeamsProps): JSX.Element{
         {name: 'Name', property: 'name', percent: 70},
         {name: 'Number of users', property: 'usersNumber', percent: 20},
     ]
-    return <ReusableTable fetcher={fetcher} tableCellHeight={50} columns={columns}/>
+    return <ReusableTable fetcher={fetcher} tableCellHeight={50} columns={columns} onAlert={onAlert}/>
 }

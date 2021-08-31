@@ -11,9 +11,10 @@ interface ReusableTableProps{
     fetcher: (pageNumber: number) => Promise<PaginatedTableFetcher | ErrorBody>;
     tableCellHeight: number;
     columns: Column[];
+    onAlert(message: string): void;
 }
 
-export function ReusableTable({fetcher, tableCellHeight, columns}: ReusableTableProps): JSX.Element{
+export function ReusableTable({fetcher, tableCellHeight, columns, onAlert}: ReusableTableProps): JSX.Element{
     const [data, setData] = useState<unknown[]>();
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [pageCount, setPageCount] = useState<number>(1);
@@ -40,7 +41,7 @@ export function ReusableTable({fetcher, tableCellHeight, columns}: ReusableTable
                 );
             })
             .catch( (reason: ErrorBody) => {
-                alert('reason: ' + reason.error);
+                onAlert('reason: ' + reason.error);
             });
     }, [pageNumber]);
 
