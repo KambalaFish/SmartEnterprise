@@ -39,21 +39,21 @@ export default function NavBar(): JSX.Element {
     const currentPageIdentifier = getCurrentPageIdentifier(history.location.pathname);
 
     const onProfile = () => {
-        history.push(spaPaths.profile);
+        history.push(spaPaths.profile, {from: history.location.pathname});
         handleProfileMenuClose();
     }
 
     const onCompanyCreation = () => {
-        history.push(spaPaths.companyCreation);
+        history.push(spaPaths.companyCreation, {from: history.location.pathname});
         handleCompanyMenuClose();
     }
 
     const onHomeHandle = () => {
-        history.push(spaPaths.home);
+        history.push(spaPaths.home, {from: history.location.pathname});
     }
 
     const onAllCompanies = () => {
-        history.push(spaPaths.allCompanies);
+        history.push(spaPaths.allCompanies, {from: history.location.pathname});
         handleCompanyMenuClose();
     }
 
@@ -67,12 +67,12 @@ export default function NavBar(): JSX.Element {
     };
 
     const onCompanyAdminCreation = () => {
-        history.push(spaPaths.companyAdminCreation);
+        history.push(spaPaths.companyAdminCreation, {from: history.location.pathname});
         handleStaffMenuClose();
     }
 
     const onAllCompanyAdmins = () => {
-        history.push(spaPaths.allCompanyAdmins);
+        history.push(spaPaths.allCompanyAdmins, {from: history.location.pathname});
         handleStaffMenuClose();
     }
 

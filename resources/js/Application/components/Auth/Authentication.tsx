@@ -66,7 +66,6 @@ export function removeSessionExpiration(): void{
 function useProvideAuth(): useProvideAuthType {
 
     const [user, setUser] = useState<AuthenticatedUser>(getUserFromLocalStorage());
-    const history = useHistory();
 
     //signin should redirect to page corresponding to user role
     const signin = (creds: Credentials,cb: (user: AuthenticatedUser)=>void): Promise<ErrorBody|boolean> => {

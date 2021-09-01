@@ -100,7 +100,7 @@ function CompanyAdminTable(): JSX.Element {
                 .catch((reason) => setAlert(reason.response.error));
         }
         function updateCompany(){
-            history.push(spaPaths.companyAdminUpdate(id));
+            history.push(spaPaths.companyAdminUpdate(id), {from: history.location.pathname});
         }
         function handleClick(event: BaseSyntheticEvent) {
             if (event.target.value == 0) {

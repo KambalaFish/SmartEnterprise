@@ -11,7 +11,7 @@ import {spaPaths} from "../utils";
  */
 
 export default function UnloggedRoute(props: RouteProps): JSX.Element {
-    const {component: Component, ...rest} = props as {component: React.ComponentType<RouteComponentProps>};
+    const {component: Component, ...rest} = props as { component: React.ComponentType<RouteComponentProps> };
     //const Component: React.ComponentType<RouteComponentProps<any>> = props.component as React.ComponentType<RouteComponentProps<any>>;
 
     const auth = useAuth();
@@ -19,17 +19,20 @@ export default function UnloggedRoute(props: RouteProps): JSX.Element {
     return (
         <Route
             {...rest}
-            render={(routeProps): React.ReactNode =>
-                auth.user.usertype == UserType.Unauthenticated ? (
-                    <Component {...routeProps} />
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: spaPaths.home,
-                            state: { from: routeProps.location },
-                        }}
-                    />
-                )
+            render={
+                (routeProps): React.ReactNode => {
+                    switch (auth.user.usertype) {
+                        case UserType.Unauthenticated:
+                            return <Component {...routeProps} />;
+                        default:
+                            return <Redirect
+                                to={{
+                                    pathname: spaPaths.home,
+                                    state: {from: routeProps.location},
+                                }}
+                            />;
+                    }
+                }
             }
         />
     );

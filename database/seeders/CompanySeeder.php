@@ -103,6 +103,28 @@ class CompanySeeder extends Seeder
                     ),
                 'staff'
             )
+            ->has(
+                Staff::factory()
+                    ->count(1)
+                    ->state(function (array $attributes) {
+                        return [
+                            'email' => 'company@admin.com',
+                            'login' => 'company@admin.com',
+                            'usertype' => 'companyAdmin'
+                        ];
+                    })
+                    ->has(
+                        Role::factory()
+                            ->count(1)
+                            ->state(function (array $attributes, Staff $staff) {
+                                return [
+                                    'companyId' => $staff->companyId
+                                ];
+                            }),
+                        'roles'
+                    ),
+                'staff'
+            )
             ->count(1)
             ->create();
 //        Company::factory()
