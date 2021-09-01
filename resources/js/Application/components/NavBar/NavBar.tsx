@@ -77,65 +77,126 @@ export default function NavBar(): JSX.Element {
     }
 
     return (
-        <div className={classes.root}>
-            <AppBar position="static" style={{margin: 0}}>
-                <Toolbar>
-                    {currentPageIdentifier}
-                    <div className={classes.title}/>
-                    <div>
-                        <Chip
-                            label={'Company administrators'}
-                            onClick={handleStaffMenuClick}
-                            icon={<ExpandMoreRoundedIcon/>}
-                            style={{marginRight: 10}}
-                        />
-                        <CustomMenu
-                            anchorEl={staffMenuAnchor}
-                            open={isStaffMenuOpen}
-                            onClose={handleStaffMenuClose}
-                        >
-                            <MenuItem onClick={onAllCompanyAdmins}>All administrators</MenuItem>
-                            <MenuItem onClick={onCompanyAdminCreation}>Create administrator</MenuItem>
-                        </CustomMenu>
-                        <Chip
-                            label={"Company"}
-                            onClick={handleCompanyMenuClick}
-                            icon={<ExpandMoreRoundedIcon/>}
-                        />
-                        <CustomMenu
-                            anchorEl={companyMenuAnchor}
-                            open={isCompanyMenuOpen}
-                            onClose={handleCompanyMenuClose}
-                        >
-                            <MenuItem onClick={onAllCompanies}>All companies</MenuItem>
-                            <MenuItem onClick={onCompanyCreation}>Create a company</MenuItem>
-                        </CustomMenu>
+        <AppBar position="static">
+            <Toolbar>
+                {currentPageIdentifier}
+                <div className={classes.title}/>
+                <div>
+                    <Chip
+                        label={'Company administrators'}
+                        onClick={handleStaffMenuClick}
+                        icon={<ExpandMoreRoundedIcon/>}
+                        style={{marginRight: 10}}
+                    />
+                    <CustomMenu
+                        anchorEl={staffMenuAnchor}
+                        open={isStaffMenuOpen}
+                        onClose={handleStaffMenuClose}
+                    >
+                        <MenuItem onClick={onAllCompanyAdmins}>All administrators</MenuItem>
+                        <MenuItem onClick={onCompanyAdminCreation}>Create administrator</MenuItem>
+                    </CustomMenu>
+                    <Chip
+                        label={"Company"}
+                        onClick={handleCompanyMenuClick}
+                        icon={<ExpandMoreRoundedIcon/>}
+                    />
+                    <CustomMenu
+                        anchorEl={companyMenuAnchor}
+                        open={isCompanyMenuOpen}
+                        onClose={handleCompanyMenuClose}
+                    >
+                        <MenuItem onClick={onAllCompanies}>All companies</MenuItem>
+                        <MenuItem onClick={onCompanyCreation}>Create a company</MenuItem>
+                    </CustomMenu>
 
-                        <IconButton
-                            onClick={onHomeHandle}
-                            style={{color: green[500]}}
-                        >
-                            <HomeIcon/>
-                        </IconButton>
+                    <IconButton
+                        onClick={onHomeHandle}
+                        style={{color: green[500]}}
+                    >
+                        <HomeIcon/>
+                    </IconButton>
 
-                        <IconButton
-                            onClick={handleProfileMenuClick}
-                            color="inherit"
-                            style={{marginRight: 5}}
-                        >
-                            <AccountCircle/>
-                        </IconButton>
-                        <CustomMenu
-                            anchorEl={profileMenuAnchor}
-                            open={isProfileMenuOpen}
-                            onClose={handleProfileMenuClose}
-                        >
-                            <MenuItem onClick={onProfile}>Profile</MenuItem>
-                            <MenuItem onClick={onLogout}>Log out</MenuItem>
-                        </CustomMenu>
-                    </div>
-                </Toolbar>
-            </AppBar>
-        </div>
+                    <IconButton
+                        onClick={handleProfileMenuClick}
+                        color="inherit"
+                        style={{marginRight: 5}}
+                    >
+                        <AccountCircle/>
+                    </IconButton>
+                    <CustomMenu
+                        anchorEl={profileMenuAnchor}
+                        open={isProfileMenuOpen}
+                        onClose={handleProfileMenuClose}
+                    >
+                        <MenuItem onClick={onProfile}>Profile</MenuItem>
+                        <MenuItem onClick={onLogout}>Log out</MenuItem>
+                    </CustomMenu>
+                </div>
+            </Toolbar>
+        </AppBar>
     );
+
+    // return (
+    //     <div className={classes.root}>
+    //         <AppBar position="static">
+    //             <Toolbar>
+    //                 {currentPageIdentifier}
+    //                 <div className={classes.title}/>
+    //                 <div>
+    //                     <Chip
+    //                         label={'Company administrators'}
+    //                         onClick={handleStaffMenuClick}
+    //                         icon={<ExpandMoreRoundedIcon/>}
+    //                         style={{marginRight: 10}}
+    //                     />
+    //                     <CustomMenu
+    //                         anchorEl={staffMenuAnchor}
+    //                         open={isStaffMenuOpen}
+    //                         onClose={handleStaffMenuClose}
+    //                     >
+    //                         <MenuItem onClick={onAllCompanyAdmins}>All administrators</MenuItem>
+    //                         <MenuItem onClick={onCompanyAdminCreation}>Create administrator</MenuItem>
+    //                     </CustomMenu>
+    //                     <Chip
+    //                         label={"Company"}
+    //                         onClick={handleCompanyMenuClick}
+    //                         icon={<ExpandMoreRoundedIcon/>}
+    //                     />
+    //                     <CustomMenu
+    //                         anchorEl={companyMenuAnchor}
+    //                         open={isCompanyMenuOpen}
+    //                         onClose={handleCompanyMenuClose}
+    //                     >
+    //                         <MenuItem onClick={onAllCompanies}>All companies</MenuItem>
+    //                         <MenuItem onClick={onCompanyCreation}>Create a company</MenuItem>
+    //                     </CustomMenu>
+    //
+    //                     <IconButton
+    //                         onClick={onHomeHandle}
+    //                         style={{color: green[500]}}
+    //                     >
+    //                         <HomeIcon/>
+    //                     </IconButton>
+    //
+    //                     <IconButton
+    //                         onClick={handleProfileMenuClick}
+    //                         color="inherit"
+    //                         style={{marginRight: 5}}
+    //                     >
+    //                         <AccountCircle/>
+    //                     </IconButton>
+    //                     <CustomMenu
+    //                         anchorEl={profileMenuAnchor}
+    //                         open={isProfileMenuOpen}
+    //                         onClose={handleProfileMenuClose}
+    //                     >
+    //                         <MenuItem onClick={onProfile}>Profile</MenuItem>
+    //                         <MenuItem onClick={onLogout}>Log out</MenuItem>
+    //                     </CustomMenu>
+    //                 </div>
+    //             </Toolbar>
+    //         </AppBar>
+    //     </div>
+    // );
 }
