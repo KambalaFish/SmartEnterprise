@@ -5,18 +5,17 @@ import SignIn from "./components/Auth/SignIn/SignIn";
 import {spaPaths} from "./utils/utils";
 import {MainLayout} from "./components/Reusable/Layout/MainLayout/MainLayout";
 import Home from "./components/Home/Home";
-import CompanyCreation from "./components/Companies/CompanyCreation/CompanyCreation";
-import CompanyInfo from "./components/Companies/CompanyInfo/CompanyInfo";
-import PrivateRouteOld from "./utils/CustomRoutes/PrivateRouteOld";
+import CompanyCreation from "./components/SystemAdmin/Companies/CompanyCreation/CompanyCreation";
+import CompanyInfo from "./components/SystemAdmin/Companies/CompanyInfo/CompanyInfo";
 import {ProvideAuth} from "./components/Auth/Authentication";
 import UnloggedRoute from "./utils/CustomRoutes/UnloggedRoute";
 import Profile from "./components/Profile/Profile";
-import CompanyAdminCreation from "./components/Staff/CompanyAdmin/Creation/CompanyAdminCreation/CompanyAdminCreation";
-import SelectedCompanyAdminCreation from "./components/Staff/CompanyAdmin/Creation/SelectedCompanyAdminCreation/SelectedCompanyAdminCreation";
-import CompanyAdminTable from "./components/Staff/CompanyAdmin/CompanyAdminTable/CompanyAdminTable";
-import CompanyAdminUpdate from "./components/Staff/CompanyAdmin/Update/CompanyAdminUpdate";
-import CompanyTable from "./components/Companies/CompanyTable/CompanyTable";
-import CompanyUpdate from "./components/Companies/CompanyUpdate/CompanyUpdate";
+import CompanyAdminCreation from "./components/SystemAdmin/Staff/CompanyAdmin/Creation/CompanyAdminCreation/CompanyAdminCreation";
+import SelectedCompanyAdminCreation from "./components/SystemAdmin/Staff/CompanyAdmin/Creation/SelectedCompanyAdminCreation/SelectedCompanyAdminCreation";
+import CompanyAdminTable from "./components/SystemAdmin/Staff/CompanyAdmin/CompanyAdminTable/CompanyAdminTable";
+import CompanyAdminUpdate from "./components/SystemAdmin/Staff/CompanyAdmin/Update/CompanyAdminUpdate";
+import CompanyTable from "./components/SystemAdmin/Companies/CompanyTable/CompanyTable";
+import CompanyUpdate from "./components/SystemAdmin/Companies/CompanyUpdate/CompanyUpdate";
 import PrivateRoute from "./utils/CustomRoutes/PrivateRoute";
 import CompanyAdminHome from "./components/Home/CompanyAdminHome";
 
@@ -27,7 +26,6 @@ function App(): JSX.Element {
             <Switch>
                 <UnloggedRoute path={spaPaths.signIn} component={SignIn}/>
                 <MainLayout>
-                    {/*<SystemAdminRoutes/>*/}
                     <PrivateRoute exact path={spaPaths.allCompanies} systemAdminComponent={CompanyTable}/>
                     <PrivateRoute exact path={spaPaths.companyCreation} systemAdminComponent={CompanyCreation}/>
                     <PrivateRoute exact path={spaPaths.companyUpdatePath} systemAdminComponent={CompanyUpdate}/>
