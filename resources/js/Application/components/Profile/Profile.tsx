@@ -1,7 +1,10 @@
 import React from "react";
 import {useAuth} from "../Auth/Authentication";
-import {Grid} from "@material-ui/core";
+import {Grid, Paper, Typography} from "@material-ui/core";
 import {UserType} from "../../utils/Interfaces/InterfacesApi";
+import PageHeader from "../Reusable/Headers/PageHeader/PageHeader";
+import {makeStyles} from "@material-ui/core/styles";
+import {ParagraphHeader} from "../Reusable/Headers/ParagraphHeader/ParagraphHeader";
 
 export default function Profile(): JSX.Element {
     const {user} = useAuth();
@@ -9,25 +12,95 @@ export default function Profile(): JSX.Element {
     let usertype;
     switch (user.usertype) {
         case UserType.CompanyAdmin:
-            usertype = 'Company administrator';
+            usertype = 'company administrator';
             break;
         case UserType.SystemAdmin:
-            usertype = 'System administrator';
+            usertype = 'system administrator';
             break;
         default:
-            usertype = 'Undefined usertype';
+            usertype = 'undefined usertype';
     }
+    const useStyles = makeStyles((theme) => ({
+        container: {
+            marginTop: theme.spacing(2),
+            borderRadius: theme.spacing(3)
+        },
+        border: {
+            border: '1px solid black'
+        },
+        pl: {
+            paddingLeft: theme.spacing(2)
+        },
+        ml: {
+            marginLeft: theme.spacing(3)
+        },
+        mb: {
+            marginBottom: theme.spacing(2),
+        }
+    }));
+    const classes = useStyles();
 
-    return <Grid container direction={'column'} justifyContent={'center'} alignItems={'flex-start'} spacing={1}>
-        <Grid item xs={4}>ID: {user.id}</Grid>
-        <Grid item xs={4}>Name: {`${user.name}`}</Grid>
-        <Grid item xs={4}>Phone: {user.phoneNumber}</Grid>
-        <Grid item xs={4}>Email: {user.email}</Grid>
-        {usertype &&
-        <Grid item xs={4}>Usertype: {usertype}</Grid>
-        }
-        {user.roles.length > 0 &&
-        <Grid item xs={4}>Roles: {user.roles.join(', ')}</Grid>
-        }
-    </Grid>
+    return <>
+        <PageHeader headerText={'Profile'}/>
+        <Grid item xs={4} container direction={'column'} justifyContent={'center'} alignItems={'flex-start'}
+              className={classes.container} component={Paper} elevation={12}>
+            <Grid item container direction={'row'}>
+                <ParagraphHeader headerText={'Identity'}/>
+            </Grid>
+            <Grid item xs={12} container direction={'row'} className={classes.ml}>
+                <Grid item xs={2}>
+                    <Typography variant={'h6'} color={'secondary'}>
+                        ID: {user.id}
+                    </Typography>
+                </Grid>
+                <Grid item xs={10}>
+                    <Typography variant={'h6'} color={'primary'}>
+                        Name: {`${user.name}`}
+                    </Typography>
+                </Grid>
+            </Grid>
+
+            <Grid item container direction={'row'}>
+                <ParagraphHeader headerText={'Contacts'}/>
+            </Grid>
+            <Grid item xs={12} container direction={'row'} className={classes.ml}>
+                <Grid item xs={6}>
+                    <Typography variant={'h6'} color={'primary'}>
+                        Phone: {user.phoneNumber}
+                    </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography variant={'h6'} color={'primary'}>
+                        Email: {user.email}
+                    </Typography>
+                </Grid>
+            </Grid>
+
+            {
+                (usertype || user.roles.length > 0) &&
+                    <>
+                        <Grid item container direction={'row'}>
+                            <ParagraphHeader headerText={'Authorities'}/>
+                        </Grid>
+                        {
+                            usertype &&
+                            <Grid item xs={12} className={classes.ml}>
+                                <Typography variant={'h6'} color={'primary'}>
+                                    Usertype: {usertype}
+                                </Typography>
+                            </Grid>
+                        }
+                        {user.roles.length > 0 &&
+                        <Grid item xs={12} className={`${classes.ml} ${classes.mb}`}>
+                            <Typography variant={'h6'} color={'primary'}>
+                                Roles: {user.roles.map(role => role.toLowerCase()).join(', ')}
+                            </Typography>
+                        </Grid>
+                        }
+                    </>
+            }
+
+
+        </Grid>
+    </>
 }

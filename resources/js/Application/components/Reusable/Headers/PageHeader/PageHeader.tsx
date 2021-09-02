@@ -6,7 +6,7 @@ import {HeaderProps} from "../../../../utils/Interfaces/PropsInterfaces";
 function PageHeader({headerText}: HeaderProps): JSX.Element{
     const classes = useStyles();
     return <Grid item xs={6}>
-        <Typography variant={'h5'} align={'center'} className={classes.mt}>
+        <Typography variant={'h4'} align={'center'} className={classes.mt}>
             {headerText}
         </Typography>
     </Grid>
