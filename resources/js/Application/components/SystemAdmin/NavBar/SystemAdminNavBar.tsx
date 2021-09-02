@@ -49,7 +49,7 @@ export default function SystemAdminNavBar(): JSX.Element {
     }
 
     const onHomeHandle = () => {
-        history.push(spaPaths.home, {from: history.location.pathname});
+        history.push(spaPaths.allCompanies, {from: history.location.pathname});
     }
 
     const onAllCompanies = () => {

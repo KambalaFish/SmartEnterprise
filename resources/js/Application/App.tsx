@@ -4,7 +4,6 @@ import {Switch} from 'react-router-dom';
 import SignIn from "./components/Auth/SignIn/SignIn";
 import {spaPaths} from "./utils/utils";
 import {MainLayout} from "./components/Reusable/Layout/MainLayout/MainLayout";
-import Home from "./components/Home/Home";
 import CompanyCreation from "./components/SystemAdmin/Companies/CompanyCreation/CompanyCreation";
 import CompanyInfo from "./components/SystemAdmin/Companies/CompanyInfo/CompanyInfo";
 import {ProvideAuth} from "./components/Auth/Authentication";
@@ -17,7 +16,7 @@ import CompanyAdminUpdate from "./components/SystemAdmin/Staff/CompanyAdmin/Upda
 import CompanyTable from "./components/SystemAdmin/Companies/CompanyTable/CompanyTable";
 import CompanyUpdate from "./components/SystemAdmin/Companies/CompanyUpdate/CompanyUpdate";
 import PrivateRoute from "./utils/CustomRoutes/PrivateRoute";
-import CompanyAdminHome from "./components/Home/CompanyAdminHome";
+import CompanyAdminHome from "./components/CompanyAdmin/Home/CompanyAdminHome";
 
 function App(): JSX.Element {
     return (
@@ -39,10 +38,7 @@ function App(): JSX.Element {
                     <PrivateRoute exact path={spaPaths.allCompanyAdmins} systemAdminComponent={CompanyAdminTable}/>
                     <PrivateRoute exact path={spaPaths.companyAdminUpdatePath} systemAdminComponent={CompanyAdminUpdate}/>
                     <PrivateRoute exact path={spaPaths.companyAdminUpdatePath} systemAdminComponent={CompanyAdminUpdate}/>
-                    <PrivateRoute exact path={[spaPaths.home, '/', '']}
-                                  systemAdminComponent={Home}
-                                  companyAdminComponent={CompanyAdminHome}
-                    />
+                    <PrivateRoute exact path={[spaPaths.home, '/', '']} companyAdminComponent={CompanyAdminHome}/>
                 </MainLayout>
             </Switch>
         </ProvideAuth>
