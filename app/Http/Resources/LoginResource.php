@@ -9,11 +9,23 @@ class LoginResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
     {
+        if ($this->usertype == 'systemAdmin') {
+            return [
+                'id' => $this->id,
+                'name' => $this->name,
+                'phoneNumber' => $this->phoneNumber,
+                'email' => $this->email,
+                'usertype' => $this->usertype,
+                'roles' => $this->roles->map(function ($value) {
+                    return $value->name;
+                })
+            ];
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -21,9 +33,9 @@ class LoginResource extends JsonResource
             'email' => $this->email,
 //            'status' => $this->status,
 //            'login' => $this->login,
-//            'companyId' => $this->companyId,
+            'companyId' => $this->companyId,
             'usertype' => $this->usertype,
-            'roles' => $this->roles->map(function($value){
+            'roles' => $this->roles->map(function ($value) {
                 return $value->name;
             })
         ];

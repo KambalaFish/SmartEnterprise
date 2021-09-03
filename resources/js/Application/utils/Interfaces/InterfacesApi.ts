@@ -103,6 +103,7 @@ export interface AuthenticatedUser{
     email: string;
     usertype: UserType;
     roles: string[];
+    companyId?: number;
 }
 
 export enum UserStatus {

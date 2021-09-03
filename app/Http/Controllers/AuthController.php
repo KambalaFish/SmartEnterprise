@@ -19,7 +19,6 @@ class AuthController extends Controller
             logger('user: '.$user);
             logger('roles: '.$roles);
             return response(LoginResource::make($user), 200);
-//            return response('you are logged in');
         }
         return response('Credentials are not valid', 401);
     }
