@@ -3,8 +3,8 @@ import {useAuth} from "../Auth/Authentication";
 import {Grid, Paper, Typography} from "@material-ui/core";
 import {UserType} from "../../utils/Interfaces/InterfacesApi";
 import PageHeader from "../Reusable/Headers/PageHeader/PageHeader";
-import {makeStyles} from "@material-ui/core/styles";
 import {ParagraphHeader} from "../Reusable/Headers/ParagraphHeader/ParagraphHeader";
+import useStyles from "./includes/styles";
 
 export default function Profile(): JSX.Element {
     const {user} = useAuth();
@@ -20,24 +20,7 @@ export default function Profile(): JSX.Element {
         default:
             usertype = 'undefined usertype';
     }
-    const useStyles = makeStyles((theme) => ({
-        container: {
-            marginTop: theme.spacing(2),
-            borderRadius: theme.spacing(3)
-        },
-        border: {
-            border: '1px solid black'
-        },
-        pl: {
-            paddingLeft: theme.spacing(2)
-        },
-        ml: {
-            marginLeft: theme.spacing(3)
-        },
-        mb: {
-            marginBottom: theme.spacing(2),
-        }
-    }));
+
     const classes = useStyles();
 
     return <>
@@ -99,7 +82,6 @@ export default function Profile(): JSX.Element {
                         }
                     </>
             }
-
 
         </Grid>
     </>
