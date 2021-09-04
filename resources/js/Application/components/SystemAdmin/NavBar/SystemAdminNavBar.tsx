@@ -32,15 +32,15 @@ export default function SystemAdminNavBar(): JSX.Element {
     }
 
     const onCompanyCreation = () => {
-        history.push(spaPaths.companyCreation, {from: history.location.pathname});
+        history.push(spaPaths.systemAdminPaths.companyCreation, {from: history.location.pathname});
     }
 
     const onHomeHandle = () => {
-        history.push(spaPaths.allCompanies, {from: history.location.pathname});
+        history.push(spaPaths.systemAdminPaths.allCompanies, {from: history.location.pathname});
     }
 
     const onAllCompanies = () => {
-        history.push(spaPaths.allCompanies, {from: history.location.pathname});
+        history.push(spaPaths.systemAdminPaths.allCompanies, {from: history.location.pathname});
     }
 
     const onLogout = () => {
@@ -53,11 +53,11 @@ export default function SystemAdminNavBar(): JSX.Element {
     };
 
     const onCompanyAdminCreation = () => {
-        history.push(spaPaths.companyAdminCreation, {from: history.location.pathname});
+        history.push(spaPaths.systemAdminPaths.companyAdminCreation, {from: history.location.pathname});
     }
 
     const onAllCompanyAdmins = () => {
-        history.push(spaPaths.allCompanyAdmins, {from: history.location.pathname});
+        history.push(spaPaths.systemAdminPaths.allCompanyAdmins, {from: history.location.pathname});
     }
 
     return (

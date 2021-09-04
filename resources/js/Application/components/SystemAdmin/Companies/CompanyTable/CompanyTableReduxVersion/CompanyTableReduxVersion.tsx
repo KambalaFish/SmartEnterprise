@@ -95,7 +95,7 @@ export function CompanyTableReduxVersion({
 
     const CompanyTableMenu: ClickableButton = (id: number) => {
         function updateCompany(id: number) {
-            history.push(spaPaths.companyUpdate(id));
+            history.push(spaPaths.systemAdminPaths.companyUpdate(id));
         }
 
         function removeCompany(id: number) {
@@ -112,7 +112,7 @@ export function CompanyTableReduxVersion({
         }
 
         function createAdmin(id: number){
-            history.push(spaPaths.selectedCompanyAdminCreation(id));
+            history.push(spaPaths.systemAdminPaths.selectedCompanyAdminCreation(id));
         }
 
         function handleClick(event: BaseSyntheticEvent, id: number) {

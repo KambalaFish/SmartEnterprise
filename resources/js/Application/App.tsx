@@ -17,6 +17,7 @@ import CompanyTable from "./components/SystemAdmin/Companies/CompanyTable/Compan
 import CompanyUpdate from "./components/SystemAdmin/Companies/CompanyUpdate/CompanyUpdate";
 import PrivateRoute from "./utils/CustomRoutes/PrivateRoute";
 import CompanyAdminHome from "./components/CompanyAdmin/Home/CompanyAdminHome";
+import RolesTable from "./components/CompanyAdmin/Roles/RolesTable";
 
 function App(): JSX.Element {
     return (
@@ -25,20 +26,20 @@ function App(): JSX.Element {
             <Switch>
                 <UnloggedRoute path={spaPaths.signIn} component={SignIn}/>
                 <MainLayout>
-                    <PrivateRoute exact path={spaPaths.allCompanies} systemAdminComponent={CompanyTable}/>
-                    <PrivateRoute exact path={spaPaths.companyCreation} systemAdminComponent={CompanyCreation}/>
-                    <PrivateRoute exact path={spaPaths.companyUpdatePath} systemAdminComponent={CompanyUpdate}/>
+                    <PrivateRoute exact path={spaPaths.systemAdminPaths.allCompanies} systemAdminComponent={CompanyTable}/>
+                    <PrivateRoute exact path={spaPaths.systemAdminPaths.companyCreation} systemAdminComponent={CompanyCreation}/>
+                    <PrivateRoute exact path={spaPaths.systemAdminPaths.companyUpdatePath} systemAdminComponent={CompanyUpdate}/>
                     <PrivateRoute exact path={spaPaths.companyInfoPath} systemAdminComponent={CompanyInfo}/>
                     <PrivateRoute exact path={spaPaths.profile}
                                   systemAdminComponent={Profile}
                                   companyAdminComponent={Profile}
                     />
-                    <PrivateRoute exact path={spaPaths.companyAdminCreation} systemAdminComponent={CompanyAdminCreation}/>
-                    <PrivateRoute exact path={spaPaths.selectedCompanyAdminCreationPath} systemAdminComponent={SelectedCompanyAdminCreation}/>
-                    <PrivateRoute exact path={spaPaths.allCompanyAdmins} systemAdminComponent={CompanyAdminTable}/>
-                    <PrivateRoute exact path={spaPaths.companyAdminUpdatePath} systemAdminComponent={CompanyAdminUpdate}/>
-                    <PrivateRoute exact path={spaPaths.companyAdminUpdatePath} systemAdminComponent={CompanyAdminUpdate}/>
+                    <PrivateRoute exact path={spaPaths.systemAdminPaths.companyAdminCreation} systemAdminComponent={CompanyAdminCreation}/>
+                    <PrivateRoute exact path={spaPaths.systemAdminPaths.selectedCompanyAdminCreationPath} systemAdminComponent={SelectedCompanyAdminCreation}/>
+                    <PrivateRoute exact path={spaPaths.systemAdminPaths.allCompanyAdmins} systemAdminComponent={CompanyAdminTable}/>
+                    <PrivateRoute exact path={spaPaths.systemAdminPaths.companyAdminUpdatePath} systemAdminComponent={CompanyAdminUpdate}/>
                     <PrivateRoute exact path={[spaPaths.home, '/', '']} companyAdminComponent={CompanyAdminHome}/>
+                    <PrivateRoute exact path={spaPaths.companyAdminPaths.allRoles} companyAdminComponent={RolesTable}/>
                 </MainLayout>
             </Switch>
         </ProvideAuth>

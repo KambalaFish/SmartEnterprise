@@ -18,7 +18,7 @@ export function getCurrentPageIdentifier(pathname: string): JSX.Element{
             currentPageName = 'Home';
             icon = <HomeIcon/>;
             break;
-        case spaPaths.allCompanies:
+        case spaPaths.systemAdminPaths.allCompanies:
             currentPageName = 'All companies';
             icon = <AccountBalanceIcon/>;
             break;
@@ -26,15 +26,15 @@ export function getCurrentPageIdentifier(pathname: string): JSX.Element{
             currentPageName = 'Profile';
             icon = <PermIdentityIcon/>;
             break;
-        case spaPaths.companyCreation:
+        case spaPaths.systemAdminPaths.companyCreation:
             currentPageName = 'Company creation';
             icon = <CreateIcon/>;
             break;
-        case spaPaths.companyAdminCreation:
+        case spaPaths.systemAdminPaths.companyAdminCreation:
             currentPageName = 'Company admin creation';
             icon = <CreateIcon/>;
             break;
-        case spaPaths.allCompanyAdmins:
+        case spaPaths.systemAdminPaths.allCompanyAdmins:
             currentPageName = 'Company administrators';
             icon = <SupervisorAccount/>
             break;

@@ -9,19 +9,24 @@ export function getApiBaseUrl(): string {
 export const spaPaths = {
     home: "/home",
     signIn: '/sign-in',
-    allCompanies: '/company/all',
-    companyCreation: '/company/create',
-    companyUpdatePath: `/company/:id/update/`,
-    companyUpdate: (id: number): string => `/company/${id}/update/`,
+    systemAdminPaths:{
+        allCompanies: '/company/all',
+        companyCreation: '/company/create',
+        companyUpdatePath: `/company/:id/update/`,
+        companyUpdate: (id: number): string => `/company/${id}/update/`,
+        selectedCompanyAdminCreationPath: '/company/:id/admin/creation',
+        selectedCompanyAdminCreation: (companyId: number): string => `/company/${companyId}/admin/creation`,
+        companyAdminCreation: '/company/admin/creation',
+        allCompanyAdmins: '/company/admin/all',
+        companyAdminUpdatePath: `/company/admin/:id/update`,
+        companyAdminUpdate: (id: number): string => `/company/admin/${id}/update`,
+    },
+    companyAdminPaths: {
+        allRoles: '/roles'
+    },
     companyInfoPath: `/company/:id/about/`,
     companyInfo: (id: number): string => `/company/${id}/about/`,
     profile: '/profile',
-    selectedCompanyAdminCreationPath: '/company/:id/admin/creation',
-    selectedCompanyAdminCreation: (companyId: number): string => `/company/${companyId}/admin/creation`,
-    companyAdminCreation: '/company/admin/creation',
-    allCompanyAdmins: '/company/admin/all',
-    companyAdminUpdatePath: `/company/admin/:id/update`,
-    companyAdminUpdate: (id: number): string => `/company/admin/${id}/update`,
 }
 
 export const apiPaths = {

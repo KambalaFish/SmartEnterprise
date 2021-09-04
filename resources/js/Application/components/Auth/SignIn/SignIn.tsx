@@ -35,7 +35,7 @@ export default function SignIn(): JSX.Element {
             .signin(data, (user)=>{
                 switch (user.usertype){
                     case UserType.SystemAdmin:
-                        history.replace(spaPaths.allCompanies);
+                        history.replace(spaPaths.systemAdminPaths.allCompanies);
                         break;
                     case UserType.CompanyAdmin:
                         history.replace(spaPaths.home)

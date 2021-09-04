@@ -10,6 +10,7 @@ import {spaPaths} from "../../../utils/utils";
 import {useAuth} from "../../Auth/Authentication";
 import {green} from "@material-ui/core/colors";
 import HomeIcon from "@material-ui/icons/Home";
+import ChipMenu from "../../../utils/navBarUtils/ChipMenu";
 
 function CompanyAdminNavBar(): JSX.Element {
     const history = useHistory();
@@ -40,7 +41,7 @@ function CompanyAdminNavBar(): JSX.Element {
     const onHomeHandle = () => {
         history.push(spaPaths.home, {from: history.location.pathname});
     }
-
+    const onAllRoles = () => history.push(spaPaths.companyAdminPaths.allRoles, {from: history.location.pathname});
     return (
         <AppBar position={'static'}>
             <Toolbar>
@@ -50,6 +51,15 @@ function CompanyAdminNavBar(): JSX.Element {
                     </Grid>
 
                     <Grid item className={classes.fg}/>
+
+                    <Grid item>
+                        <ChipMenu
+                            label={'Roles'}
+                            menuItems={[
+                                {label: 'All roles', onClick: onAllRoles},
+                            ]}
+                        />
+                    </Grid>
 
                     <Grid item>
                         <IconButton

@@ -64,7 +64,7 @@ function CompanyTable(): JSX.Element{
         function handleClick(event: BaseSyntheticEvent){
             switch (event.target.value){
                 case 0:
-                    history.push(spaPaths.companyUpdate(id), {from: history.location.pathname});
+                    history.push(spaPaths.systemAdminPaths.companyUpdate(id), {from: history.location.pathname});
                     break
                 case 1:
                     api().getCompanyApi()
@@ -80,7 +80,7 @@ function CompanyTable(): JSX.Element{
                         .catch((reason) => setAlert(reason.response.error));
                     break;
                 case 2:
-                    history.push(spaPaths.selectedCompanyAdminCreation(id), {from: history.location.pathname});
+                    history.push(spaPaths.systemAdminPaths.selectedCompanyAdminCreation(id), {from: history.location.pathname});
                     break;
                 case 3:
                     history.push(spaPaths.companyInfo(id), {from: history.location.pathname});
