@@ -37,7 +37,6 @@ class CompanyController extends Controller
             if(is_null($value))
                 unset($query[$key]);
         }
-        logger($query);
         $paginatedCompanies = empty($query)? Company::paginate(5) : Company::where($query)->paginate(5);
         return CompanyResourceCollection::make($paginatedCompanies);
     }
@@ -73,10 +72,6 @@ class CompanyController extends Controller
         $customerManagerContact = $this->extractArrayElement($validatedData, 'customerManagerContact');
         $validatedData['usersNumber'] = 1;
         $validatedData['beaconsNumber'] = 1;
-        logger($validatedData);
-        logger($mainAdminContact);
-        logger($itDepartmentContact);
-        logger($customerManagerContact);
         $company = Company::create($validatedData);
         $company->mainAdminContact()->create($mainAdminContact);
         $company->itDepartmentContact()->create($itDepartmentContact);
