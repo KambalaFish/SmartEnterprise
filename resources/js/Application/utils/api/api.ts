@@ -1,11 +1,13 @@
 import {CompanyApi, CompanyApiImpl} from "./companyApi";
 import {StaffApi, StaffApiImpl} from "./staffApi";
 import {AuthApi, AuthApiImpl} from "./authenticationApi";
+import {CompanyAdminApi, CompanyAdminApiImpl} from "./companyAdminApi";
 
 interface ClientApi {
     getAuthApi(): AuthApi;
     getCompanyApi(): CompanyApi;
     getStaffApi(): StaffApi;
+    getCompanyAdminApi(): CompanyAdminApi;
 }
 
 class ClientApiImpl implements ClientApi {
@@ -16,6 +18,7 @@ class ClientApiImpl implements ClientApi {
         this.companyApi = new CompanyApiImpl();
         this.staffApi = new StaffApiImpl();
         this.authApi = new AuthApiImpl();
+        this.companyAdminApi = new CompanyAdminApiImpl();
     }
 
     public static getInstance(): ClientApi{
@@ -41,6 +44,12 @@ class ClientApiImpl implements ClientApi {
 
     getStaffApi(): StaffApi {
         return this.staffApi;
+    }
+
+    private readonly companyAdminApi: CompanyAdminApi;
+
+    getCompanyAdminApi(): CompanyAdminApi {
+        return this.companyAdminApi;
     }
 
 }

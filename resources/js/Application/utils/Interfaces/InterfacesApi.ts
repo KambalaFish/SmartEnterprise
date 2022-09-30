@@ -146,3 +146,7 @@ export interface IStaffFilter {
     companyId: number|null;
     status: UserStatus|'any';
 }
+
+export interface IRoleCreation{
+    name: string;
+}

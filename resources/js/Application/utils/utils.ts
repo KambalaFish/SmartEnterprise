@@ -50,5 +50,6 @@ export const apiPaths = {
     getPaginatedCompanyAdmins: '/staff/companyAdmins',
     removeStaff: (staffId: number): string => `/staff/${staffId}`,
     getCompanyAdmin: (id: number): string => `/staff/${id}`,
-    updateStaff: (id: number): string => `/staff/${id}`
+    updateStaff: (id: number): string => `/staff/${id}`,
+    createRole: (companyId: number): string => `/company/${companyId}/role`
 }

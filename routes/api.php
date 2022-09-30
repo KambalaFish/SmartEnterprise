@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthController;
 use \App\Http\Controllers\StaffController;
-
+use \App\Http\Controllers\RoleController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,4 +36,5 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('staff/{staff}', [StaffController::class, 'destroy']);
     Route::get('staff/{staff}', [StaffController::class, 'show']);
     Route::put('staff/{staff}', [StaffController::class,'update']);
+    Route::post('company/{company}/role', [RoleController::class, 'store']);
 });

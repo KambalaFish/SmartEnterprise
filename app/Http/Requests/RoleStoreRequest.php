@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class RoleStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,10 +13,9 @@ class LoginRequest extends FormRequest
      */
     public function authorize()
     {
-//        return false;
         return true;
     }
-
+    private string $nameRegEx = '/^[a-zA-Z]+(?:(?:,\s|\s-\s|[-\s\'])?[a-zA-Z]+)*\.{0,3}$/';
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,8 +24,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string']
+            'name' => ['required', 'string', 'regex:'.$this->nameRegEx]
         ];
     }
 }
