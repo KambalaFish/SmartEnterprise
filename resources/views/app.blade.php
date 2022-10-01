@@ -7,7 +7,7 @@
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
         </style>
-        <script src="/js/app.js"></script>
+        <script src="/js/app.js" defer></script>
     </head>
     <body class="antialiased">
         <div id="root"></div>
