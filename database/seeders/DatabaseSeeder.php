@@ -23,15 +23,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(CompanySeeder $companySeeder)
     {
-         User::factory(1)->create();
-//        Company::truncateTable();
-//        Department::truncateTable();
-//        MainAdminContact::truncateTable();
-//        ItDepartmentContact::truncateTable();
-//        CustomerManagerContact::truncateTable();
-//        Staff::truncateTable();
-//        Role::truncateTable();
-//        Team::truncateTable();
-//        $companySeeder->run();
+//         User::factory(1)->create();
+        Company::truncateTable();
+        Department::truncateTable();
+        MainAdminContact::truncateTable();
+        ItDepartmentContact::truncateTable();
+        CustomerManagerContact::truncateTable();
+        Staff::truncateTable();
+        Role::truncateTable();
+        Team::truncateTable();
+        $companySeeder->run();
     }
 }
