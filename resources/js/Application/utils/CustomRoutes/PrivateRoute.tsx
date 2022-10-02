@@ -33,11 +33,14 @@ export default function PrivateRoute(props: RouteProps & PrivateRoteTestProps): 
     const history = useHistory<{from: string}>();
 
     function redirectBack(): JSX.Element{
-        return <Redirect
-            to={{
-                pathname: history.location.state.from
-            }}
-        />;
+        if (history && history.location.state && history.location.state.from){
+            return <Redirect
+                to={{
+                    pathname: history.location.state.from
+                }}
+            />;
+        }
+        return <></>
     }
 
     return (

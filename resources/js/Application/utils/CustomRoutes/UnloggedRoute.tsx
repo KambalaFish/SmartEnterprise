@@ -3,7 +3,6 @@ import {Redirect, Route, RouteProps} from "react-router-dom";
 import {RouteComponentProps} from "react-router";
 import {UserType} from "../Interfaces/InterfacesApi";
 import {useAuth} from "../../components/Auth/Authentication";
-import {spaPaths} from "../utils";
 
 
 /**
@@ -27,7 +26,7 @@ export default function UnloggedRoute(props: RouteProps): JSX.Element {
                         default:
                             return <Redirect
                                 to={{
-                                    pathname: spaPaths.home,
+                                    pathname: '/',
                                     state: {from: routeProps.location},
                                 }}
                             />;
