@@ -16,3 +16,4 @@ yarn-error.log
 routes.txt
 public/js
 .env
+.env.example
