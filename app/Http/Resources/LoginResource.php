@@ -14,7 +14,7 @@ class LoginResource extends JsonResource
      */
     public function toArray($request)
     {
-        if ($this->usertype == 'systemAdmin') {
+        if (strcmp($this->usertype, 'systemAdmin') == 0) {
             return [
                 'id' => $this->id,
                 'name' => $this->name,
