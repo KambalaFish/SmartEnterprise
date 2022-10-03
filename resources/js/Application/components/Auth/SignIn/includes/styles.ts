@@ -5,8 +5,7 @@ export const useStyles = makeStyles((theme) => ({
         height: '100vh',
     },
     image: {
-        //backgroundImage: 'url(https://source.unsplash.com/random)',
-        backgroundImage: 'url(/images/factory.jpg)',
+        backgroundImage: 'url(/images/factory.webp)',
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
